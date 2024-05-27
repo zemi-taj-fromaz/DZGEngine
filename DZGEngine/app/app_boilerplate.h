@@ -16,6 +16,9 @@ void  dzg::cleanup() {
 
     cleanupSwapChain();
 
+    vkDestroyBuffer(core.device, indexBuffer, nullptr);
+    vkFreeMemory(core.device, indexBufferMemory, nullptr);
+
     vkDestroyBuffer(core.device, vertexBuffer, nullptr);
     vkFreeMemory(core.device, vertexBufferMemory, nullptr);
 
@@ -61,8 +64,9 @@ void  dzg::initVulkan() {
     createGraphicsPipeline();
     createImageViews();
     createFramebuffers();
-    createVertexBuffer();
     createCommandPool();
+    createIndexBuffer();
+    createVertexBuffer();
     createCommandBuffers();
     createSyncObjects();
 
