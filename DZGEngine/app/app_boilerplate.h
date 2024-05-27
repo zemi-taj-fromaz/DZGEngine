@@ -10,10 +10,14 @@
 #include "framebuffer.h"
 #include "command_buffers.h"
 #include "sync_objects.h"
+#include "buffers.h"
 
 void  dzg::cleanup() {
 
     cleanupSwapChain();
+
+    vkDestroyBuffer(core.device, vertexBuffer, nullptr);
+    vkFreeMemory(core.device, vertexBufferMemory, nullptr);
 
     for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
     {
@@ -57,6 +61,7 @@ void  dzg::initVulkan() {
     createGraphicsPipeline();
     createImageViews();
     createFramebuffers();
+    createVertexBuffer();
     createCommandPool();
     createCommandBuffers();
     createSyncObjects();

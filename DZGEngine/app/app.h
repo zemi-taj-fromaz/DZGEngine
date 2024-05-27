@@ -8,7 +8,10 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 #include <optional>
+#include <stdexcept>
 
+
+#include "../vertex_buffer.h"
 
 class dzg {
 public:
@@ -97,6 +100,10 @@ private:
     void recreateSwapChain();
     void cleanupSwapChain();
 
+    void createVertexBuffer();
+
+    uint32_t find_memory_type(uint32_t typeFilter, VkMemoryPropertyFlags properties);
+
 public:
     bool framebufferResized = false;
 
@@ -127,4 +134,13 @@ private:
 
     VkCommandPool commandPool;
     std::vector<VkCommandBuffer> commandBuffers;
+
+    VkBuffer vertexBuffer;
+    VkDeviceMemory vertexBufferMemory;
+
+    const std::vector<Vertex> vertices = {
+    {{0.0f, -0.5f}, {1.0f, 1.0f, 1.0f}},
+    {{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
+    {{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}}
+    };
 };

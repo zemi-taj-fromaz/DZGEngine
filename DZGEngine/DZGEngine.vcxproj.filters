@@ -18,36 +18,42 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="app.cpp">
+    <ClCompile Include="app\app.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app.h">
+    <ClInclude Include="app\app.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="swapchain_setup.h">
+    <ClInclude Include="app\swapchain_setup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="glfw_window_init.h">
+    <ClInclude Include="app\glfw_window_init.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app_boilerplate.h">
+    <ClInclude Include="app\app_boilerplate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="shader_load.h">
+    <ClInclude Include="app\shader_load.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics_pipeline_setup.h">
+    <ClInclude Include="app\graphics_pipeline_setup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framebuffer.h">
+    <ClInclude Include="app\framebuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="command_buffers.h">
+    <ClInclude Include="app\command_buffers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sync_objects.h">
+    <ClInclude Include="app\sync_objects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\buffers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

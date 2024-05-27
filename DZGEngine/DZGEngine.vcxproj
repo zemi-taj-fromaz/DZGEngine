@@ -135,19 +135,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="app.cpp" />
+    <ClCompile Include="app\app.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app.h" />
-    <ClInclude Include="app_boilerplate.h" />
-    <ClInclude Include="command_buffers.h" />
-    <ClInclude Include="framebuffer.h" />
-    <ClInclude Include="glfw_window_init.h" />
-    <ClInclude Include="graphics_pipeline_setup.h" />
-    <ClInclude Include="shader_load.h" />
-    <ClInclude Include="swapchain_setup.h" />
-    <ClInclude Include="sync_objects.h" />
+    <ClInclude Include="app\app.h" />
+    <ClInclude Include="app\app_boilerplate.h" />
+    <ClInclude Include="app\buffers.h" />
+    <ClInclude Include="app\command_buffers.h" />
+    <ClInclude Include="app\framebuffer.h" />
+    <ClInclude Include="app\glfw_window_init.h" />
+    <ClInclude Include="app\graphics_pipeline_setup.h" />
+    <ClInclude Include="app\shader_load.h" />
+    <ClInclude Include="app\swapchain_setup.h" />
+    <ClInclude Include="app\sync_objects.h" />
+    <ClInclude Include="vertex_buffer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
