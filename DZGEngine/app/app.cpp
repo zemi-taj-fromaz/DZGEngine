@@ -66,6 +66,8 @@ void dzg::drawFrame() {
     // Only reset the fence if we are submitting work
     vkResetFences(device, 1, &inFlightFence);
 
+    updateUniformBuffer(currentFrame);
+
     vkResetCommandBuffer(commandBuffer, 0);
     recordCommandBuffer(commandBuffer, imageIndex);
 

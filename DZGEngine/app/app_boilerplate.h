@@ -11,10 +11,18 @@
 #include "command_buffers.h"
 #include "sync_objects.h"
 #include "buffers.h"
+#include "descriptors.h"
 
 void  dzg::cleanup() {
 
     cleanupSwapChain();
+
+    for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+        vkDestroyBuffer(core.device, uniformBuffers[i], nullptr);
+        vkFreeMemory(core.device, uniformBuffersMemory[i], nullptr);
+    }
+    vkDestroyDescriptorPool(core.device, descriptorPool, nullptr);
+    vkDestroyDescriptorSetLayout(core.device, descriptorSetLayout, nullptr);
 
     vkDestroyBuffer(core.device, indexBuffer, nullptr);
     vkFreeMemory(core.device, indexBufferMemory, nullptr);
@@ -61,12 +69,16 @@ void  dzg::initVulkan() {
     createLogicalDevice();
     createSwapChain();
     createRenderPass();
+    createDescriptorSetLayout();
     createGraphicsPipeline();
     createImageViews();
     createFramebuffers();
     createCommandPool();
-    createIndexBuffer();
     createVertexBuffer();
+    createIndexBuffer();
+    createUniformBuffers();
+    createDescriptorPool();
+    createDescriptorSets();
     createCommandBuffers();
     createSyncObjects();
 

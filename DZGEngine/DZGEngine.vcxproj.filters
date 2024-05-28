@@ -56,5 +56,8 @@
     <ClInclude Include="app\buffers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="app\descriptors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

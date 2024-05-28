@@ -33,6 +33,7 @@ void dzg::createCommandBuffers()
 }
 
 void dzg::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex) {
+
 	VkCommandBufferBeginInfo beginInfo{};
 	beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 	beginInfo.flags = 0; // Optional
@@ -63,6 +64,9 @@ void dzg::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex
 
 		vkCmdBindIndexBuffer(commandBuffer, indexBuffer, 0, VK_INDEX_TYPE_UINT16);
 
+		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSets[currentFrame], 0, nullptr);
+
+	//	vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
 
 		VkViewport viewport{};
 		viewport.x = 0.0f;

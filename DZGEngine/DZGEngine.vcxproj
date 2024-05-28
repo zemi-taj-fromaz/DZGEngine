@@ -143,6 +143,7 @@
     <ClInclude Include="app\app_boilerplate.h" />
     <ClInclude Include="app\buffers.h" />
     <ClInclude Include="app\command_buffers.h" />
+    <ClInclude Include="app\descriptors.h" />
     <ClInclude Include="app\framebuffer.h" />
     <ClInclude Include="app\glfw_window_init.h" />
     <ClInclude Include="app\graphics_pipeline_setup.h" />
