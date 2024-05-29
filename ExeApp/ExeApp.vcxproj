@@ -136,11 +136,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="my_scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DZGEngine\DZGEngine.vcxproj">
       <Project>{25dc62ed-20ef-4b39-a35c-210ad7f57edb}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="my_scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

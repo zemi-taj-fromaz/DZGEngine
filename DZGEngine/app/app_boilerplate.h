@@ -86,22 +86,35 @@ void  dzg::initVulkan() {
     createLogicalDevice();
     createSwapChain();
     createRenderPass();
-    createDescriptorSetLayout();
-    createGraphicsPipeline();
+
+    {
+        createDescriptorSetLayout(); // takes scene
+        createGraphicsPipeline(); // takes scene
+    }
+
+
     createImageViews();
     createFramebuffers();
     createCommandPool();
-    createTextureImage();
-    createTextureImageView();
-    createTextureSampler();
-    createVertexBuffer();
-    createIndexBuffer();
-    createUniformBuffers();
+
+    /*
+      take scene
+    */
+    {
+        createTextureImage();
+        createTextureImageView();
+        createTextureSampler();
+        createVertexBuffer();
+        createIndexBuffer();
+        createUniformBuffers();
+    }
+
+
     createDescriptorPool();
     createDescriptorSets();
+
     createCommandBuffers();
     createSyncObjects();
-
 }
 
 

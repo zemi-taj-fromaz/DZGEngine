@@ -32,6 +32,7 @@ void dzg::run(std::unique_ptr<scene>& s) {
     this->HEIGHT = m_scene->HEIGHT;
 
     initWindow();
+
     initVulkan();
     
     camera = std::make_unique<Camera>(0.0f, static_cast<float>(this->WIDTH), 0.0f, (float)this->HEIGHT);
