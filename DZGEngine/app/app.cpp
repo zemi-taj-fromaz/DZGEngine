@@ -24,8 +24,12 @@
 #include "app_boilerplate.h"
 
 void dzg::run() {
+
     initWindow();
     initVulkan();
+    
+    camera = std::make_unique<Camera>(0, this->WIDTH, 0, this->HEIGHT);
+
     mainLoop();
     cleanup();
 }

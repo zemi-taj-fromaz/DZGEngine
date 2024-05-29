@@ -142,6 +142,7 @@
     <ClInclude Include="app\app.h" />
     <ClInclude Include="app\app_boilerplate.h" />
     <ClInclude Include="app\buffers.h" />
+    <ClInclude Include="camera.h" />
     <ClInclude Include="app\command_buffers.h" />
     <ClInclude Include="app\descriptors.h" />
     <ClInclude Include="app\framebuffer.h" />

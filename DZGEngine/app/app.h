@@ -9,9 +9,11 @@
 #include <GLFW/glfw3.h>
 #include <optional>
 #include <stdexcept>
-
+#include <memory>
 
 #include "../vertex_buffer.h"
+#include "../camera.h"
+
 
 class dzg {
 public:
@@ -180,6 +182,7 @@ private:
     std::vector<VkDeviceMemory> uniformBuffersMemory;
     std::vector<void*> uniformBuffersMapped;
 
+    std::unique_ptr<Camera> camera;
 
     const std::vector<Vertex> vertices = {
         {{  50.5f, 20.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
