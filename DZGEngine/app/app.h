@@ -13,11 +13,12 @@
 
 #include "../vertex_buffer.h"
 #include "../camera.h"
+#include "../scene.h"
 
 
 class dzg {
 public:
-    void run();
+    void run(std::unique_ptr<scene>& s);
 
 private:
 
@@ -140,12 +141,13 @@ public:
 
 
 private:
+    std::unique_ptr<scene> m_scene;
     const int MAX_FRAMES_IN_FLIGHT = 2;
     int currentFrame;
 
     GLFWwindow* window;
-    const uint32_t WIDTH = 800;
-    const uint32_t HEIGHT = 600;
+    uint32_t WIDTH = 800;
+    uint32_t HEIGHT = 600;
     const std::vector<const char*> validationLayers = {
     "VK_LAYER_KHRONOS_validation"
     };

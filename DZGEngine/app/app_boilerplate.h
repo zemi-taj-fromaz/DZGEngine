@@ -13,6 +13,7 @@
 #include "buffers.h"
 #include "descriptors.h"
 #include "images.h"
+#include "../scene.h"
 
 void  dzg::cleanup() {
     auto& device = core.device;
@@ -66,6 +67,7 @@ void  dzg::cleanup() {
     glfwDestroyWindow(window);
     glfwTerminate();
 }
+
 
 void  dzg::initWindow() {
     window = glfw::initWindowGLFW(WIDTH, HEIGHT);

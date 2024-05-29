@@ -22,13 +22,19 @@
 #include <algorithm> 
 
 #include "app_boilerplate.h"
+#include "../scene.h"
 
-void dzg::run() {
+void dzg::run(std::unique_ptr<scene>& s) {
+
+    this->m_scene = std::move(s);
+
+    this->WIDTH = m_scene->WIDTH;
+    this->HEIGHT = m_scene->HEIGHT;
 
     initWindow();
     initVulkan();
     
-    camera = std::make_unique<Camera>(0, this->WIDTH, 0, this->HEIGHT);
+    camera = std::make_unique<Camera>(0.0f, static_cast<float>(this->WIDTH), 0.0f, (float)this->HEIGHT);
 
     mainLoop();
     cleanup();
