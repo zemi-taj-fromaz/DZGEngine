@@ -35,8 +35,19 @@ void dzg::run() {
 }
 
 void  dzg::mainLoop() {
+    
+    static float initialTime{ (float)glfwGetTime() };
+
+    float time = (float)glfwGetTime();
+
+    float deltaTime = time - initialTime;
+
     while (!glfwWindowShouldClose(window)) {
+        
         glfwPollEvents();
+
+        inputPolling(deltaTime);
+
         drawFrame();
     }
 

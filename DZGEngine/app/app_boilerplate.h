@@ -68,9 +68,12 @@ void  dzg::cleanup() {
 }
 
 void  dzg::initWindow() {
-
     window = glfw::initWindowGLFW(WIDTH, HEIGHT);
+}
 
+void dzg::inputPolling(float deltaTime)
+{
+    glfw::inputPolling(window, camera, deltaTime);
 }
 
 void  dzg::initVulkan() {

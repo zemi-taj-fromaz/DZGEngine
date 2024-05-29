@@ -29,5 +29,27 @@ namespace glfw
         glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
     }
 
+    void inputPolling(GLFWwindow* window, std::unique_ptr<Camera>& camera, float deltaTime)
+    {
+        float cameraSpeed = camera->speed;
 
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+            camera->movePosition( glm::vec3(0.0f, -cameraSpeed * deltaTime, 0.0f));
+        }
+
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+            camera->movePosition(glm::vec3(-cameraSpeed * deltaTime, 0.0f, 0.0f));
+        }
+
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+            camera->movePosition(glm::vec3(0.0f, cameraSpeed * deltaTime, 0.0f));
+
+        }
+
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+            camera->movePosition(glm::vec3(cameraSpeed * deltaTime, 0.0f, 0.0f));
+
+        }
+
+    }
 }
