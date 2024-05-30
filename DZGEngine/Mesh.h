@@ -57,7 +57,7 @@ struct Mesh
     MeshType meshType{ MeshType::None };
 
     std::vector<Vertex> Vertices;
-    std::vector<uint32_t> Indices;
+    std::vector<uint16_t> Indices;
     VkBuffer VertexBuffer;
     VkBuffer IndexBuffer;
     VkDeviceMemory VertexBufferMemory;

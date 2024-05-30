@@ -58,12 +58,12 @@ void dzg::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex
 	{
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_scene->pipelineDataVec[0]->pipeline);
 
-	//	VkBuffer vertexBuffers[] = { m_scene->MeshVec[0].VertexBuffer };
-		VkBuffer vertexBuffers[] = { vertexBuffer };
+		VkBuffer vertexBuffers[] = { m_scene->MeshVec[0].VertexBuffer };
+	//	VkBuffer vertexBuffers[] = { vertexBuffer };
 		VkDeviceSize offsets[] = { 0 };
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
-	//	vkCmdBindIndexBuffer(commandBuffer, m_scene->MeshVec[0].IndexBuffer, 0, VK_INDEX_TYPE_UINT16);
-		vkCmdBindIndexBuffer(commandBuffer, indexBuffer, 0, VK_INDEX_TYPE_UINT16);
+		vkCmdBindIndexBuffer(commandBuffer, m_scene->MeshVec[0].IndexBuffer, 0, VK_INDEX_TYPE_UINT16);
+//		vkCmdBindIndexBuffer(commandBuffer, indexBuffer, 0, VK_INDEX_TYPE_UINT16);
 
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_scene->pipelineDataVec[0]->PipelineLayout, 0, 1, &m_scene->DescriptorSetVec[0]->sets[currentFrame], 0, nullptr);
 
@@ -82,8 +82,8 @@ void dzg::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex
 		scissor.extent = core.swapChainExtent;
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 
-		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
-		//vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(m_scene->MeshVec[0].Indices.size()), 1, 0, 0, 0);
+//		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
+		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(m_scene->MeshVec[0].Indices.size()), 1, 0, 0, 0);
 	}
 	vkCmdEndRenderPass(commandBuffer);
 
