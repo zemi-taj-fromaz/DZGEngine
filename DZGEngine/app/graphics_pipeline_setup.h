@@ -5,6 +5,12 @@
 
 void dzg::createGraphicsPipelines() 
 {
+    /*
+        TODO
+        create_pipeline_layouts() -> takes scene as an argument
+            Move pipeline layouts from PipelineData somewhere else
+    */
+
     for (auto& pipelineData : m_scene->pipelineDataVec)
     {
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
