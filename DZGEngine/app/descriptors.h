@@ -4,56 +4,32 @@
 
 void dzg::createDescriptorSetLayout()
 {
-    //auto& descriptorSetLayoutInfo = m_scene->get_dSetLayout();
+    DescriptorSetLayoutVec_t& descriptorSetLayouts = m_scene->DescriptorSetLayoutVec;
 
-    ///*
-    //    struct DescriptorSet
-    //    {
-    //        layout
-    //        std::vector bindingInfo
-    //    }
-    //*/
 
-    //int i = 0;
-    //std::vector<VkDescriptorSetLayoutBinding> bindings(descriptorSetLayoutInfo.size());
+    for (auto& descriptorSetLayoutPtr : descriptorSetLayouts)
+    {
+        std::vector<VkDescriptorSetLayoutBinding> bindingVec;
 
-    //for (Binding& bindingInfo : descriptorSetLayoutInfo)
-    //{
-    //    VkDescriptorSetLayoutBinding binding = create_dSetLayoutBinding(bindingInfo, i++);
-    //    bindings[i] = binding;
-    //}
+        for (int i = 0; i < descriptorSetLayoutPtr->bindings.size(); ++i)
+        {
+            VkDescriptorSetLayoutBinding layoutBinding{};
+            layoutBinding.binding = i;
+            layoutBinding.descriptorType = descriptorSetLayoutPtr->bindings[i].type;
+            layoutBinding.descriptorCount = descriptorSetLayoutPtr->bindings[i].descriptorCount; // number of values in the array of uniform buffer object
+            layoutBinding.stageFlags = descriptorSetLayoutPtr->bindings[i].stageFlags;
+            layoutBinding.pImmutableSamplers = nullptr; // Optional
+            bindingVec.push_back(layoutBinding);
+        }
 
-    //VkDescriptorSetLayoutCreateInfo layoutInfo{};
-    //layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-    //layoutInfo.bindingCount = static_cast<uint32_t>(bindings.size());
-    //layoutInfo.pBindings = bindings.data();
+        VkDescriptorSetLayoutCreateInfo layoutInfo{};
+        layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+        layoutInfo.bindingCount = static_cast<uint32_t>(bindingVec.size());
+        layoutInfo.pBindings = bindingVec.data();
 
-    //if (vkCreateDescriptorSetLayout(core.device, &layoutInfo, nullptr, &descriptorSetLayout) != VK_SUCCESS) {
-    //    throw std::runtime_error("failed to create descriptor set layout!");
-    //}
-
-    VkDescriptorSetLayoutBinding uboLayoutBinding{};
-    uboLayoutBinding.binding = 0;
-    uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-    uboLayoutBinding.descriptorCount = 1; // number of values in the array of uniform buffer object
-    uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-    uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
-
-    VkDescriptorSetLayoutBinding samplerLayoutBinding{};
-    samplerLayoutBinding.binding = 1;
-    samplerLayoutBinding.descriptorCount = 1;
-    samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-    samplerLayoutBinding.pImmutableSamplers = nullptr;
-    samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-
-    std::array<VkDescriptorSetLayoutBinding, 2> bindings = { uboLayoutBinding, samplerLayoutBinding };
-    VkDescriptorSetLayoutCreateInfo layoutInfo{};
-    layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-    layoutInfo.bindingCount = static_cast<uint32_t>(bindings.size());
-    layoutInfo.pBindings = bindings.data();
-
-    if (vkCreateDescriptorSetLayout(core.device, &layoutInfo, nullptr, &descriptorSetLayout) != VK_SUCCESS) {
-        throw std::runtime_error("failed to create descriptor set layout!");
+        if (vkCreateDescriptorSetLayout(core.device, &layoutInfo, nullptr, &(descriptorSetLayoutPtr->dSetLayout))  != VK_SUCCESS) {
+            throw std::runtime_error("failed to create descriptor set layout!");
+        }
     }
 }
 
@@ -77,7 +53,7 @@ void dzg::createDescriptorPool()
 }
 
 void dzg::createDescriptorSets() {
-    std::vector<VkDescriptorSetLayout> layouts(MAX_FRAMES_IN_FLIGHT, descriptorSetLayout);
+    std::vector<VkDescriptorSetLayout> layouts(MAX_FRAMES_IN_FLIGHT, m_scene->DescriptorSetLayoutVec[0]->dSetLayout);
 
     VkDescriptorSetAllocateInfo allocInfo{};
     allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
