@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include "PipelineData.h"
+#include "Mesh.h"
 
 using PipelineDataVec_t = std::vector<std::shared_ptr<PipelineData>>;
 using DescriptorSetLayoutVec_t = std::vector<std::shared_ptr<DescriptorSetLayout>>;
@@ -20,6 +21,7 @@ public:
 	DescriptorSetLayoutVec_t DescriptorSetLayoutVec;
 	DescriptorSetVec_t DescriptorSetVec;
 	BufferDataVec_t BufferDataVec;
+	std::vector<Mesh> MeshVec;
 };
 
 

@@ -104,9 +104,10 @@ void  dzg::initVulkan() {
         createTextureImage();
         createTextureImageView();
         createTextureSampler();
+
         createVertexBuffer();
         createIndexBuffer();
-        createUniformBuffers();
+        createUniformBuffers(); 
 
         createDescriptorPool();
         createDescriptorSets();

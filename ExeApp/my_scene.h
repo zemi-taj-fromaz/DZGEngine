@@ -57,6 +57,8 @@ public:
 		BufferDataVec.push_back(std::shared_ptr<BufferData>(bufferData));
 		DescriptorSetVec.push_back(std::shared_ptr<DescriptorSet>(ds));
 
+		MeshVec.push_back(Mesh(MeshType::Quad));
+
 		pData = nullptr;
 		dsl = nullptr;
 		ds = nullptr;
