@@ -136,7 +136,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app\app.cpp" />
+    <ClCompile Include="app\shader_load.cpp" />
     <ClCompile Include="entry_point.h" />
+    <ClCompile Include="graphics_pipeline_builder.cpp" />
+    <ClCompile Include="PipelineData.cpp" />
     <ClCompile Include="scene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +156,8 @@
     <ClInclude Include="app\shader_load.h" />
     <ClInclude Include="app\swapchain_setup.h" />
     <ClInclude Include="app\sync_objects.h" />
+    <ClInclude Include="graphics_pipeline_builder.h" />
+    <ClInclude Include="PipelineData.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="vertex_buffer.h" />
   </ItemGroup>

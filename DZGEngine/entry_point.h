@@ -1,6 +1,6 @@
 #include "app/app.h"
 
-#include<iostream>
+#include <iostream>
 #include <memory>
 
 std::unique_ptr<scene> CreateScene();

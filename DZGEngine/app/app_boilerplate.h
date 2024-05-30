@@ -89,7 +89,7 @@ void  dzg::initVulkan() {
 
     {
         createDescriptorSetLayout(); // takes scene
-        createGraphicsPipeline(); // takes scene
+        createGraphicsPipelines(); // takes scene
     }
 
 

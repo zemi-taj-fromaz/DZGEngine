@@ -14,12 +14,15 @@
 #include "../vertex_buffer.h"
 #include "../camera.h"
 #include "../scene.h"
-
+#include "../PipelineData.h"
 
 class dzg {
 public:
+    
+    friend void build_pipeline(dzg* app, PipelineData* pipelineData);
+    
     void run(std::unique_ptr<scene>& s);
-
+ 
 private:
 
     struct QueueFamilyIndices {
@@ -96,7 +99,7 @@ private:
     void setupDebugMessenger();
     bool isDeviceSuitable(VkPhysicalDevice device);
     void createImageViews();
-    void createGraphicsPipeline();
+    void createGraphicsPipelines();
     VkShaderModule createShaderModule(const std::vector<char>& code);
     void createRenderPass();
     void createFramebuffers();

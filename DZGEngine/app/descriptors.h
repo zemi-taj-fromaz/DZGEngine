@@ -4,6 +4,34 @@
 
 void dzg::createDescriptorSetLayout()
 {
+    //auto& descriptorSetLayoutInfo = m_scene->get_dSetLayout();
+
+    ///*
+    //    struct DescriptorSet
+    //    {
+    //        layout
+    //        std::vector bindingInfo
+    //    }
+    //*/
+
+    //int i = 0;
+    //std::vector<VkDescriptorSetLayoutBinding> bindings(descriptorSetLayoutInfo.size());
+
+    //for (Binding& bindingInfo : descriptorSetLayoutInfo)
+    //{
+    //    VkDescriptorSetLayoutBinding binding = create_dSetLayoutBinding(bindingInfo, i++);
+    //    bindings[i] = binding;
+    //}
+
+    //VkDescriptorSetLayoutCreateInfo layoutInfo{};
+    //layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+    //layoutInfo.bindingCount = static_cast<uint32_t>(bindings.size());
+    //layoutInfo.pBindings = bindings.data();
+
+    //if (vkCreateDescriptorSetLayout(core.device, &layoutInfo, nullptr, &descriptorSetLayout) != VK_SUCCESS) {
+    //    throw std::runtime_error("failed to create descriptor set layout!");
+    //}
+
     VkDescriptorSetLayoutBinding uboLayoutBinding{};
     uboLayoutBinding.binding = 0;
     uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
