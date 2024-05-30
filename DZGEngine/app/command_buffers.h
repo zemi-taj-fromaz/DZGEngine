@@ -64,7 +64,7 @@ void dzg::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex
 
 		vkCmdBindIndexBuffer(commandBuffer, indexBuffer, 0, VK_INDEX_TYPE_UINT16);
 
-		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_scene->pipelineDataVec[0]->PipelineLayout, 0, 1, &descriptorSets[currentFrame], 0, nullptr);
+		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_scene->pipelineDataVec[0]->PipelineLayout, 0, 1, &m_scene->DescriptorSetVec[0]->sets[currentFrame], 0, nullptr);
 
 	//	vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
 

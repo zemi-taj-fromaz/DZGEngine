@@ -7,6 +7,8 @@
 
 using PipelineDataVec_t = std::vector<std::shared_ptr<PipelineData>>;
 using DescriptorSetLayoutVec_t = std::vector<std::shared_ptr<DescriptorSetLayout>>;
+using DescriptorSetVec_t = std::vector<std::shared_ptr<DescriptorSet>>;
+using BufferDataVec_t = std::vector<std::shared_ptr<BufferData>>;
 
 class scene
 {
@@ -16,6 +18,8 @@ public:
 	uint32_t HEIGHT;
 	PipelineDataVec_t pipelineDataVec;
 	DescriptorSetLayoutVec_t DescriptorSetLayoutVec;
+	DescriptorSetVec_t DescriptorSetVec;
+	BufferDataVec_t BufferDataVec;
 };
 
 

@@ -55,16 +55,19 @@ void dzg::createIndexBuffer() {
 }
 
 void dzg::createUniformBuffers(){
-    VkDeviceSize bufferSize = sizeof(UniformBufferObject);
 
-    uniformBuffers.resize(MAX_FRAMES_IN_FLIGHT);
-    uniformBuffersMemory.resize(MAX_FRAMES_IN_FLIGHT);
-    uniformBuffersMapped.resize(MAX_FRAMES_IN_FLIGHT);
+    for (int i = 0; i < m_scene->BufferDataVec.size(); ++i)
+    {
+        m_scene->BufferDataVec[i]->Buffers.resize(MAX_FRAMES_IN_FLIGHT);
+        m_scene->BufferDataVec[i]->BuffersMemory.resize(MAX_FRAMES_IN_FLIGHT);
+        m_scene->BufferDataVec[i]->BuffersMapped.resize(MAX_FRAMES_IN_FLIGHT);
 
-    for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-        createBuffer(bufferSize, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, uniformBuffers[i], uniformBuffersMemory[i]);
+        for (size_t j = 0; j < MAX_FRAMES_IN_FLIGHT; j++) {
+            createBuffer(m_scene->BufferDataVec[i]->size, m_scene->BufferDataVec[i]->usage, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+                m_scene->BufferDataVec[i]->Buffers[j], m_scene->BufferDataVec[i]->BuffersMemory[j]);
 
-        vkMapMemory(core.device, uniformBuffersMemory[i], 0, bufferSize, 0, &uniformBuffersMapped[i]);
+            vkMapMemory(core.device, m_scene->BufferDataVec[i]->BuffersMemory[j], 0, m_scene->BufferDataVec[i]->size, 0, &m_scene->BufferDataVec[i]->BuffersMapped[j]);
+        }
     }
 }
 
@@ -73,21 +76,12 @@ void dzg::updateUniformBuffer(uint32_t currentImage) {
 
     auto currentTime = std::chrono::high_resolution_clock::now();
     float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
-    UniformBufferObject ubo{};
- //   ubo.model = glm::rotate(glm::mat4(1.0f), time * glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    ubo.model = glm::mat4(1.0f);
 
-    ubo.view = camera->ViewMatrix;  glm::mat4(1.0f);// glm::lookAt(glm::vec3(0.0f, 0.0f, .0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-   // ubo.proj = glm::perspective(glm::radians(45.0f), core.swapChainExtent.width / (float)core.swapChainExtent.height, 0.1f, 10.0f);
-
-    ubo.proj = camera->ProjectionMatrix;
-   // ubo.proj[1][1] *= -1;
-
-    memcpy(uniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
-
-    // TODO Using a UBO this way is not the most efficient way to pass frequently changing values to the shader.
-    //  A more efficient way to pass a small buffer of data to shaders are push constants. We may look at these in a future chapter.
+    for (int i = 0; i < m_scene->BufferDataVec.size(); i++)
+    {
+        m_scene->BufferDataVec[i]->update(this, currentImage);
+    }
+   
 }
 
 void dzg::createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory) {

@@ -141,7 +141,7 @@ private:
 
 public:
     bool framebufferResized = false;
-
+    std::unique_ptr<Camera> camera;
 
 private:
     std::unique_ptr<scene> m_scene;
@@ -189,13 +189,12 @@ private:
     std::vector<VkDeviceMemory> uniformBuffersMemory;
     std::vector<void*> uniformBuffersMapped;
 
-    std::unique_ptr<Camera> camera;
 
     const std::vector<Vertex> vertices = {
-        {{  50.5f, 20.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
-        {{  20.5f, 20.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}},
-        {{  20.5f, 50.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}},
-        {{  50.0f, 50.5f}, {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f}}
+        {{  20.5f, 50.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
+        {{  50.5f, 50.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}},
+        {{  50.5f, 20.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}},
+        {{  20.0f, 20.5f}, {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f}}
     };
 
     const std::vector<uint16_t> indices = {

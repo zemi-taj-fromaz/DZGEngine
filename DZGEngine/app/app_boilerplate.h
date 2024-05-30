@@ -107,12 +107,10 @@ void  dzg::initVulkan() {
         createVertexBuffer();
         createIndexBuffer();
         createUniformBuffers();
+
+        createDescriptorPool();
+        createDescriptorSets();
     }
-
-
-    createDescriptorPool();
-    createDescriptorSets();
-
     createCommandBuffers();
     createSyncObjects();
 }

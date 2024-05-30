@@ -6,6 +6,9 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <functional>
+
+class dzg;
 
 struct BindingInfo
 {
@@ -23,6 +26,31 @@ struct DescriptorSetLayout
 {
 	VkDescriptorSetLayout dSetLayout;
 	std::vector<BindingInfo> bindings;
+};
+
+struct BufferData
+{
+	std::vector<VkBuffer> Buffers;
+	std::vector<VkDeviceMemory> BuffersMemory;
+	std::vector<void*> BuffersMapped;
+	VkDescriptorType type;
+	VkBufferUsageFlagBits usage;
+	size_t size;
+
+	std::function<void(dzg*, void*)> bufferUpdateFunc;
+
+
+	void update(dzg* app,int currFrame)
+	{
+		bufferUpdateFunc(app, BuffersMapped[currFrame % BuffersMapped.size()]);
+	}
+};
+
+struct DescriptorSet
+{
+	std::shared_ptr<DescriptorSetLayout> layout;
+	std::vector<VkDescriptorSet> sets;
+	std::vector<std::shared_ptr<BufferData>> bufferDataVec;
 };
 
 struct PipelineData

@@ -2,6 +2,8 @@
 
 #include "app.h"
 
+#include <unordered_map>
+
 void dzg::createDescriptorSetLayout()
 {
     DescriptorSetLayoutVec_t& descriptorSetLayouts = m_scene->DescriptorSetLayoutVec;
@@ -35,17 +37,21 @@ void dzg::createDescriptorSetLayout()
 
 void dzg::createDescriptorPool()
 {
-    std::array<VkDescriptorPoolSize, 2> poolSizes{};
-    poolSizes[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-    poolSizes[0].descriptorCount = static_cast<uint32_t>(MAX_FRAMES_IN_FLIGHT);
-    poolSizes[1].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-    poolSizes[1].descriptorCount = static_cast<uint32_t>(MAX_FRAMES_IN_FLIGHT);
+    std::vector<VkDescriptorPoolSize> sizes =
+    {
+        { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 50 },
+        { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 50 },
+        { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 50 },
+        { VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 50 },
+        { VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 100 }
+    };
 
-    VkDescriptorPoolCreateInfo poolInfo{};
+    VkDescriptorPoolCreateInfo poolInfo = {};
     poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-    poolInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
-    poolInfo.pPoolSizes = poolSizes.data();
-    poolInfo.maxSets = static_cast<uint32_t>(MAX_FRAMES_IN_FLIGHT);
+    poolInfo.flags = 0;
+    poolInfo.maxSets = 100;
+    poolInfo.poolSizeCount = (uint32_t)sizes.size();
+    poolInfo.pPoolSizes = sizes.data();
 
     if (vkCreateDescriptorPool(core.device, &poolInfo, nullptr, &descriptorPool) != VK_SUCCESS) {
         throw std::runtime_error("failed to create descriptor pool!");
@@ -53,49 +59,76 @@ void dzg::createDescriptorPool()
 }
 
 void dzg::createDescriptorSets() {
-    std::vector<VkDescriptorSetLayout> layouts(MAX_FRAMES_IN_FLIGHT, m_scene->DescriptorSetLayoutVec[0]->dSetLayout);
+    for(int i = 0; i < m_scene->DescriptorSetVec.size(); ++i)
+    {
 
-    VkDescriptorSetAllocateInfo allocInfo{};
-    allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-    allocInfo.descriptorPool = descriptorPool;
-    allocInfo.descriptorSetCount = static_cast<uint32_t>(MAX_FRAMES_IN_FLIGHT);
-    allocInfo.pSetLayouts = layouts.data();
+        std::vector<VkDescriptorSetLayout> layouts(MAX_FRAMES_IN_FLIGHT, m_scene->DescriptorSetVec[i]->layout->dSetLayout);
 
-    descriptorSets.resize(MAX_FRAMES_IN_FLIGHT);
-    if (vkAllocateDescriptorSets(core.device, &allocInfo, descriptorSets.data()) != VK_SUCCESS) {
-        throw std::runtime_error("failed to allocate descriptor sets!");
-    }
+        VkDescriptorSetAllocateInfo allocInfo{};
+        allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+        allocInfo.descriptorPool = descriptorPool;
+        allocInfo.descriptorSetCount = static_cast<uint32_t>(MAX_FRAMES_IN_FLIGHT);
+        allocInfo.pSetLayouts = layouts.data();
 
-    for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-        VkDescriptorBufferInfo bufferInfo{};
-        bufferInfo.buffer = uniformBuffers[i];
-        bufferInfo.offset = 0;
-        bufferInfo.range = sizeof(UniformBufferObject);
+        m_scene->DescriptorSetVec[i]->sets.resize(MAX_FRAMES_IN_FLIGHT);
+        if (vkAllocateDescriptorSets(core.device, &allocInfo, m_scene->DescriptorSetVec[i]->sets.data()) != VK_SUCCESS) {
+            throw std::runtime_error("failed to allocate descriptor sets!");
+        }
+
+        std::vector<VkWriteDescriptorSet> descriptorWrites; //TASK
+
+        for (size_t j = 0; j < MAX_FRAMES_IN_FLIGHT; j++) {
+            
+            for (int k = 0; k < m_scene->DescriptorSetVec[i]->bufferDataVec.size(); k++)
+            {
+                VkDescriptorBufferInfo bufferInfo{};
+                bufferInfo.buffer = m_scene->DescriptorSetVec[i]->bufferDataVec[k]->Buffers[j];
+                bufferInfo.offset = 0;
+                bufferInfo.range = m_scene->DescriptorSetVec[i]->bufferDataVec[k]->size;
+
+                VkWriteDescriptorSet descriptorWrite{}; //TASK
+
+                descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+                descriptorWrite.dstSet = m_scene->DescriptorSetVec[i]->sets[j];
+                descriptorWrite.dstBinding = k;
+                descriptorWrite.dstArrayElement = 0;
+                descriptorWrite.descriptorType = m_scene->DescriptorSetVec[i]->bufferDataVec[k]->type;
+                descriptorWrite.descriptorCount = 1;
+                descriptorWrite.pBufferInfo = &bufferInfo;
+                
+                descriptorWrites.push_back(descriptorWrite);
+            }
+
+ /*           VkDescriptorBufferInfo bufferInfo{};
+            bufferInfo.buffer = uniformBuffers[i];
+            bufferInfo.offset = 0;
+            bufferInfo.range = sizeof(UniformBufferObject);*/
 
 
-        VkDescriptorImageInfo imageInfo{};
-        imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-        imageInfo.imageView = textureImageView;
-        imageInfo.sampler = textureSampler;
+            VkDescriptorImageInfo imageInfo{};
+            imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+            imageInfo.imageView = textureImageView;
+            imageInfo.sampler = textureSampler;
 
-        std::array<VkWriteDescriptorSet, 2> descriptorWrites{};
+            //std::array<VkWriteDescriptorSet, 1> descriptorWrites{}; //TASK
 
-        descriptorWrites[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-        descriptorWrites[0].dstSet = descriptorSets[i];
-        descriptorWrites[0].dstBinding = 0;
-        descriptorWrites[0].dstArrayElement = 0;
-        descriptorWrites[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-        descriptorWrites[0].descriptorCount = 1;
-        descriptorWrites[0].pBufferInfo = &bufferInfo;
+            //descriptorWrites[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+            //descriptorWrites[0].dstSet = descriptorSets[i];
+            //descriptorWrites[0].dstBinding = 0;
+            //descriptorWrites[0].dstArrayElement = 0;
+            //descriptorWrites[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+            //descriptorWrites[0].descriptorCount = 1;
+            //descriptorWrites[0].pBufferInfo = &bufferInfo;
 
-        descriptorWrites[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-        descriptorWrites[1].dstSet = descriptorSets[i];
-        descriptorWrites[1].dstBinding = 1;
-        descriptorWrites[1].dstArrayElement = 0;
-        descriptorWrites[1].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-        descriptorWrites[1].descriptorCount = 1;
-        descriptorWrites[1].pImageInfo = &imageInfo;
+            //descriptorWrites[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+            //descriptorWrites[1].dstSet = descriptorSets[i];
+            //descriptorWrites[1].dstBinding = 1;
+            //descriptorWrites[1].dstArrayElement = 0;
+            //descriptorWrites[1].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+            //descriptorWrites[1].descriptorCount = 1;
+            //descriptorWrites[1].pImageInfo = &imageInfo;
 
-        vkUpdateDescriptorSets(core.device, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+            vkUpdateDescriptorSets(core.device, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+        }
     }
 }

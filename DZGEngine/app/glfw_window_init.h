@@ -48,8 +48,6 @@ namespace glfw
 
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
             camera->movePosition(glm::vec3(cameraSpeed * deltaTime, 0.0f, 0.0f));
-
         }
-
     }
 }
