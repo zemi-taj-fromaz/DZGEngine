@@ -5,6 +5,8 @@
 
 struct texture
 {
+	texture(const std::string& Name) : Name(Name) {}
+
 	std::string Name;
 	VkImage textureImage;
 	VkImageView textureImageView;

@@ -33,16 +33,31 @@ struct DescriptorSetLayout
 
 struct BufferData
 {
+	BufferData(VkDescriptorType type, VkBufferUsageFlagBits usage, size_t size) 
+		: type(type), usage(usage), size(size)
+	{}
+	BufferData(VkDescriptorType type, VkBufferUsageFlagBits usage, size_t size, std::function<void(dzg*, void*)> bufferUpdateFunc)
+		: type(type), usage(usage), size(size), bufferUpdateFunc(bufferUpdateFunc)
+	{}
+
+
+	BufferData(std::shared_ptr<texture> Texture, std::shared_ptr<sampler> TextureSampler) 
+		: Texture(Texture), TextureSampler(TextureSampler), type(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER)
+	{}
+	BufferData(std::shared_ptr<texture> Texture, std::shared_ptr<sampler> TextureSampler, std::function<void(dzg*, void*)> bufferUpdateFunc)
+		: Texture(Texture), TextureSampler(TextureSampler), type(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER), bufferUpdateFunc(bufferUpdateFunc)
+	{}
+
 	std::vector<VkBuffer> Buffers;
 	std::vector<VkDeviceMemory> BuffersMemory;
 	std::vector<void*> BuffersMapped;
+
 	VkDescriptorType type;
 	VkBufferUsageFlagBits usage;
 	size_t size;
 
 	std::function<void(dzg*, void*)> bufferUpdateFunc = [](dzg* app, void*) {};
 
-	bool is_image;
 	std::shared_ptr<sampler> TextureSampler;
 	std::shared_ptr<texture> Texture;
 
