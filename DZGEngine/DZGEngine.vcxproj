@@ -141,7 +141,9 @@
     <ClCompile Include="graphics_pipeline_builder.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="PipelineData.cpp" />
+    <ClCompile Include="sampler.cpp" />
     <ClCompile Include="scene.cpp" />
+    <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app\app.h" />
@@ -160,7 +162,9 @@
     <ClInclude Include="graphics_pipeline_builder.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PipelineData.h" />
+    <ClInclude Include="sampler.h" />
     <ClInclude Include="scene.h" />
+    <ClInclude Include="texture.h" />
     <ClInclude Include="vertex_buffer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

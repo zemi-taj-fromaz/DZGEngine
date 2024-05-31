@@ -103,6 +103,8 @@ void dzg::createUniformBuffers(){
 
     for (int i = 0; i < m_scene->BufferDataVec.size(); ++i)
     {
+        if (m_scene->BufferDataVec[i]->type == VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER) continue;
+
         m_scene->BufferDataVec[i]->Buffers.resize(MAX_FRAMES_IN_FLIGHT);
         m_scene->BufferDataVec[i]->BuffersMemory.resize(MAX_FRAMES_IN_FLIGHT);
         m_scene->BufferDataVec[i]->BuffersMapped.resize(MAX_FRAMES_IN_FLIGHT);
@@ -124,7 +126,7 @@ void dzg::updateUniformBuffer(uint32_t currentImage) {
 
     for (int i = 0; i < m_scene->BufferDataVec.size(); i++)
     {
-        m_scene->BufferDataVec[i]->update(this, currentImage);
+        if(m_scene->BufferDataVec[i]->type == VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER) m_scene->BufferDataVec[i]->update(this, currentImage);
     }
    
 }

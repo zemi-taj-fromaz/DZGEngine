@@ -1,12 +1,15 @@
 #pragma once
 
-#include "vulkan/vulkan.h"
+#include <vulkan/vulkan.h>
 
 #include <array>
 #include <string>
 #include <memory>
 #include <vector>
 #include <functional>
+
+#include "sampler.h"
+#include "texture.h"
 
 class dzg;
 
@@ -37,8 +40,11 @@ struct BufferData
 	VkBufferUsageFlagBits usage;
 	size_t size;
 
-	std::function<void(dzg*, void*)> bufferUpdateFunc;
+	std::function<void(dzg*, void*)> bufferUpdateFunc = [](dzg* app, void*) {};
 
+	bool is_image;
+	std::shared_ptr<sampler> TextureSampler;
+	std::shared_ptr<texture> Texture;
 
 	void update(dzg* app,int currFrame)
 	{
