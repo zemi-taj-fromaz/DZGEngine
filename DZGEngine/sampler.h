@@ -2,9 +2,9 @@
 
 #include <vulkan/vulkan.h>
 
-struct sampler
+struct Sampler
 {
-	sampler() 
+    Sampler()
 	{
         SamplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
         SamplerInfo.magFilter = VK_FILTER_LINEAR;
@@ -23,9 +23,9 @@ struct sampler
         SamplerInfo.minLod = 0.0f;
         SamplerInfo.maxLod = 0.0f;
 	}
-	sampler(VkSamplerCreateInfo samplerInfo) : SamplerInfo(samplerInfo) {}
+    Sampler(VkSamplerCreateInfo samplerInfo) : SamplerInfo(samplerInfo) {}
 
-	VkSampler Sampler;
+	VkSampler vkSampler;
     VkSamplerCreateInfo SamplerInfo{};
 };
 

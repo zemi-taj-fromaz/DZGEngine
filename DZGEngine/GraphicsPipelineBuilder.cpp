@@ -1,6 +1,6 @@
-#include "graphics_pipeline_builder.h"
-#include "vertex_buffer.h"
-#include "app/shader_load.h"
+#include "GraphicsPipelineBuilder.h"
+#include "Vertex.h"
+#include "app/ShaderLoad.h"
 
 #include <vector>
 

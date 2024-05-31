@@ -3,7 +3,7 @@
 #include <iostream>
 #include <memory>
 
-std::unique_ptr<scene> CreateScene();
+std::unique_ptr<Scene> CreateScene();
 
 int main() {
     dzg app;

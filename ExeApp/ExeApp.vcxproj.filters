@@ -18,7 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="my_scene.cpp">
+    <ClCompile Include="MyScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BufferObject.cpp">
@@ -26,7 +26,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="my_scene.h">
+    <ClInclude Include="MyScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BufferObject.h">

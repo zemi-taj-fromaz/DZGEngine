@@ -3,9 +3,9 @@
 #include <vulkan/vulkan.h>
 #include <string>
 
-struct texture
+struct Texture
 {
-	texture(const std::string& Name) : Name(Name) {}
+	Texture(const std::string& Name) : Name(Name) {}
 
 	std::string Name;
 	VkImage textureImage;

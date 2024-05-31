@@ -21,10 +21,9 @@
 #include <limits> 
 #include <algorithm> 
 
-#include "app_boilerplate.h"
-#include "../scene.h"
+#include "AppBoilerplate.h"
 
-void dzg::run(std::unique_ptr<scene>& s) {
+void dzg::run(std::unique_ptr<Scene>& s) {
 
     this->m_scene = std::move(s);
 

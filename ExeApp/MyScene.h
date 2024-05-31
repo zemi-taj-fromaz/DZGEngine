@@ -1,14 +1,15 @@
 #pragma once
 
-#include "scene.h"
+#include <app/app.h>
+
+#include "Scene.h"
 #include "BufferObject.h"
-#include "app/app.h"
 
 
-class my_scene : public scene
+class MyScene : public Scene
 {
 public:
-	my_scene()
+	MyScene()
 	{
 		//STEPS
 		// 1) Textures
@@ -21,11 +22,11 @@ public:
 		// 8) Mesh
 
 		//1) Samplers
-		auto texSampler = std::make_shared<sampler>();
+		auto texSampler = std::make_shared<Sampler>();
 		SamplersVec.push_back(texSampler);
 
 		//2) Textures
-		std::shared_ptr<texture> tex = std::make_shared<texture>("statue.jpg");
+		std::shared_ptr<Texture> tex = std::make_shared<Texture>("statue.jpg");
 		TexturesVec.push_back(tex);
 
 

@@ -197,7 +197,7 @@ void dzg::createTextureSampler()
         VkSamplerCreateInfo samplerInfo = m_scene->SamplersVec[i]->SamplerInfo;
         samplerInfo.maxAnisotropy = properties.limits.maxSamplerAnisotropy;
 
-        if (vkCreateSampler(core.device, &samplerInfo, nullptr, &m_scene->SamplersVec[i]->Sampler) != VK_SUCCESS) {
+        if (vkCreateSampler(core.device, &samplerInfo, nullptr, &m_scene->SamplersVec[i]->vkSampler) != VK_SUCCESS) {
             throw std::runtime_error("failed to create texture sampler!");
         }
     }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "app.h"
-#include "../vertex_buffer.h"
+#include "../Vertex.h"
 
 void dzg::createGraphicsPipelines() 
 {

@@ -11,17 +11,17 @@
 #include <stdexcept>
 #include <memory>
 
-#include "../vertex_buffer.h"
-#include "../camera.h"
-#include "../scene.h"
-#include "../PipelineData.h"
+#include "Camera.h"
+#include "Vertex.h"
+#include "scene.h"
+#include "PipelineData.h"
 
 class dzg {
 public:
     
     friend void build_pipeline(dzg* app, PipelineData* pipelineData);
     
-    void run(std::unique_ptr<scene>& s);
+    void run(std::unique_ptr<Scene>& s);
  
 private:
 
@@ -144,7 +144,7 @@ public:
     std::unique_ptr<Camera> camera;
 
 private:
-    std::unique_ptr<scene> m_scene;
+    std::unique_ptr<Scene> m_scene;
     const int MAX_FRAMES_IN_FLIGHT = 2;
     int currentFrame;
 

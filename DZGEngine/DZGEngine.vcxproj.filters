@@ -15,31 +15,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="entry_point.h">
+    <ClCompile Include="EntryPoint.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="app\app.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="scene.cpp">
+    <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphics_pipeline_builder.cpp">
+    <ClCompile Include="GraphicsPipelineBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PipelineData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="app\shader_load.cpp">
+    <ClCompile Include="app\ShaderLoad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="texture.cpp">
+    <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sampler.cpp">
+    <ClCompile Include="Sampler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,49 +47,43 @@
     <ClInclude Include="app\app.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app\swapchain_setup.h">
+    <ClInclude Include="app\SwapchainSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="app\glfw_window_init.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app\app_boilerplate.h">
+    <ClInclude Include="app\AppBoilerplate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app\shader_load.h">
+    <ClInclude Include="app\ShaderLoad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app\graphics_pipeline_setup.h">
+    <ClInclude Include="app\GraphicsPipelineSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app\framebuffer.h">
+    <ClInclude Include="app\Framebuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app\command_buffers.h">
+    <ClInclude Include="app\CommandBuffers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app\sync_objects.h">
+    <ClInclude Include="app\SyncObjects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vertex_buffer.h">
+    <ClInclude Include="app\Descriptors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app\buffers.h">
+    <ClInclude Include="app\Images.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app\descriptors.h">
+    <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app\images.h">
+    <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics_pipeline_builder.h">
+    <ClInclude Include="GraphicsPipelineBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PipelineData.h">
@@ -98,11 +92,20 @@
     <ClInclude Include="Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="texture.h">
+    <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sampler.h">
+    <ClInclude Include="Sampler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\Buffers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Camera.cpp" />
   </ItemGroup>
 </Project>

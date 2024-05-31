@@ -1,10 +1,10 @@
 #include<iostream>
 
-#include "my_scene.h"
+#include "MyScene.h"
 
-std::unique_ptr<scene> CreateScene()
+std::unique_ptr<Scene> CreateScene()
 {
-	return std::unique_ptr<scene>(new my_scene());
+	return std::unique_ptr<Scene>(new MyScene());
 }
 
-#include <entry_point.h>
+#include <EntryPoint.h>

@@ -2,7 +2,7 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
-#include "vertex_buffer.h"
+#include "Vertex.h"
 #include "PipelineData.h"
 #include <vector>
 

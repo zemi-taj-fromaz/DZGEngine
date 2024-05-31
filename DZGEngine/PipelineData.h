@@ -8,7 +8,7 @@
 #include <vector>
 #include <functional>
 
-#include "sampler.h"
+#include "Sampler.h"
 #include "texture.h"
 
 class dzg;
@@ -41,10 +41,10 @@ struct BufferData
 	{}
 
 
-	BufferData(std::shared_ptr<texture> Texture, std::shared_ptr<sampler> TextureSampler) 
+	BufferData(const std::shared_ptr<Texture>& Texture, const std::shared_ptr<Sampler>& TextureSampler) 
 		: Texture(Texture), TextureSampler(TextureSampler), type(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER)
 	{}
-	BufferData(std::shared_ptr<texture> Texture, std::shared_ptr<sampler> TextureSampler, std::function<void(dzg*, void*)> bufferUpdateFunc)
+	BufferData(std::shared_ptr<Texture> Texture, std::shared_ptr<Sampler> TextureSampler, std::function<void(dzg*, void*)> bufferUpdateFunc)
 		: Texture(Texture), TextureSampler(TextureSampler), type(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER), bufferUpdateFunc(bufferUpdateFunc)
 	{}
 
@@ -58,8 +58,8 @@ struct BufferData
 
 	std::function<void(dzg*, void*)> bufferUpdateFunc = [](dzg* app, void*) {};
 
-	std::shared_ptr<sampler> TextureSampler;
-	std::shared_ptr<texture> Texture;
+	std::shared_ptr<Sampler> TextureSampler;
+	std::shared_ptr<Texture> Texture;
 
 	void update(dzg* app,int currFrame)
 	{

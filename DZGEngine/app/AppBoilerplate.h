@@ -4,16 +4,16 @@
 #include <stdexcept>
 
 #include "glfw_window_init.h"
-#include "shader_load.h"
-#include "swapchain_setup.h"
-#include "graphics_pipeline_setup.h"
-#include "framebuffer.h"
-#include "command_buffers.h"
-#include "sync_objects.h"
-#include "buffers.h"
-#include "descriptors.h"
-#include "images.h"
-#include "../scene.h"
+#include "ShaderLoad.h"
+#include "SwapchainSetup.h"
+#include "GraphicsPipelineSetup.h"
+#include "Framebuffer.h"
+#include "CommandBuffers.h"
+#include "SyncObjects.h"
+#include "Descriptors.h"
+#include "Buffers.h"
+#include "Images.h"
+#include "Scene.h"
 
 void  dzg::cleanup() {
     auto& device = core.device;

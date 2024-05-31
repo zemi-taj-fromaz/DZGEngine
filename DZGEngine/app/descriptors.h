@@ -92,11 +92,11 @@ void dzg::createDescriptorSets() {
                 VkDescriptorImageInfo imageInfo{};
                 VkDescriptorBufferInfo bufferInfo{};
 
-                if (m_scene->DescriptorSetVec[i]->bufferDataVec[k]->is_image)
+                if (m_scene->DescriptorSetVec[i]->bufferDataVec[k]->Texture != nullptr)
                 {
                     imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
                     imageInfo.imageView = m_scene->DescriptorSetVec[i]->bufferDataVec[k]->Texture->textureImageView;
-                    imageInfo.sampler = m_scene->DescriptorSetVec[i]->bufferDataVec[k]->TextureSampler->Sampler;
+                    imageInfo.sampler = m_scene->DescriptorSetVec[i]->bufferDataVec[k]->TextureSampler->vkSampler;
                     descriptorWrite.pImageInfo = &imageInfo;
                 }
                 else

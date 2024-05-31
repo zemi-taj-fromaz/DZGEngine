@@ -7,6 +7,7 @@
 #include <string>
 
 #include "app.h"
+#include "Camera.h"
 
 namespace glfw
 {
