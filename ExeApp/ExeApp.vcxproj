@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BufferObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="my_scene.cpp" />
   </ItemGroup>
@@ -144,6 +145,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BufferObject.h" />
     <ClInclude Include="my_scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
