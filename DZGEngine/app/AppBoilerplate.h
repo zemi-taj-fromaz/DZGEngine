@@ -20,28 +20,43 @@ void  dzg::cleanup() {
 
     cleanupSwapChain();
 
-
-    vkDestroySampler(device, textureSampler, nullptr);
-
-    vkDestroyImageView(device, textureImageView, nullptr);
-
-    vkDestroyImage(device, textureImage, nullptr);
-    vkFreeMemory(device, textureImageMemory, nullptr);
-
-    vkDestroyImage(device, textureImage, nullptr);
-    vkFreeMemory(device, textureImageMemory, nullptr);
-    for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-        vkDestroyBuffer(core.device, uniformBuffers[i], nullptr);
-        vkFreeMemory(core.device, uniformBuffersMemory[i], nullptr);
+    for (size_t i = 0; i < m_scene->SamplersVec.size(); ++i)
+    {
+        vkDestroySampler(device, m_scene->SamplersVec[i]->vkSampler, nullptr);
     }
+
+    for (size_t i = 0; i < m_scene->TexturesVec.size(); ++i)
+    {
+        vkDestroyImageView(device, m_scene->TexturesVec[i]->textureImageView, nullptr);
+        vkDestroyImage(device, m_scene->TexturesVec[i]->textureImage, nullptr);
+        vkFreeMemory(device, m_scene->TexturesVec[i]->TextureImageMemory, nullptr);
+    }
+
+    for (size_t i = 0; i < m_scene->BufferDataVec.size(); ++i)
+    {
+        if (m_scene->BufferDataVec[i]->Texture != nullptr) continue;
+        for (size_t j = 0; j < MAX_FRAMES_IN_FLIGHT; ++j) 
+        {
+            vkDestroyBuffer(core.device, m_scene->BufferDataVec[i]->Buffers[j], nullptr);
+            vkFreeMemory(core.device, m_scene->BufferDataVec[i]->BuffersMemory[j], nullptr);
+        }
+    }
+
     vkDestroyDescriptorPool(core.device, descriptorPool, nullptr);
-    vkDestroyDescriptorSetLayout(core.device, descriptorSetLayout, nullptr);
 
-    vkDestroyBuffer(core.device, indexBuffer, nullptr);
-    vkFreeMemory(core.device, indexBufferMemory, nullptr);
+    for (size_t i = 0; i < m_scene->DescriptorSetLayoutVec.size(); ++i)
+    {
+        vkDestroyDescriptorSetLayout(core.device, m_scene->DescriptorSetLayoutVec[i]->dSetLayout, nullptr);
+    }
 
-    vkDestroyBuffer(core.device, vertexBuffer, nullptr);
-    vkFreeMemory(core.device, vertexBufferMemory, nullptr);
+    for (size_t i = 0; i < m_scene->MeshVec.size(); ++i)
+    {
+        vkDestroyBuffer(core.device, m_scene->MeshVec[i].IndexBuffer, nullptr);
+        vkFreeMemory(core.device, m_scene->MeshVec[i].IndexBufferMemory, nullptr);
+
+        vkDestroyBuffer(core.device, m_scene->MeshVec[i].VertexBuffer, nullptr);
+        vkFreeMemory(core.device, m_scene->MeshVec[i].VertexBufferMemory, nullptr);
+    }
 
     for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
     {
@@ -50,8 +65,12 @@ void  dzg::cleanup() {
         vkDestroyFence(core.device, sync[i].inFlightFence, nullptr);
     }
 
-    vkDestroyPipeline(core.device, graphicsPipeline, nullptr);
-    vkDestroyPipelineLayout(core.device, pipelineLayout, nullptr);
+    for (size_t i = 0; i < m_scene->pipelineDataVec.size(); ++i)
+    {
+        vkDestroyPipeline(core.device, m_scene->pipelineDataVec[i]->pipeline, nullptr);
+        vkDestroyPipelineLayout(core.device, m_scene->pipelineDataVec[i]->PipelineLayout, nullptr);
+    }
+
     vkDestroyRenderPass(core.device, renderPass, nullptr);
 
     vkDestroyCommandPool(core.device, commandPool, nullptr);
