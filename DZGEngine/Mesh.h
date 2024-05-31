@@ -46,6 +46,7 @@ struct Mesh
     VkDeviceMemory IndexBufferMemory;
 
     DescriptorSetVec_t DescriptorSetVec;
+    std::shared_ptr<PipelineData> PipelineData;
 
     void load_quad();
     void load();

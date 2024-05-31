@@ -49,7 +49,7 @@ public:
 		dsl->bindings.push_back(bInfo1);
 		dsl->bindings.push_back(bInfo2);
 
-		PipelineData* pData = new PipelineData();
+		std::shared_ptr<PipelineData> pData = std::make_shared<PipelineData>();
 		pData->shaderNames = std::array<std::string, 2>({ "TriangleShader.vert", "TriangleShader.frag" });
 		pData->pDescriptorSetLayout = std::shared_ptr<DescriptorSetLayout>(dsl);
 
@@ -60,7 +60,7 @@ public:
 
 
 
-		pipelineDataVec.push_back(std::shared_ptr<PipelineData>(pData));
+		pipelineDataVec.push_back(pData);
 		DescriptorSetLayoutVec.push_back(std::shared_ptr<DescriptorSetLayout>(dsl));
 		BufferDataVec.push_back(std::shared_ptr<BufferData>(bufferData));
 		BufferDataVec.push_back(std::shared_ptr<BufferData>(imageData));
@@ -70,7 +70,9 @@ public:
 
 		Mesh m = Mesh(MeshType::Quad);
 		m.DescriptorSetVec = DescriptorSetVec;
+		m.PipelineData = pData;
 		MeshVec.push_back(m);
+		
 
 		pData = nullptr;
 		dsl = nullptr;
