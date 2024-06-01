@@ -12,3 +12,12 @@ struct UniformBufferObject {
 	static void bufferUpdateFunction(dzg* app, void* bufferMapped);
 };
 
+struct ObjectDataBuffer
+{
+	glm::mat4 Model;
+	glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f };
+
+	static void bufferUpdateFunction(dzg* app, void* bufferMapped);
+
+};
+

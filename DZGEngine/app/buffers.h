@@ -92,9 +92,8 @@ void dzg::updateUniformBuffer(uint32_t currentImage) {
 
     for (int i = 0; i < m_scene->BufferDataVec.size(); i++)
     {
-        if (m_scene->BufferDataVec[i]->type == VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER) m_scene->BufferDataVec[i]->update(this, currentImage);
+        if (m_scene->BufferDataVec[i]->type != VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER) m_scene->BufferDataVec[i]->update(this, currentImage);
     }
-
 }
 
 void dzg::createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory) {

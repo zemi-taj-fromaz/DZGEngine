@@ -142,9 +142,9 @@ private:
 public:
     bool framebufferResized = false;
     std::unique_ptr<Camera> camera;
+    std::unique_ptr<Scene> m_scene;
 
 private:
-    std::unique_ptr<Scene> m_scene;
     const int MAX_FRAMES_IN_FLIGHT = 2;
     int currentFrame;
 

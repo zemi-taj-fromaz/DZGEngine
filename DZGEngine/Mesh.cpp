@@ -8,9 +8,9 @@ void Mesh::load_quad()
     Indices.clear();
 
     Vertices = {
-    {{  0.0f, 50.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}},
-    {{  50.0f, 50.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 1.0f}},
-    {{  50.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},
+    {{  0.0f, 100.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}},
+    {{  100.0f, 100.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 1.0f}},
+    {{  100.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},
     {{  0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f}}
     };
 
@@ -56,4 +56,26 @@ void Mesh::load()
     //    break;
     //}
     }
+}
+
+void Mesh::computeModelMatrix()
+{
+    this->Model = this->translation * this->rotation * this->scale;
+    this->Position = this->translation * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+}
+
+void Mesh::setTranslation(glm::mat4& translation)
+{
+    this->translation = translation;
+    computeModelMatrix();
+}
+void Mesh::setRotation(glm::mat4& rotation)
+{
+    this->rotation = rotation;
+    computeModelMatrix();
+}
+void Mesh::setScale(glm::mat4& scale)
+{
+    this->scale = scale;
+    computeModelMatrix();
 }

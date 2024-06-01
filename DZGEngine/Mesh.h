@@ -5,6 +5,7 @@
 #include "Vertex.h"
 #include "PipelineData.h"
 #include <vector>
+#include <optional>
 
 enum class MeshType
 {
@@ -48,7 +49,22 @@ struct Mesh
     DescriptorSetVec_t DescriptorSetVec;
     std::shared_ptr<PipelineData> PipelineData;
 
-    void load_quad();
     void load();
+    void load_quad();
+
+    void setTranslation(glm::mat4& translation);
+    void setRotation(glm::mat4& rotation);
+    void setScale(glm::mat4& scale);
+
+    glm::mat4 Model{ glm::mat4(1.0f) };
+    glm::vec4 Position{ glm::vec4(0.0f) };
+    glm::vec4 Color{ glm::vec4(1.0) };
+
+private:
+    void computeModelMatrix();
+    
+    glm::mat4 translation{ glm::mat4(1.0f) };
+    glm::mat4 rotation{ glm::mat4(1.0f) };
+    glm::mat4 scale{ glm::mat4(1.0f) };
 
 };

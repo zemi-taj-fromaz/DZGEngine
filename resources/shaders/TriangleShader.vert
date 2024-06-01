@@ -4,7 +4,20 @@ layout(location = 0) in vec2 inPosition;
 layout(location = 1) in vec3 inColor;
 layout(location = 2) in vec2 inTexCoord;
 
-layout(binding = 0) uniform UniformBufferObject {
+struct ObjectData
+{
+    mat4 model;
+    vec4 color;
+};
+
+//all object matrices
+layout(std140, binding = 0) buffer ObjectBuffer{
+
+	ObjectData objects[];
+} objectBuffer;
+
+
+layout(binding = 1) uniform UniformBufferObject {
     mat4 model;
     mat4 view;
     mat4 proj;
@@ -29,9 +42,11 @@ layout(location = 1) out vec2 texCoord;
 
 
 void main() {
-	gl_Position = ubo.proj * ubo.view * ubo.model * vec4(inPosition, 0.0, 1.0);
+    mat4 model = objectBuffer.objects[gl_InstanceIndex].model;
+	//matt4 model = mat4(1.0);
+	gl_Position = ubo.proj * ubo.view * model * vec4(inPosition, 0.0, 1.0);
 	//    gl_Position =  ubo.proj * ubo.view * ubo.model * vec4(positions[gl_VertexIndex], 0.0, 1.0);
 	//    gl_Position =  ubo.proj * ubo.view * ubo.model * vec4(positionsNDC[gl_VertexIndex], 0.0, 1.0);
-	fragColor = inColor;
+	fragColor = objectBuffer.objects[gl_InstanceIndex].color.xyz;
 	texCoord = inTexCoord;
 }

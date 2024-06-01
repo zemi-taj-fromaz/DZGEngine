@@ -31,22 +31,30 @@ public:
 
 
 		//3) Bindings
-		BindingInfo bInfo1(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,  VK_SHADER_STAGE_VERTEX_BIT);
-		BindingInfo bInfo2(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,  VK_SHADER_STAGE_FRAGMENT_BIT);
+		BindingInfo bInfoStorage(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_VERTEX_BIT);
+		BindingInfo bInfoUbo(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,  VK_SHADER_STAGE_VERTEX_BIT);
+		BindingInfo bInfoSampler(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,  VK_SHADER_STAGE_FRAGMENT_BIT);
+
 
 		//4) Buffers
-		auto bufferData = std::make_shared<BufferData>(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, sizeof(UniformBufferObject), 
+		auto bufferDataUbo = std::make_shared<BufferData>(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, sizeof(UniformBufferObject), 
 			[](dzg* app, void* bufferMapped) { UniformBufferObject::bufferUpdateFunction(app, bufferMapped); });
+
+		auto bufferDataStorage = std::make_shared<BufferData>(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, sizeof(ObjectDataBuffer) * 500,
+			[](dzg* app, void* bufferMapped) { ObjectDataBuffer::bufferUpdateFunction(app, bufferMapped); });
 
 		auto imageData = std::make_shared<BufferData>(tex, texSampler);
 
-		BufferDataVec.push_back(bufferData);
+		BufferDataVec.push_back(bufferDataStorage);
+		BufferDataVec.push_back(bufferDataUbo);
 		BufferDataVec.push_back(imageData);
 
 		//5) Descriptor set Layouts
 		std::shared_ptr<DescriptorSetLayout> dsl = std::make_shared<DescriptorSetLayout>();
-		dsl->bindings.push_back(bInfo1);
-		dsl->bindings.push_back(bInfo2);
+		dsl->bindings.push_back(bInfoStorage);
+		dsl->bindings.push_back(bInfoUbo);
+		dsl->bindings.push_back(bInfoSampler);
+
 		DescriptorSetLayoutVec.push_back(dsl);
 
 		//6) Pipelines
@@ -58,7 +66,8 @@ public:
 		//7) Descriptors
 		std::shared_ptr<DescriptorSet> ds = std::make_shared<DescriptorSet>();
 		ds->layout = pData->pDescriptorSetLayout;
-		ds->bufferDataVec.push_back(std::shared_ptr<BufferData>(bufferData));
+		ds->bufferDataVec.push_back(std::shared_ptr<BufferData>(bufferDataStorage));
+		ds->bufferDataVec.push_back(std::shared_ptr<BufferData>(bufferDataUbo));
 		ds->bufferDataVec.push_back(std::shared_ptr<BufferData>(imageData));
 		DescriptorSetVec.push_back(ds);
 

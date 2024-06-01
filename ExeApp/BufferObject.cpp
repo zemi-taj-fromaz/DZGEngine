@@ -12,3 +12,15 @@ void UniformBufferObject::bufferUpdateFunction(dzg* app, void* bufferMapped)
 	//	ubo.proj[1][1] *= -1;
 		memcpy(bufferMapped, &ubo, sizeof(ubo));
 }
+
+void ObjectDataBuffer::bufferUpdateFunction(dzg* app, void* bufferMapped)
+{
+
+	ObjectDataBuffer* objectArray = (ObjectDataBuffer*)bufferMapped;
+
+	for (size_t i = 0; i < app->m_scene->MeshVec.size(); ++i)
+	{
+		objectArray[i].Model = app->m_scene->MeshVec[i].Model;
+		objectArray[i].Color = app->m_scene->MeshVec[i].Color;
+	}
+}
