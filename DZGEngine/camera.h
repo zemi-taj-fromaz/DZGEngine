@@ -13,7 +13,7 @@ struct Camera
 	Camera(float left, float right, float bottom, float top)
 		: ProjectionMatrix(glm::ortho(left, right, bottom, top, -1.0f, 1.0f)),
 		Position(glm::vec3(0.0f)),
-		ViewMatrix(glm::mat4(1.0f))
+		ViewMatrix(glm::mat4(1.0f)), left(left), right(right), top(top), bottom(bottom)
 	{
 		ViewMatrix = glm::mat4(1.0f);
 
@@ -30,7 +30,8 @@ struct Camera
 	glm::vec3 Position;
 	glm::mat4 ViewMatrix;
 	glm::mat4 ProjectionMatrix;
+	float left,  right,  bottom,  top;
 
-	float speed{ 10000000.0f };
+	float speed{ 100000.0f };
 
 };

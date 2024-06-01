@@ -55,10 +55,17 @@ struct Mesh
     void setTranslation(glm::mat4& translation);
     void setRotation(glm::mat4& rotation);
     void setScale(glm::mat4& scale);
+    void offsetPosition(glm::vec3 offset);
+
 
     glm::mat4 Model{ glm::mat4(1.0f) };
     glm::vec4 Position{ glm::vec4(0.0f) };
     glm::vec4 Color{ glm::vec4(1.0) };
+
+    void update(float totalTime, float deltaTime)
+    {
+        offsetPosition(glm::vec3(-50000.0f * deltaTime, 0.0f, 0.0f));
+    }
 
 private:
     void computeModelMatrix();

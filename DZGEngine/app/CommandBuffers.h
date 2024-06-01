@@ -71,9 +71,11 @@ void dzg::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 		
 		//For petljica jos jedna
-		for(int i = 0; i < m_scene->MeshVec.size(); ++i)
+		for(int i = 0; i < m_scene->MeshVec.size() ; ++i)
 		{
-			vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_scene->pipelineDataVec[0]->pipeline);
+			//TODO skip unneccessary bindings
+
+			vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_scene->MeshVec[i].PipelineData->pipeline);
 
 			VkBuffer vertexBuffers[] = { m_scene->MeshVec[i].VertexBuffer };
 			VkDeviceSize offsets[] = { 0 };
@@ -82,10 +84,9 @@ void dzg::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex
 
 			for (int j = 0; j < m_scene->MeshVec[i].DescriptorSetVec.size(); ++j)
 			{
-				vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_scene->MeshVec[i].PipelineData->PipelineLayout, 0, 1, &m_scene->MeshVec[i].DescriptorSetVec[j]->sets[currentFrame], 0, nullptr);
+				vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_scene->MeshVec[i].PipelineData->PipelineLayout, j, 1, &m_scene->MeshVec[i].DescriptorSetVec[j]->sets[currentFrame], 0, nullptr);
 			}
-
-			vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(m_scene->MeshVec[i].Indices.size()), 1, 0, 0, 0);
+			vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(m_scene->MeshVec[i].Indices.size()), 1, 0, 0, i);
 		}
 
 	}

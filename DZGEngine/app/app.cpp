@@ -34,23 +34,23 @@ void dzg::run(std::unique_ptr<Scene>& s) {
 
     initVulkan();
     
-    float aspectRation = this->WIDTH * this->HEIGHT;
-
-    //float camHeight = 9.0f;
-    //float bottom = -camHeight;
-    //float top = camHeight;
-    //float left = bottom * aspectRation;
-    //float right = top * aspectRation;
+    float aspectRation = (float)this->WIDTH / (float)this->HEIGHT;
 
     float camHeight = 9.0f;
-    float bottom = this->HEIGHT;
-    float top = 0.f;
-    float left = 0.f;
-    float right = this->WIDTH;
+    float bottom = -camHeight;
+    float top = camHeight;
+    float left = bottom * aspectRation;
+    float right = top * aspectRation;
+
+    //float camHeight = 9.0f;
+    //float bottom = 0.f;
+    //float top = this->HEIGHT;
+    //float left = 0.f;
+    //float right = this->WIDTH;
     camera = std::make_unique<Camera>(left, right, bottom, top);
 
 
-    camera = std::make_unique<Camera>(0.0f, static_cast<float>(this->WIDTH), 0.0f, (float)this->HEIGHT);
+ //   camera = std::make_unique<Camera>(0.0f, static_cast<float>(this->WIDTH), 0.0f, (float)this->HEIGHT);
 
     mainLoop();
     cleanup();
@@ -69,6 +69,7 @@ void  dzg::mainLoop() {
         glfwPollEvents();
 
         inputPolling(deltaTime);
+        m_scene->scene_update(time, deltaTime, this);
 
         drawFrame();
     }

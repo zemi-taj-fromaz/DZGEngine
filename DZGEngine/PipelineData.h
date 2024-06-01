@@ -80,7 +80,7 @@ struct PipelineData
 	VkPipelineLayout PipelineLayout;
 	std::array<std::string, 2> shaderNames;
 
-	std::shared_ptr<DescriptorSetLayout> pDescriptorSetLayout;
+	std::vector<std::shared_ptr<DescriptorSetLayout>> pDescriptorSetLayouts;
 
 	VkPrimitiveTopology Topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 	VkPolygonMode PolygonMode = VK_POLYGON_MODE_FILL;

@@ -51,31 +51,71 @@ public:
 
 		//5) Descriptor set Layouts
 		std::shared_ptr<DescriptorSetLayout> dsl = std::make_shared<DescriptorSetLayout>();
-		dsl->bindings.push_back(bInfoStorage);
 		dsl->bindings.push_back(bInfoUbo);
 		dsl->bindings.push_back(bInfoSampler);
 
+		std::shared_ptr<DescriptorSetLayout> dsl2 = std::make_shared<DescriptorSetLayout>();
+		dsl2->bindings.push_back(bInfoStorage);
+
+		DescriptorSetLayoutVec.push_back(dsl2);
 		DescriptorSetLayoutVec.push_back(dsl);
 
 		//6) Pipelines
 		std::shared_ptr<PipelineData> pData = std::make_shared<PipelineData>();
 		pData->shaderNames = std::array<std::string, 2>({ "TriangleShader.vert", "TriangleShader.frag" });
-		pData->pDescriptorSetLayout = dsl;
+		pData->pDescriptorSetLayouts = DescriptorSetLayoutVec;
+
 		pipelineDataVec.push_back(pData);
 
 		//7) Descriptors
 		std::shared_ptr<DescriptorSet> ds = std::make_shared<DescriptorSet>();
-		ds->layout = pData->pDescriptorSetLayout;
-		ds->bufferDataVec.push_back(std::shared_ptr<BufferData>(bufferDataStorage));
+		ds->layout = dsl;
 		ds->bufferDataVec.push_back(std::shared_ptr<BufferData>(bufferDataUbo));
 		ds->bufferDataVec.push_back(std::shared_ptr<BufferData>(imageData));
+
+		std::shared_ptr<DescriptorSet> ds2 = std::make_shared<DescriptorSet>();
+		ds2->layout = dsl2;
+		ds2->bufferDataVec.push_back(std::shared_ptr<BufferData>(bufferDataStorage));
+
+		DescriptorSetVec.push_back(ds2);
 		DescriptorSetVec.push_back(ds);
 
 		//8) Mesh
-		Mesh m = Mesh(MeshType::Quad);
-		m.DescriptorSetVec = DescriptorSetVec;
-		m.PipelineData = pData;
-		MeshVec.push_back(m);
+
+		float offset = 2.0f;
+		for (int i = 0; i < 9; i++)
+		{
+			Mesh m2 = Mesh(MeshType::Quad);
+			m2.DescriptorSetVec = DescriptorSetVec;
+			m2.PipelineData = pData;
+			m2.offsetPosition(glm::vec3(offset*(i - 4), 0.0f, 0.0f));
+
+			MeshVec.push_back(m2);
+		}
+
+		//Mesh m = Mesh(MeshType::Quad);
+		//m.DescriptorSetVec = DescriptorSetVec;
+		//m.PipelineData = pData;
+
+		//Mesh m2 = Mesh(MeshType::Quad);
+		//m2.DescriptorSetVec = DescriptorSetVec;
+		//m2.PipelineData = pData;
+		//m2.offsetPosition(glm::vec3(0.0f, 5.0f, 0.0f));
+
+		//MeshVec.push_back(m);
+		//MeshVec.push_back(m2);
+	}
+
+	virtual void scene_update(float totalTime, float deltaTime, dzg* app) override
+	{
+		for (int i = 0; i < MeshVec.size(); ++i)
+		{
+			MeshVec[i].update(totalTime, deltaTime);
+			if (MeshVec[i].Position.x < app->camera->left - 1.0f)
+			{
+				MeshVec[i].offsetPosition(glm::vec3(app->camera->right - app->camera->left, 0.0f, 0.0f));
+			}
+		}
 	}
 };
 

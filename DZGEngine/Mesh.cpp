@@ -1,4 +1,6 @@
 #include "Mesh.h"
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/glm.hpp>
 
 
 void Mesh::load_quad()
@@ -8,9 +10,9 @@ void Mesh::load_quad()
     Indices.clear();
 
     Vertices = {
-    {{  0.0f, 100.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}},
-    {{  100.0f, 100.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 1.0f}},
-    {{  100.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},
+    {{  0.0f, 1.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}},
+    {{  1.0f, 1.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 1.0f}},
+    {{  1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},
     {{  0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f}}
     };
 
@@ -61,7 +63,13 @@ void Mesh::load()
 void Mesh::computeModelMatrix()
 {
     this->Model = this->translation * this->rotation * this->scale;
-    this->Position = this->translation * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+}
+
+void Mesh::offsetPosition(glm::vec3 offset)
+{
+    this->Position += glm::vec4(offset, 0.0f);
+    auto translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(Position.x, Position.y, Position.z));
+    this->setTranslation( translationMatrix );
 }
 
 void Mesh::setTranslation(glm::mat4& translation)

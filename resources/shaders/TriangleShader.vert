@@ -11,13 +11,13 @@ struct ObjectData
 };
 
 //all object matrices
-layout(std140, binding = 0) buffer ObjectBuffer{
+layout(std140,set = 0, binding = 0) buffer ObjectBuffer{
 
 	ObjectData objects[];
 } objectBuffer;
 
 
-layout(binding = 1) uniform UniformBufferObject {
+layout(set = 1, binding = 0) uniform UniformBufferObject {
     mat4 model;
     mat4 view;
     mat4 proj;

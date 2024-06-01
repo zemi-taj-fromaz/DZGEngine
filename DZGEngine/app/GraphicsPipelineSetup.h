@@ -13,10 +13,17 @@ void dzg::createGraphicsPipelines()
 
     for (auto& pipelineData : m_scene->pipelineDataVec)
     {
+        std::vector<VkDescriptorSetLayout> dSetLayoutVec;
+        for (int i = 0; i < pipelineData->pDescriptorSetLayouts.size(); ++i)
+        {
+            dSetLayoutVec.push_back(pipelineData->pDescriptorSetLayouts[i]->dSetLayout);
+        }
+
+
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
         pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-        pipelineLayoutInfo.setLayoutCount = 1; // Optional
-        pipelineLayoutInfo.pSetLayouts = &pipelineData->pDescriptorSetLayout->dSetLayout; // Optional // TODO - add for possible multiple sets in a layout
+        pipelineLayoutInfo.setLayoutCount = dSetLayoutVec.size(); // Optional
+        pipelineLayoutInfo.pSetLayouts = dSetLayoutVec.data(); // Optional // TODO - add for possible multiple sets in a layout
         pipelineLayoutInfo.pushConstantRangeCount = 0; // Optional
         pipelineLayoutInfo.pPushConstantRanges = nullptr; // Optional
 
