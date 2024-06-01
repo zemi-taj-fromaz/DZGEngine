@@ -64,7 +64,7 @@ struct Mesh
 
     void update(float totalTime, float deltaTime)
     {
-        offsetPosition(glm::vec3(-50000.0f * deltaTime, 0.0f, 0.0f));
+        offsetPosition(glm::vec3(-220000.0f * deltaTime, 0.0f, 0.0f));
     }
 
 private:

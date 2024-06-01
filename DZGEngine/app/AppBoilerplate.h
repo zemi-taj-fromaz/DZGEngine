@@ -51,11 +51,11 @@ void  dzg::cleanup() {
 
     for (size_t i = 0; i < m_scene->MeshVec.size(); ++i)
     {
-        vkDestroyBuffer(core.device, m_scene->MeshVec[i].IndexBuffer, nullptr);
-        vkFreeMemory(core.device, m_scene->MeshVec[i].IndexBufferMemory, nullptr);
+        vkDestroyBuffer(core.device, m_scene->MeshVec[i]->IndexBuffer, nullptr);
+        vkFreeMemory(core.device, m_scene->MeshVec[i]->IndexBufferMemory, nullptr);
 
-        vkDestroyBuffer(core.device, m_scene->MeshVec[i].VertexBuffer, nullptr);
-        vkFreeMemory(core.device, m_scene->MeshVec[i].VertexBufferMemory, nullptr);
+        vkDestroyBuffer(core.device, m_scene->MeshVec[i]->VertexBuffer, nullptr);
+        vkFreeMemory(core.device, m_scene->MeshVec[i]->VertexBufferMemory, nullptr);
     }
 
     for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
@@ -90,6 +90,11 @@ void  dzg::cleanup() {
 
 void  dzg::initWindow() {
     window = glfw::initWindowGLFW(WIDTH, HEIGHT);
+
+    GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
+
+    glfwSetWindowMonitor(window, primaryMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 }
 
 void dzg::inputPolling(float deltaTime)
@@ -124,8 +129,8 @@ void  dzg::initVulkan() {
         createTextureImageView();
         createTextureSampler();
 
-        createVertexBuffer();
-        createIndexBuffer();
+        createVertexBuffers();
+        createIndexBuffers();
         createUniformBuffers(); 
 
         createDescriptorPool();

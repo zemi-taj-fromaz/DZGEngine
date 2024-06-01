@@ -20,7 +20,7 @@ void ObjectDataBuffer::bufferUpdateFunction(dzg* app, void* bufferMapped)
 
 	for (size_t i = 0; i < app->m_scene->MeshVec.size(); ++i)
 	{
-		objectArray[i].Model = app->m_scene->MeshVec[i].Model;
-		objectArray[i].Color = app->m_scene->MeshVec[i].Color;
+		objectArray[i].Model = app->m_scene->MeshVec[i]->Model;
+		objectArray[i].Color = app->m_scene->MeshVec[i]->Color;
 	}
 }

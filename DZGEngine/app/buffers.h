@@ -9,11 +9,11 @@
 
 #include <chrono>
 
-void dzg::createVertexBuffer()
+void dzg::createVertexBuffers()
 {
-    for (Mesh& mesh : m_scene->MeshVec)
+    for (auto& mesh : m_scene->MeshVec)
     {
-        VkDeviceSize bufferSize = sizeof(mesh.Vertices[0]) * mesh.Vertices.size();
+        VkDeviceSize bufferSize = sizeof(mesh->Vertices[0]) * mesh->Vertices.size();
 
         VkBuffer stagingBuffer;
         VkDeviceMemory stagingBufferMemory;
@@ -21,12 +21,12 @@ void dzg::createVertexBuffer()
 
         void* data;
         vkMapMemory(core.device, stagingBufferMemory, 0, bufferSize, 0, &data);
-        memcpy(data, mesh.Vertices.data(), (size_t)bufferSize);
+        memcpy(data, mesh->Vertices.data(), (size_t)bufferSize);
         vkUnmapMemory(core.device, stagingBufferMemory);
 
-        createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, mesh.VertexBuffer, mesh.VertexBufferMemory);
+        createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, mesh->VertexBuffer, mesh->VertexBufferMemory);
 
-        copyBuffer(stagingBuffer, mesh.VertexBuffer, bufferSize);
+        copyBuffer(stagingBuffer, mesh->VertexBuffer, bufferSize);
 
         vkDestroyBuffer(core.device, stagingBuffer, nullptr);
         vkFreeMemory(core.device, stagingBufferMemory, nullptr);
@@ -39,12 +39,12 @@ void dzg::createVertexBuffer()
     //The transfer of data to the GPU is an operation that happens in the background and the specification simply tells us that it is guaranteed to be complete as of the next call to vkQueueSubmit.
 }
 
-void dzg::createIndexBuffer() 
+void dzg::createIndexBuffers() 
 {
 
-    for (Mesh& mesh : m_scene->MeshVec)
+    for (auto& mesh : m_scene->MeshVec)
     {
-        VkDeviceSize bufferSize = sizeof(mesh.Indices[0]) * mesh.Indices.size();
+        VkDeviceSize bufferSize = sizeof(mesh->Indices[0]) * mesh->Indices.size();
 
         VkBuffer stagingBuffer;
         VkDeviceMemory stagingBufferMemory;
@@ -52,12 +52,12 @@ void dzg::createIndexBuffer()
 
         void* data;
         vkMapMemory(core.device, stagingBufferMemory, 0, bufferSize, 0, &data);
-        memcpy(data, mesh.Indices.data(), (size_t)bufferSize);
+        memcpy(data, mesh->Indices.data(), (size_t)bufferSize);
         vkUnmapMemory(core.device, stagingBufferMemory);
 
-        createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, mesh.IndexBuffer, mesh.IndexBufferMemory);
+        createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, mesh->IndexBuffer, mesh->IndexBufferMemory);
 
-        copyBuffer(stagingBuffer, mesh.IndexBuffer, bufferSize);
+        copyBuffer(stagingBuffer, mesh->IndexBuffer, bufferSize);
 
         vkDestroyBuffer(core.device, stagingBuffer, nullptr);
         vkFreeMemory(core.device, stagingBufferMemory, nullptr);

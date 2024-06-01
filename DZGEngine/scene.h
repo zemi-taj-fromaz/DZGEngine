@@ -15,6 +15,7 @@ using BufferDataVec_t = std::vector<std::shared_ptr<BufferData>>;
 using BufferDataVec_t = std::vector<std::shared_ptr<BufferData>>;
 using TextureVec_t = std::vector<std::shared_ptr<Texture>>;
 using SamplersVec_t = std::vector<std::shared_ptr<Sampler>>;
+using MeshVec_t = std::vector<std::shared_ptr<Mesh>>;
 
 class dzg;
 
@@ -30,7 +31,8 @@ public:
 	BufferDataVec_t BufferDataVec;
 	TextureVec_t TexturesVec;
 	SamplersVec_t SamplersVec;
-	std::vector<Mesh> MeshVec;
+	MeshVec_t MeshVec;
+	//std::vector<Mesh> MeshVec;
 
 	virtual void scene_update(float totalTime, float deltaTime, dzg* app) {}
 };

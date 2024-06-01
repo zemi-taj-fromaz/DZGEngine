@@ -112,8 +112,8 @@ private:
     void recreateSwapChain();
     void cleanupSwapChain();
 
-    void createVertexBuffer();
-    void createIndexBuffer();
+    void createVertexBuffers();
+    void createIndexBuffers();
     void createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);
 
     uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
