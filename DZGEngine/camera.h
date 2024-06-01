@@ -32,6 +32,6 @@ struct Camera
 	glm::mat4 ProjectionMatrix;
 	float left,  right,  bottom,  top;
 
-	float speed{ 100000.0f };
+	float speed{ 5.0f };
 
 };

@@ -8,6 +8,8 @@
 #include "texture.h"
 #include "Sampler.h"
 
+#include <GLFW/glfw3.h>
+
 using PipelineDataVec_t = std::vector<std::shared_ptr<PipelineData>>;
 using DescriptorSetLayoutVec_t = std::vector<std::shared_ptr<DescriptorSetLayout>>;
 using DescriptorSetVec_t = std::vector<std::shared_ptr<DescriptorSet>>;
@@ -37,6 +39,7 @@ public:
 	//std::vector<Mesh> MeshVec;
 
 	virtual void scene_update(float totalTime, float deltaTime, dzg* app) {}
+	virtual void inputPolling(GLFWwindow* window, float deltaTime) {}
 };
 
 

@@ -35,7 +35,7 @@ namespace glfw
     {
         auto app = reinterpret_cast<dzg*>(glfwGetWindowUserPointer(window));
         float cameraSpeed = app->camera->speed;
-        float playerSpeed = 1000000.0f;
+        float playerSpeed = 5.0f;
 
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
             app->camera->movePosition( glm::vec3(0.0f, -cameraSpeed * deltaTime, 0.0f));
@@ -55,16 +55,7 @@ namespace glfw
         }
 
 
-     //   app->m_scene->
-        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            app->m_scene->Player->offsetPosition(glm::vec3(0.0f, -playerSpeed * deltaTime, 0.0f));
-        }
-        else
-        {
-            app->m_scene->Player->offsetPosition(glm::vec3(0.0f, playerSpeed * deltaTime, 0.0f));
-       //     app->m_scene->m_Partic
-
-        }
+        app->m_scene->inputPolling(window, deltaTime);
 
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
             return false;

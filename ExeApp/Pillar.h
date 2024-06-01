@@ -12,7 +12,7 @@ struct Pillar : public Mesh
 
     virtual void update(float totalTime, float deltaTime, dzg* app) override
     {
-        offsetPosition(glm::vec3(-220000.0f * deltaTime, 0.0f, 0.0f));
+        offsetPosition(glm::vec3(-4.0f * deltaTime, 0.0f, 0.0f));
         
         if (Position.x < app->camera->left - 1.0f)
         {

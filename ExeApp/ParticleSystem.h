@@ -20,14 +20,13 @@ struct Particle : public Mesh
 	Particle() : Mesh(MeshType::Quad)
 	{
 	}
-	glm::vec2 Position;
 	glm::vec2 Velocity;
 	glm::vec4 ColorBegin, ColorEnd;
-	float Rotation = 0.0f;
+	float RotationAngle = 0.0f;
 	float SizeBegin, SizeEnd, Size;
 
 	float LifeTime = 1.0f;
-	float LifeRemaining = 0.0f;
+	float LifeRemaining = 1.0f;
 
 	bool Active = false;
 

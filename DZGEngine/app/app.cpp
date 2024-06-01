@@ -60,16 +60,23 @@ void  dzg::mainLoop() {
     
     static float initialTime{ (float)glfwGetTime() };
 
-    float time = (float)glfwGetTime();
 
+    float time = (float)glfwGetTime();
     float deltaTime = time - initialTime;
+    float totalTime = time - initialTime;
+
 
     while (!glfwWindowShouldClose(window)) {
+
+        float currTime = (float)glfwGetTime();
+        deltaTime = currTime - time;
+        totalTime = currTime - initialTime;
+        time = currTime;
         
         glfwPollEvents();
 
         if (inputPolling(deltaTime) == false) break;
-        m_scene->scene_update(time, deltaTime, this);
+        m_scene->scene_update(totalTime, deltaTime, this);
 
         drawFrame();
     }
