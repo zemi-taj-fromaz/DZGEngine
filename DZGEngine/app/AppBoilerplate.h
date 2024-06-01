@@ -95,11 +95,13 @@ void  dzg::initWindow() {
     const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
 
     glfwSetWindowMonitor(window, primaryMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+
+    glfw::setWindowCallbacks(window, this);
 }
 
-void dzg::inputPolling(float deltaTime)
+bool dzg::inputPolling(float deltaTime)
 {
-    glfw::inputPolling(window, camera, deltaTime);
+    return glfw::inputPolling(window, deltaTime);
 }
 
 void  dzg::initVulkan() {
@@ -115,7 +117,6 @@ void  dzg::initVulkan() {
         createDescriptorSetLayout(); // takes scene
         createGraphicsPipelines(); // takes scene
     }
-
 
     createImageViews();
     createFramebuffers();

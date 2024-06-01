@@ -32,6 +32,8 @@ public:
 	TextureVec_t TexturesVec;
 	SamplersVec_t SamplersVec;
 	MeshVec_t MeshVec;
+
+	std::shared_ptr<Mesh> Player;
 	//std::vector<Mesh> MeshVec;
 
 	virtual void scene_update(float totalTime, float deltaTime, dzg* app) {}

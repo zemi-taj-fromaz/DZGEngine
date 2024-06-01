@@ -56,15 +56,28 @@ struct Mesh
     void setRotation(glm::mat4& rotation);
     void setScale(glm::mat4& scale);
     void offsetPosition(glm::vec3 offset);
+    void setPosition(glm::vec3 pos);
 
 
     glm::mat4 Model{ glm::mat4(1.0f) };
     glm::vec4 Position{ glm::vec4(0.0f) };
     glm::vec4 Color{ glm::vec4(1.0) };
 
-    void update(float totalTime, float deltaTime)
+    virtual void update(float totalTime, float deltaTime, dzg* app) {}
+    virtual void render(VkCommandBuffer commandBuffer, int instanceIndex, int currFrame) 
     {
-        offsetPosition(glm::vec3(-220000.0f * deltaTime, 0.0f, 0.0f));
+        vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, this->PipelineData->pipeline);
+
+        VkBuffer vertexBuffers[] = { this->VertexBuffer };
+        VkDeviceSize offsets[] = { 0 };
+        vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
+        vkCmdBindIndexBuffer(commandBuffer, this->IndexBuffer, 0, VK_INDEX_TYPE_UINT16);
+
+        for (int j = 0; j < this->DescriptorSetVec.size(); ++j)
+        {
+            vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, this->PipelineData->PipelineLayout, j, 1, &this->DescriptorSetVec[j]->sets[currFrame], 0, nullptr);
+        }
+        vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(this->Indices.size()), 1, 0, 0, instanceIndex);
     }
 
 private:

@@ -136,7 +136,7 @@ private:
     void createTextureImageView();
     VkImageView createImageView(VkImage image, VkFormat format);
     void createTextureSampler();
-    void         inputPolling(float deltaTime);
+    bool         inputPolling(float deltaTime);
 
 
 public:

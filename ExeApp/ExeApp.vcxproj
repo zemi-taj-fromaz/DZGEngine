@@ -138,6 +138,9 @@
     <ClCompile Include="BufferObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyScene.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="Pillar.cpp" />
+    <ClCompile Include="PlayerObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DZGEngine\DZGEngine.vcxproj">
@@ -147,6 +150,9 @@
   <ItemGroup>
     <ClInclude Include="BufferObject.h" />
     <ClInclude Include="MyScene.h" />
+    <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="Pillar.h" />
+    <ClInclude Include="PlayerObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

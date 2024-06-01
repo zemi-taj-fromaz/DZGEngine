@@ -72,6 +72,13 @@ void Mesh::offsetPosition(glm::vec3 offset)
     this->setTranslation( translationMatrix );
 }
 
+void Mesh::setPosition(glm::vec3 pos)
+{
+    this->Position = glm::vec4(pos, 0.0f);
+    auto translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(Position.x, Position.y, Position.z));
+    this->setTranslation(translationMatrix);
+}
+
 void Mesh::setTranslation(glm::mat4& translation)
 {
     this->translation = translation;

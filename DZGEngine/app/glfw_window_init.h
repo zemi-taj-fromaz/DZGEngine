@@ -30,26 +30,45 @@ namespace glfw
         glfwSetWindowUserPointer(window, app);
         glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
     }
-
-    void inputPolling(GLFWwindow* window, std::unique_ptr<Camera>& camera, float deltaTime)
+     
+    bool inputPolling(GLFWwindow* window, float deltaTime)
     {
-        float cameraSpeed = camera->speed;
+        auto app = reinterpret_cast<dzg*>(glfwGetWindowUserPointer(window));
+        float cameraSpeed = app->camera->speed;
+        float playerSpeed = 1000000.0f;
 
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-            camera->movePosition( glm::vec3(0.0f, -cameraSpeed * deltaTime, 0.0f));
+            app->camera->movePosition( glm::vec3(0.0f, -cameraSpeed * deltaTime, 0.0f));
         }
-
+         
         if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-            camera->movePosition(glm::vec3(-cameraSpeed * deltaTime, 0.0f, 0.0f));
+            app->camera->movePosition(glm::vec3(-cameraSpeed * deltaTime, 0.0f, 0.0f));
         }
 
         if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-            camera->movePosition(glm::vec3(0.0f, cameraSpeed * deltaTime, 0.0f));
+            app->camera->movePosition(glm::vec3(0.0f, cameraSpeed * deltaTime, 0.0f));
 
         }
 
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-            camera->movePosition(glm::vec3(cameraSpeed * deltaTime, 0.0f, 0.0f));
+            app->camera->movePosition(glm::vec3(cameraSpeed * deltaTime, 0.0f, 0.0f));
         }
+
+
+     //   app->m_scene->
+        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+            app->m_scene->Player->offsetPosition(glm::vec3(0.0f, -playerSpeed * deltaTime, 0.0f));
+        }
+        else
+        {
+            app->m_scene->Player->offsetPosition(glm::vec3(0.0f, playerSpeed * deltaTime, 0.0f));
+       //     app->m_scene->m_Partic
+
+        }
+
+        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+            return false;
+        }
+        return true;
     }
 }

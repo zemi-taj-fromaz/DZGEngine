@@ -4,6 +4,8 @@
 
 #include "Scene.h"
 #include "BufferObject.h"
+#include "Pillar.h"
+#include "ParticleSystem.h"
 
 #include <random>
 
@@ -83,26 +85,30 @@ public:
 
 		//8) Mesh
 
-		std::random_device dev;
-		std::mt19937 rng(dev());
-		std::uniform_real_distribution<> distY(4.0, 9.0); // distribution in range [1, 6]
-		std::normal_distribution<> distPos(4.0, 2.0); // distribution in range [1, 6]
+		Player = std::make_shared<Mesh>(MeshType::Quad);
+		Player->DescriptorSetVec = DescriptorSetVec;
+		Player->PipelineData = pData;
 
+		MeshVec.push_back(Player);
 
 		float offset = 8.0f;
 		for (int i = 0; i < 8; i++)
 		{
-			std::shared_ptr<Mesh> m2 = std::make_shared<Mesh>(MeshType::Quad);
+			Pillar* pillar = new Pillar();
+			std::shared_ptr<Mesh> m2 = std::shared_ptr<Mesh>(pillar);
 			m2->DescriptorSetVec = DescriptorSetVec;
 			m2->PipelineData = pData;
 			
-			m2->offsetPosition(glm::vec3(offset*i, -distPos(rng), 0.0f));
+			m2->offsetPosition(glm::vec3(offset*i,  0.0f, 0.0f));
 
-			auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, distY(rng), 1.0f));
+			auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 1.0f, 1.0f));
 			m2->setScale(scale);
 			MeshVec.push_back(m2);
 		}
 
+		m_ParticleSystem = std::make_unique<ParticleSystem>();
+
+		MeshVec.insert(MeshVec.end(), m_ParticleSystem->m_ParticlePool.begin(), m_ParticleSystem->m_ParticlePool.end());
 		//Mesh m = Mesh(MeshType::Quad);
 		//m.DescriptorSetVec = DescriptorSetVec;
 		//m.PipelineData = pData;
@@ -118,24 +124,13 @@ public:
 
 	virtual void scene_update(float totalTime, float deltaTime, dzg* app) override
 	{
-
-		static std::random_device dev;
-		static std::mt19937 rng(dev());
-		static std::uniform_real_distribution<> distY(4.0, 9.0); // distribution in range [1, 6]
-		static std::normal_distribution<> distPos(4.0, 2.0); // distribution in range [1, 6]
-
 		for (int i = 0; i < MeshVec.size(); ++i)
 		{
-			MeshVec[i]->update(totalTime, deltaTime);
-			if (MeshVec[i]->Position.x < app->camera->left - 1.0f)
-			{
-				MeshVec[i]->offsetPosition(glm::vec3(8 * 8.0f, 0.0f, 0.0f));
-				MeshVec[i]->Position.y = 0.0f;
-				MeshVec[i]->offsetPosition(glm::vec3(0.0f, -distPos(rng), 0.0f));
-				auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, distY(rng), 1.0f));
-				MeshVec[i]->setScale(scale);
-			}
+			MeshVec[i]->update(totalTime, deltaTime, app);
 		}
 	}
+
+private:
+	std::unique_ptr<ParticleSystem> m_ParticleSystem;
 };
 
