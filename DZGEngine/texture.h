@@ -11,5 +11,6 @@ struct Texture
 	VkImage textureImage;
 	VkImageView textureImageView;
 	VkDeviceMemory TextureImageMemory;
+	int width; int height;
 };
 

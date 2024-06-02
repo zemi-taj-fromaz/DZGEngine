@@ -34,6 +34,8 @@ void dzg::run(std::unique_ptr<Scene>& s) {
 
     initVulkan();
     
+    initImgui();
+
     float aspectRation = (float)this->WIDTH / (float)this->HEIGHT;
 
 
@@ -69,6 +71,8 @@ void  dzg::mainLoop() {
     float deltaTime = time - initialTime;
     float totalTime = time - initialTime;
 
+    ImGuiStyle* style = &ImGui::GetStyle();
+    style->Colors[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
     while (!glfwWindowShouldClose(window)) {
 
@@ -79,7 +83,7 @@ void  dzg::mainLoop() {
         
         glfwPollEvents();
 
-         if (inputPolling(deltaTime) == false) break;
+        inputPolling(deltaTime);
         m_scene->scene_update(totalTime, deltaTime, this);
 
         drawFrame();
@@ -113,12 +117,13 @@ void dzg::drawFrame() {
     }
 
     // Only reset the fence if we are submitting work
-    vkResetFences(device, 1, &inFlightFence);
 
+    vkResetFences(device, 1, &inFlightFence);
     updateUniformBuffer(currentFrame);
 
     vkResetCommandBuffer(commandBuffer, 0);
     recordCommandBuffer(commandBuffer, imageIndex);
+
 
     VkSubmitInfo submitInfo{};
     submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;

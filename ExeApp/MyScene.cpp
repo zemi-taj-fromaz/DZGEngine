@@ -1,5 +1,9 @@
 #include "MyScene.h"
 
+//#include "vendor/imgui/imgui.h"
+//#include "vendor/imgui/imgui_impl_glfw.h"
+//#include "vendor/imgui/imgui_impl_vulkan.h"
+
 MyScene::MyScene()
 {
 	this->clearColor = { {1.00f, 0.06f, 0.06f, 1.0f}};
@@ -21,7 +25,7 @@ MyScene::MyScene()
 	std::shared_ptr<Texture> tex = std::make_shared<Texture>("jetpack.png");
 	TexturesVec.push_back(tex);
 
-	TextureAtlas = std::make_shared<Texture>("AtariClassic - gry3.ttf");
+	//TextureAtlas = std::make_shared<Texture>("AtariClassic - gry3.ttf");
 
 	//3) Bindings
 	BindingInfo bInfoStorage(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_VERTEX_BIT);

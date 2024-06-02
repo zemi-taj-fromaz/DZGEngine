@@ -3,6 +3,10 @@
 #include <set>
 #include <stdexcept>
 
+#include "vendor/imgui/imgui.h"
+#include "vendor/imgui/imgui_impl_glfw.h"
+#include "vendor/imgui/imgui_impl_vulkan.h"
+
 #include "glfw_window_init.h"
 #include "ShaderLoad.h"
 #include "SwapchainSetup.h"
@@ -18,6 +22,14 @@
 
 void  dzg::cleanup() {
     auto& device = core.device;
+
+    vkDestroyDescriptorPool(device, m_ImguiPool, nullptr);
+
+    ImGui_ImplVulkan_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
+
 
     cleanupSwapChain();
 
@@ -72,6 +84,7 @@ void  dzg::cleanup() {
         vkDestroyPipelineLayout(core.device, m_scene->pipelineDataVec[i]->PipelineLayout, nullptr);
     }
 
+
     vkDestroyRenderPass(core.device, renderPass, nullptr);
 
     vkDestroyCommandPool(core.device, commandPool, nullptr);
@@ -92,13 +105,13 @@ void  dzg::cleanup() {
 void  dzg::initWindow() {
     window = glfw::initWindowGLFW(WIDTH, HEIGHT);
 
-    GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
-    const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
+    //GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+    //const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
 
-    glfwSetWindowMonitor(window, primaryMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-        
-    this->WIDTH = mode->width;
-    this->HEIGHT = mode->height;
+    //glfwSetWindowMonitor(window, primaryMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+    //    
+    //this->WIDTH = mode->width;
+    //this->HEIGHT = mode->height;
 
     glfw::setWindowCallbacks(window, this);
 }
@@ -106,6 +119,67 @@ void  dzg::initWindow() {
 bool dzg::inputPolling(float deltaTime)
 {
     return glfw::inputPolling(window, deltaTime);
+}
+
+void dzg::initImgui() {
+    VkDescriptorPoolSize pool_sizes[] =
+    {
+        { VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
+        { VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
+        { VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
+        { VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
+        { VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
+        { VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
+        { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
+        { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
+        { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
+        { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
+        { VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 }
+    };
+
+    VkDescriptorPoolCreateInfo pool_info = {};
+    pool_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+    pool_info.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
+    pool_info.maxSets = 1000;
+    pool_info.poolSizeCount = static_cast<uint32_t>(std::size(pool_sizes));
+    pool_info.pPoolSizes = pool_sizes;
+
+
+    vkCreateDescriptorPool(core.device, &pool_info, nullptr, &m_ImguiPool);
+
+    //this initializes the core structures of imgui
+    ImGui::CreateContext();
+    // Register mouse button callback with GLFW
+    glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
+        ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+
+        });
+
+
+
+    //ImGui_ImplVulkan_Init(m_Window);
+    ImGui_ImplGlfw_InitForVulkan(window, false);
+
+    //this initializes imgui for Vulkan
+    ImGui_ImplVulkan_InitInfo init_info = {};
+    init_info.Instance = core.instance;
+    init_info.PhysicalDevice = core.physicalDevice;
+    init_info.Device = core.device;
+    init_info.Queue = core.graphicsQueue;
+    init_info.DescriptorPool = m_ImguiPool;
+    init_info.MinImageCount = 3;
+    init_info.ImageCount = 3;
+    init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
+
+    ImGui_ImplVulkan_Init(&init_info, renderPass);
+
+    {
+        VkCommandBuffer commandBuffer = beginSingleTimeCommands();
+        ImGui_ImplVulkan_CreateFontsTexture(commandBuffer);
+        endSingleTimeCommands(commandBuffer);
+    }
+    //clear font textures from cpu data
+    ImGui_ImplVulkan_DestroyFontUploadObjects();
 }
 
 void  dzg::initVulkan() {

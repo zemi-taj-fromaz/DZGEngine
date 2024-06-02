@@ -48,7 +48,7 @@ void dzg::createDescriptorPool()
 
     VkDescriptorPoolCreateInfo poolInfo = {};
     poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-    poolInfo.flags = 0;
+    poolInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
     poolInfo.maxSets = 100;
     poolInfo.poolSizeCount = (uint32_t)sizes.size();
     poolInfo.pPoolSizes = sizes.data();

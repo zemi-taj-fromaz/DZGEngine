@@ -16,6 +16,9 @@
 #include "scene.h"
 #include "PipelineData.h"
 
+//#include "vendor/imgui/imgui.h"
+//#include "vendor/imgui/imgui_impl_glfw.h"
+//#include "vendor/imgui/imgui_impl_vulkan.h"
 
 class dzg {
 public:
@@ -75,6 +78,7 @@ private:
 
     void initWindow();
     void initVulkan();
+    void initImgui();
     void createSurface();
     void createLogicalDevice();
     void pickPhysicalDevice();
@@ -175,6 +179,7 @@ private:
     VkRenderPass renderPass;
     VkDescriptorSetLayout descriptorSetLayout;
     VkDescriptorPool descriptorPool;
+    VkDescriptorPool m_ImguiPool;
     std::vector<VkDescriptorSet> descriptorSets;
 
     VkPipelineLayout pipelineLayout;

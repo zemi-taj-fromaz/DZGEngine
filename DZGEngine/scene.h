@@ -8,6 +8,10 @@
 #include "texture.h"
 #include "Sampler.h"
 
+#include "vendor/imgui/imgui.h"
+#include "vendor/imgui/imgui_impl_glfw.h"
+#include "vendor/imgui/imgui_impl_vulkan.h"
+
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
@@ -55,6 +59,42 @@ public:
 
 	virtual void scene_update(float totalTime, float deltaTime, dzg* app) {}
 	virtual void inputPolling(GLFWwindow* window, float deltaTime) {}
+	virtual void drawImgui(dzg* app, VkCommandBuffer commandbuffer) {
+		ImGui_ImplVulkan_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+
+		ImGui::NewFrame();
+
+		ImGuiWindowFlags window_flags = 0;
+		window_flags |= ImGuiWindowFlags_NoBackground;
+		window_flags |= ImGuiWindowFlags_NoTitleBar;
+
+		ImVec2 windowSize{ 250, 350 };
+		ImGui::SetNextWindowSize(windowSize);
+		// etc.
+		bool open_ptr = true;
+		ImGui::Begin("I'm a Window!", &open_ptr, window_flags);
+
+		ImFont* font = ImGui::GetFont();
+		font->Scale = 2;
+
+		// font->Color
+		ImGui::PushFont(font);
+		//imgui commands
+
+		std::string score = "Score : " + std::to_string(0);
+		std::string enemies_left = "Deer left : " + std::to_string(0);
+		ImGui::Text(score.c_str());
+		ImGui::Text(enemies_left.c_str());
+
+		ImGui::PopFont();
+
+		ImGui::End();
+
+		ImGui::EndFrame();
+		ImGui::Render();
+		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandbuffer);
+	}
 };
 
 

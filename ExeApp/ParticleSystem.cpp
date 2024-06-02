@@ -43,7 +43,7 @@ void Particle::update(float totalTime, float deltaTime, dzg* app)
 	this->Color.r = color.r;
 	this->Color.g = color.g;
 	this->Color.b = color.b;
-	std::cout << "Color : " << color.r << " ," << color.g <<","<< color.b << std::endl;
+	//std::cout << "Color : " << color.r << " ," << color.g <<","<< color.b << std::endl;
 	this->Size = glm::lerp(this->SizeEnd, this->SizeBegin, life);
 	auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(this->Size, this->Size, 1.0f));
 	this->setScale(scale);

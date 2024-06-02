@@ -12,10 +12,13 @@ void dzg::createTextureImage() {
     for (int i = 0; i < m_scene->TexturesVec.size(); ++i)
     {
         std::string texName = m_scene->TexturesVec[i]->Name;
-
+        
         int texWidth, texHeight, texChannels;
         stbi_uc* pixels = stbi_load((TEX_FOLDER + texName).c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
         VkDeviceSize imageSize = texWidth * texHeight * 4;
+
+        m_scene->TexturesVec[i]->width = texWidth;
+        m_scene->TexturesVec[i]->height = texHeight;
 
         if (!pixels) {
             throw std::runtime_error("failed to load texture image!");
@@ -62,7 +65,7 @@ void dzg::createFontAtlas(char* p) {
     memcpy(data, pixels, static_cast<size_t>(imageSize));
     vkUnmapMemory(core.device, stagingBufferMemory);
 
-    stbi_image_free(pixels);
+    //stbi_image_free(pixels);
 
     createImage(texWidth, texHeight, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_scene->TextureAtlas->textureImage, m_scene->TextureAtlas->TextureImageMemory);
 
