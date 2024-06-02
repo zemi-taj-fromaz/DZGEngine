@@ -35,17 +35,19 @@ void Particle::update(float totalTime, float deltaTime, dzg* app)
 	this->RotationAngle += deltaTime;
 	auto rot = glm::rotate(glm::mat4(1.0f), RotationAngle, glm::vec3(0.0f, 0.0f, 1.0f));
 	this->setRotation(rot);
-	//TODO scale and rotation
 
 	float life = this->LifeRemaining / this->LifeTime;
 	glm::vec4 color = glm::lerp(this->ColorEnd, this->ColorBegin, life);
-	//	color.a = color.a * life; //TODO turn on blending
-	this->Color = color;
+	//glm::vec4 color = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);
+//	color.a = color.a * life; //TODO turn on blending
+	this->Color.r = color.r;
+	this->Color.g = color.g;
+	this->Color.b = color.b;
+	std::cout << "Color : " << color.r << " ," << color.g <<","<< color.b << std::endl;
 	this->Size = glm::lerp(this->SizeEnd, this->SizeBegin, life);
 	auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(this->Size, this->Size, 1.0f));
 	this->setScale(scale);
 
-	//TODO adjust model matrix and color
 }
 
 void Particle::render(VkCommandBuffer commandBuffer, int instanceIndex, int currFrame)

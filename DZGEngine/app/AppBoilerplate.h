@@ -14,6 +14,7 @@
 #include "Buffers.h"
 #include "Images.h"
 #include "Scene.h"
+#include "LoadFont.h"
 
 void  dzg::cleanup() {
     auto& device = core.device;
@@ -95,6 +96,9 @@ void  dzg::initWindow() {
     const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
 
     glfwSetWindowMonitor(window, primaryMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        
+    this->WIDTH = mode->width;
+    this->HEIGHT = mode->height;
 
     glfw::setWindowCallbacks(window, this);
 }
@@ -126,6 +130,10 @@ void  dzg::initVulkan() {
       take scene
     */
     {
+        if (m_scene->TextureAtlas)
+        {
+            this->loadFont(8);
+        }
         createTextureImage();
         createTextureImageView();
         createTextureSampler();

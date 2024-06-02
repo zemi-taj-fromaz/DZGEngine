@@ -6,10 +6,6 @@
 
 void build_pipeline(dzg* app, PipelineData* pipelineData)//(std::string vertShaderName, std::string fragShaderName, VkDevice device, VkPipelineLayout pipelineLayout, VkRenderPass pass, VkExtent2D extent, VkPolygonMode polygonMode, VkPrimitiveTopology topology)
 {
-	/*
-		TODO
-		GraphicsPipelineData
-	*/
 	VkPrimitiveTopology Topology = pipelineData->Topology;
 	VkPolygonMode PolygonMode = pipelineData->PolygonMode;
 	VkCullModeFlags cullMode = pipelineData->cullMode;
@@ -33,7 +29,7 @@ void build_pipeline(dzg* app, PipelineData* pipelineData)//(std::string vertShad
 	dotPosition = shaderNames[1].find_last_of('.');
 	shaderNames[1] = shaderNames[1].substr(0, dotPosition) + shaderNames[1].substr(dotPosition + 1) + ".spv";
 
-	auto vertShaderCode = readFile("../resources/shaders/" + shaderNames[0]);
+  	auto vertShaderCode = readFile("../resources/shaders/" + shaderNames[0]);
 	auto fragShaderCode = readFile("../resources/shaders/" + shaderNames[1]);
 
 	VkShaderModule vertShaderModule = app->createShaderModule(vertShaderCode);

@@ -4,6 +4,11 @@ layout(location = 0) in vec2 inPosition;
 layout(location = 1) in vec3 inColor;
 layout(location = 2) in vec2 inTexCoord;
 
+
+layout(location = 0) out vec3 fragColor;
+layout(location = 1) out vec2 texCoord;
+layout(location = 2) out vec2 screenPos;
+
 struct ObjectData
 {
     mat4 model;
@@ -37,8 +42,6 @@ vec2 positionsNDC[4] = vec2[](
     vec2(-0.5, -0.5)
 );
 
-layout(location = 0) out vec3 fragColor;
-layout(location = 1) out vec2 texCoord;
 
 
 void main() {
@@ -49,4 +52,5 @@ void main() {
 	//    gl_Position =  ubo.proj * ubo.view * ubo.model * vec4(positionsNDC[gl_VertexIndex], 0.0, 1.0);
 	fragColor = objectBuffer.objects[gl_InstanceIndex].color.xyz;
 	texCoord = inTexCoord;
+	screenPos = gl_Position.xy;
 }

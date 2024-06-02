@@ -9,6 +9,7 @@
 #include "Sampler.h"
 
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 using PipelineDataVec_t = std::vector<std::shared_ptr<PipelineData>>;
 using DescriptorSetLayoutVec_t = std::vector<std::shared_ptr<DescriptorSetLayout>>;
@@ -20,6 +21,14 @@ using SamplersVec_t = std::vector<std::shared_ptr<Sampler>>;
 using MeshVec_t = std::vector<std::shared_ptr<Mesh>>;
 
 class dzg;
+
+struct Glyph
+{
+	glm::vec2 offset;
+	glm::vec2 advance;
+	glm::vec2 textureCoords;
+	glm::vec2 size;
+};
 
 class Scene
 {
@@ -34,8 +43,14 @@ public:
 	TextureVec_t TexturesVec;
 	SamplersVec_t SamplersVec;
 	MeshVec_t MeshVec;
+	VkClearValue clearColor = { {0.06f, 0.06f, 0.06f, 1.0f} };
+	long fontHeight = 0;
 
 	std::shared_ptr<Mesh> Player;
+
+	Glyph glyphs[127];
+	std::shared_ptr<Texture> TextureAtlas;
+
 	//std::vector<Mesh> MeshVec;
 
 	virtual void scene_update(float totalTime, float deltaTime, dzg* app) {}

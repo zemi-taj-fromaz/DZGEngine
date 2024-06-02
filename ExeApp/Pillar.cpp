@@ -47,3 +47,17 @@ void Pillar::load_pillar()
         4, 5, 6, 6, 7, 4,
     };
 }
+
+void Pillar::update(float totalTime, float deltaTime, dzg* app)
+{
+    offsetPosition(glm::vec3(-4.0f * deltaTime, 0.0f, 0.0f));
+
+    if (Position.x < app->camera->left - 2.0f)
+    {
+        offsetPosition(glm::vec3(8 * 8.0f, 0.0f, 0.0f));
+    }
+
+    this->Color.r = glm::sin(totalTime) * 0.5f + 0.5f;
+    this->Color.g = glm::cos(totalTime) * 0.5f + 0.5f;
+    this->Color.b = glm::sin(2*totalTime) * 0.5f + 0.5f;
+}

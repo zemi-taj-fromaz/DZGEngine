@@ -21,3 +21,10 @@ struct ObjectDataBuffer
 
 };
 
+struct ResolutionBufferObject {
+	float width;
+	float height;
+
+	static void bufferUpdateFunction(dzg* app, void* bufferMapped);
+};
+

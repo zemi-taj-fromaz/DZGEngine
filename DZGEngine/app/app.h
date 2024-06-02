@@ -16,12 +16,16 @@
 #include "scene.h"
 #include "PipelineData.h"
 
+
 class dzg {
 public:
     
     friend void build_pipeline(dzg* app, PipelineData* pipelineData);
     
     void run(std::unique_ptr<Scene>& s);
+
+    uint32_t GetWidth() { return WIDTH; }
+    uint32_t GetHeight() { return HEIGHT; }
  
 private:
 
@@ -138,19 +142,23 @@ private:
     void createTextureSampler();
     bool         inputPolling(float deltaTime);
 
+    void loadFont(int fontsize);
+    void createFontAtlas(char* pixels);
 
 public:
     bool framebufferResized = false;
     std::unique_ptr<Camera> camera;
+    int camHeight;
     std::unique_ptr<Scene> m_scene;
 
 private:
     const int MAX_FRAMES_IN_FLIGHT = 2;
     int currentFrame;
 
-    GLFWwindow* window;
-    uint32_t WIDTH = 800;
+    uint32_t WIDTH = 800; //TODO pack this up nicely and don't make it public and possibly fix window init, it's annoying
     uint32_t HEIGHT = 600;
+    GLFWwindow* window;
+
     const std::vector<const char*> validationLayers = {
     "VK_LAYER_KHRONOS_validation"
     };

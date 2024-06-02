@@ -50,7 +50,7 @@ void dzg::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex
 	renderPassInfo.renderArea.offset = { 0, 0 };
 	renderPassInfo.renderArea.extent = core.swapChainExtent;
 
-	VkClearValue clearColor = { {{0.0f, 0.0f, 0.0f, 1.0f}} };
+	VkClearValue clearColor = m_scene->clearColor;
 	renderPassInfo.clearValueCount = 1;
 	renderPassInfo.pClearValues = &clearColor;
 
@@ -78,19 +78,6 @@ void dzg::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex
 			//TODO skip unneccessary bindings
 
 			m_scene->MeshVec[i]->render(commandBuffer, i, currentFrame);
-
-			//vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_scene->MeshVec[i]->PipelineData->pipeline);
-
-			//VkBuffer vertexBuffers[] = { m_scene->MeshVec[i]->VertexBuffer };
-			//VkDeviceSize offsets[] = { 0 };
-			//vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
-			//vkCmdBindIndexBuffer(commandBuffer, m_scene->MeshVec[i]->IndexBuffer, 0, VK_INDEX_TYPE_UINT16);
-
-			//for (int j = 0; j < m_scene->MeshVec[i]->DescriptorSetVec.size(); ++j)
-			//{
-			//	vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_scene->MeshVec[i]->PipelineData->PipelineLayout, j, 1, &m_scene->MeshVec[i]->DescriptorSetVec[j]->sets[currentFrame], 0, nullptr);
-			//}
-			//vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(m_scene->MeshVec[i]->Indices.size()), 1, 0, 0, i);
 		}
 
 	}

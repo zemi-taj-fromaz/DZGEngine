@@ -19,11 +19,10 @@ void dzg::createGraphicsPipelines()
             dSetLayoutVec.push_back(pipelineData->pDescriptorSetLayouts[i]->dSetLayout);
         }
 
-
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
         pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
         pipelineLayoutInfo.setLayoutCount = dSetLayoutVec.size(); // Optional
-        pipelineLayoutInfo.pSetLayouts = dSetLayoutVec.data(); // Optional // TODO - add for possible multiple sets in a layout
+        pipelineLayoutInfo.pSetLayouts = dSetLayoutVec.data(); // Optional 
         pipelineLayoutInfo.pushConstantRangeCount = 0; // Optional
         pipelineLayoutInfo.pPushConstantRanges = nullptr; // Optional
 

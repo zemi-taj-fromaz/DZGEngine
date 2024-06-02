@@ -36,7 +36,11 @@ void dzg::run(std::unique_ptr<Scene>& s) {
     
     float aspectRation = (float)this->WIDTH / (float)this->HEIGHT;
 
+
     float camHeight = 9.0f;
+    
+    this->camHeight = camHeight;
+
     float bottom = -camHeight;
     float top = camHeight;
     float left = bottom * aspectRation;

@@ -8,6 +8,8 @@ echo "...compiling shaders"
 rem Compile each shader with relative paths
 "%glslcPath%" TriangleShader.vert -o TriangleShadervert.spv
 "%glslcPath%" TriangleShader.frag -o TriangleShaderfrag.spv
+"%glslcPath%" PillarShader.vert -o PillarShadervert.spv
+"%glslcPath%" PillarShader.frag -o PillarShaderfrag.spv
 
 echo "Compilation Done"
 
