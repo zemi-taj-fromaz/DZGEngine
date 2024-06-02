@@ -21,6 +21,9 @@ void Pillar::load_pillar()
     float BottomTop = gapPos + gapHeight / 2;
     float BottomBottom = 9.0f;
 
+    this->Position.z = TopBottom;
+    this->Position.w = BottomTop;
+
    // m2->offsetPosition(glm::vec3(offset * i, -distPos(rng), 0.0f));
 
 //    auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, distY(rng), 1.0f));

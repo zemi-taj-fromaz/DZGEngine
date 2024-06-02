@@ -75,7 +75,7 @@ void  dzg::mainLoop() {
         
         glfwPollEvents();
 
-        if (inputPolling(deltaTime) == false) break;
+         if (inputPolling(deltaTime) == false) break;
         m_scene->scene_update(totalTime, deltaTime, this);
 
         drawFrame();

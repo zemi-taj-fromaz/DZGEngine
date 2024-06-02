@@ -31,7 +31,7 @@ void Particle::update(float totalTime, float deltaTime, dzg* app)
 	this->LifeRemaining -= 1.0f *deltaTime;
 
 	//std::cout << LifeRemaining << std::endl;
-
+	  
 	this->RotationAngle += deltaTime;
 	auto rot = glm::rotate(glm::mat4(1.0f), RotationAngle, glm::vec3(0.0f, 0.0f, 1.0f));
 	this->setRotation(rot);

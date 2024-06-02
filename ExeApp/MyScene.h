@@ -9,6 +9,8 @@
 
 #include <random>
 
+using PillarsVec_t = std::vector<std::shared_ptr<Mesh>>;
+
 class MyScene : public Scene
 {
 public:
@@ -105,6 +107,7 @@ public:
 			auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 1.0f, 1.0f));
 			m2->setScale(scale);
 			MeshVec.push_back(m2);
+			m_PillarsVec.push_back(m2);
 		}
 
 		m_ParticleSystem = std::make_unique<ParticleSystem>();
@@ -139,14 +142,24 @@ public:
 
 	virtual void scene_update(float totalTime, float deltaTime, dzg* app) override
 	{
+		if (m_GameOver) return;
+
 		for (int i = 0; i < MeshVec.size(); ++i)
 		{
 			MeshVec[i]->update(totalTime, deltaTime, app);
+		}
+
+		if (CollisionTest())
+		{
+			m_GameOver = true;
+			return;
 		}
 	}
 
 	virtual void inputPolling(GLFWwindow* window, float deltaTime) override
 	{
+		if (m_GameOver) return;
+
 		float playerSpeed = 6.0f;
 		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
     			this->Player->offsetPosition(glm::vec3(0.0f, -playerSpeed * deltaTime, 0.0f));
@@ -163,7 +176,45 @@ public:
 	}
 
 private:
+
+	bool CollisionTest()
+	{
+		return CheckBorders() || CheckPillars();
+	}
+
+	bool CheckBorders()
+	{
+		//TODO - remove hardcoded 9 and say - app->camera width
+		//TODO move impl to cpp file
+		return 9.0f <= this->Player->Position.y || this->Player->Position.y <= -8.0f;
+	}
+
+	bool CheckPillars()
+	{
+		for (auto& pillar : m_PillarsVec)
+		{
+			if (pillar->Position.x <= 1.0f && pillar->Position.x >= -2.0f) //TODO add explanations/remove hardcoding for these fixed variables
+			{
+
+			//	std::cout << " PILLAR ZONE" << std::endl;
+
+  				bool Nocollision = (pillar->Position.z < this->Player->Position.y) && (this->Player->Position.y + 1.0f < pillar->Position.w);
+
+				if (!Nocollision) {
+					std::cout << "COLISION" << std::endl;
+					return true;
+				}
+			}
+
+		}
+
+		return false;
+	}
+
 	ParticleProps m_EngineParticle;
 	std::unique_ptr<ParticleSystem> m_ParticleSystem;
+	PillarsVec_t m_PillarsVec;
+
+	bool m_GameOver = false;
 };
 

@@ -67,15 +67,16 @@ void Mesh::computeModelMatrix()
 
 void Mesh::offsetPosition(glm::vec3 offset)
 {
-    this->Position += glm::vec4(offset, 0.0f);
-    auto translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(Position.x, Position.y, Position.z));
+    this->Position += glm::vec4(glm::vec2(offset), 0.0f, 0.0f);
+    auto translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(Position.x, Position.y, 0.0f));
     this->setTranslation( translationMatrix );
 }
 
 void Mesh::setPosition(glm::vec3 pos)
 {
-    this->Position = glm::vec4(pos, 0.0f);
-    auto translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(Position.x, Position.y, Position.z));
+    this->Position.x = pos.x;
+    this->Position.y = pos.y;
+    auto translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(Position.x, Position.y, 0.0f));
     this->setTranslation(translationMatrix);
 }
 

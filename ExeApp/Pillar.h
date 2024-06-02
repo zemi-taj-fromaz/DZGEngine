@@ -14,7 +14,7 @@ struct Pillar : public Mesh
     {
         offsetPosition(glm::vec3(-4.0f * deltaTime, 0.0f, 0.0f));
         
-        if (Position.x < app->camera->left - 1.0f)
+        if (Position.x < app->camera->left - 2.0f)
         {
             offsetPosition(glm::vec3(8 * 8.0f, 0.0f, 0.0f));
         }
