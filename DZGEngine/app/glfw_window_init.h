@@ -20,7 +20,7 @@ namespace glfw
     {
         glfwInit();
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
         return glfwCreateWindow(WIDTH, HEIGHT, appName.c_str(), nullptr, nullptr);
     }
@@ -37,22 +37,22 @@ namespace glfw
         float cameraSpeed = app->camera->speed;
         float playerSpeed = 5.0f;
 
-        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-            app->camera->movePosition( glm::vec3(0.0f, -cameraSpeed * deltaTime, 0.0f));
-        }
-         
-        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-            app->camera->movePosition(glm::vec3(-cameraSpeed * deltaTime, 0.0f, 0.0f));
-        }
+        //if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        //    app->camera->movePosition( glm::vec3(0.0f, -cameraSpeed * deltaTime, 0.0f));
+        //}
+        // 
+        //if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+        //    app->camera->movePosition(glm::vec3(-cameraSpeed * deltaTime, 0.0f, 0.0f));
+        //}
 
-        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-            app->camera->movePosition(glm::vec3(0.0f, cameraSpeed * deltaTime, 0.0f));
+        //if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+        //    app->camera->movePosition(glm::vec3(0.0f, cameraSpeed * deltaTime, 0.0f));
 
-        }
+        //}
 
-        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-            app->camera->movePosition(glm::vec3(cameraSpeed * deltaTime, 0.0f, 0.0f));
-        }
+        //if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+        //    app->camera->movePosition(glm::vec3(cameraSpeed * deltaTime, 0.0f, 0.0f));
+        //}
 
 
         app->m_scene->inputPolling(window, deltaTime);

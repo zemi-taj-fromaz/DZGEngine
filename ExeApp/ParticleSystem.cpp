@@ -24,11 +24,11 @@ void Particle::update(float totalTime, float deltaTime, dzg* app)
 		return;
 	}
 
-	float playerSpeed = 5.0f;
+	float playerSpeed = 6.0f;
 
-	offsetPosition(glm::vec3(-2.0f * deltaTime * RandFloat(rng), playerSpeed * deltaTime, 0.0f));
+	offsetPosition(glm::vec3(Velocity.x * deltaTime, Velocity.y * deltaTime, 0.0f));
 
-	this->LifeRemaining -= 1.0f *deltaTime;
+  	this->LifeRemaining -= 1.0f *deltaTime;
 
 	//std::cout << LifeRemaining << std::endl;
 	  

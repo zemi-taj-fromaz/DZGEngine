@@ -159,8 +159,8 @@ private:
     const int MAX_FRAMES_IN_FLIGHT = 2;
     int currentFrame;
 
-    uint32_t WIDTH = 800; //TODO pack this up nicely and don't make it public and possibly fix window init, it's annoying
-    uint32_t HEIGHT = 600;
+    uint32_t WIDTH; //TODO pack this up nicely and don't make it public and possibly fix window init, it's annoying
+    uint32_t HEIGHT;
     GLFWwindow* window;
 
     const std::vector<const char*> validationLayers = {

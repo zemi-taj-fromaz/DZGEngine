@@ -11,10 +11,12 @@ struct Pillar : public Mesh
     }
 
     virtual void update(float totalTime, float deltaTime, dzg* app) override;
-
+ 
+    float Speed;
 
 private:
     void load_pillar();
+    
 
 };
 

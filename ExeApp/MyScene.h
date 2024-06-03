@@ -22,7 +22,7 @@ public:
 
 	virtual void scene_update(float totalTime, float deltaTime, dzg* app) override;
 	virtual void inputPolling(GLFWwindow* window, float deltaTime) override;
-	//virtual void drawImgui(dzg* app) override;
+	virtual void drawImgui(dzg* app, VkCommandBuffer commandbuffer) override;
 
 private:
 
@@ -35,5 +35,7 @@ private:
 	PillarsVec_t m_PillarsVec;
 
 	bool m_GameOver = false;
+
+	int m_Score = 0;
 };
 

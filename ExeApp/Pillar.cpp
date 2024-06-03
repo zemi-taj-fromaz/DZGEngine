@@ -50,7 +50,9 @@ void Pillar::load_pillar()
 
 void Pillar::update(float totalTime, float deltaTime, dzg* app)
 {
-    offsetPosition(glm::vec3(-4.0f * deltaTime, 0.0f, 0.0f));
+    static float pillarSpeed = -4.0f;
+    Speed = (pillarSpeed - ((float)totalTime)/10.0f);
+    offsetPosition(glm::vec3(Speed * deltaTime, 0.0f, 0.0f));
 
     if (Position.x < app->camera->left - 2.0f)
     {

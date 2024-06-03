@@ -6,7 +6,7 @@
 
 MyScene::MyScene()
 {
-	this->clearColor = { {1.00f, 0.06f, 0.06f, 1.0f}};
+	this->clearColor = { {0.1f, 0.06f, 0.06f, 1.0f}};
 	//STEPS
 	// 1) Textures
 	// 2) Samplers
@@ -94,6 +94,7 @@ MyScene::MyScene()
 	Player = std::make_shared<Mesh>(MeshType::Quad);
 	Player->DescriptorSetVec = DescriptorSetVec;
 	Player->PipelineData = pData;
+	Player->offsetPosition(glm::vec3(0.5f, 0.5f, 0.0f));
 
 	MeshVec.push_back(Player);
 
@@ -125,7 +126,8 @@ MyScene::MyScene()
 	}
 
 	m_EngineParticle.Position = { 0.0f, 0.0f };
-	m_EngineParticle.Velocity = { -2.0f, 0.0f }, m_EngineParticle.VelocityVariation = { 3.0f, 1.0f };
+	m_EngineParticle.Velocity = { -2.0f, 0.0f },
+	m_EngineParticle.VelocityVariation = { 3.0f, 1.0f };
 	m_EngineParticle.SizeBegin = 0.3f, m_EngineParticle.SizeEnd = 0.0f, m_EngineParticle.SizeVariation = 0.3f;
 	m_EngineParticle.ColorBegin = { 254.0f / 255.0f, 10.0f / 255.0f, 10.0f / 255.0f, 1.0f };
 	m_EngineParticle.ColorEnd = { 254.0f / 255.0f, 212.0f / 255.0f, 50.0f / 255.0f , 1.0f };
@@ -157,14 +159,17 @@ void MyScene::inputPolling(GLFWwindow* window, float deltaTime)
 	float playerSpeed = 6.0f;
 	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
 		this->Player->offsetPosition(glm::vec3(0.0f, -playerSpeed * deltaTime, 0.0f));
+		auto rot = glm::rotate(glm::mat4(1.0f), glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		this->Player->setRotation(rot);
 
-		m_EngineParticle.Position = glm::vec2(this->Player->Position) + glm::vec2(0.0f, 1.0f);
-		//	m_EngineParticle.Position = m_Position + glm::vec2{ rotated.x, rotated.y };
-		//	m_EngineParticle.Velocity.y = -playerSpeed * 0.2f;
+		m_EngineParticle.Position = glm::vec2(this->Player->Position) + glm::vec2(-0.5f, 1.0f);
+		m_EngineParticle.Velocity = glm::vec2(dynamic_cast<Pillar*>(m_PillarsVec[0].get())->Speed, 6.0f);
 		this->m_ParticleSystem->Emit(m_EngineParticle);
 	}
 	else
 	{
+		auto rot = glm::rotate(glm::mat4(1.0f), glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		this->Player->setRotation(rot);
 		this->Player->offsetPosition(glm::vec3(0.0f, playerSpeed * deltaTime, 0.0f));
 	}
 }
@@ -176,7 +181,7 @@ bool MyScene::CollisionTest(dzg* app)
 
 bool MyScene::CheckBorders(dzg* app)
 {
-	return  app->camHeight <= this->Player->Position.y || this->Player->Position.y - 1.0f <= app->camHeight * -1.0f; // 1.0f is player size
+	return  app->camHeight <= this->Player->Position.y +1.0f || this->Player->Position.y <= app->camHeight * -1.0f; // 1.0f is player size
 }
 
 bool MyScene::CheckPillars()
@@ -185,6 +190,8 @@ bool MyScene::CheckPillars()
 	{
 		if (pillar->Position.x <= 1.0f && pillar->Position.x >= -2.0f) //TODO add explanations/remove hardcoding for these fixed variables
 		{
+
+			if (std::abs(pillar->Position.x) < 0.05f) m_Score++;
 
 			bool Nocollision = (pillar->Position.z < this->Player->Position.y) && (this->Player->Position.y + 1.0f < pillar->Position.w);
 
@@ -195,4 +202,42 @@ bool MyScene::CheckPillars()
 	}
 
 	return false;
+}
+
+void MyScene::drawImgui(dzg* app, VkCommandBuffer commandbuffer)
+{
+	{
+		ImGui_ImplVulkan_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+
+		ImGui::NewFrame();
+
+		ImGuiWindowFlags window_flags = 0;
+		window_flags |= ImGuiWindowFlags_NoBackground;
+		window_flags |= ImGuiWindowFlags_NoTitleBar;
+
+		ImVec2 windowSize{ 250, 350 };
+		ImGui::SetNextWindowSize(windowSize);
+		// etc.
+		bool open_ptr = true;
+		ImGui::Begin("I'm a Window!", &open_ptr, window_flags);
+
+		ImFont* font = ImGui::GetFont();
+		font->Scale = 2;
+
+		// font->Color
+		ImGui::PushFont(font);
+		//imgui commands
+
+		std::string score = "Score : " + std::to_string(m_Score);
+		ImGui::Text(score.c_str());
+
+		ImGui::PopFont();
+
+		ImGui::End();
+
+		ImGui::EndFrame();
+		ImGui::Render();
+		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandbuffer);
+	}
 }
