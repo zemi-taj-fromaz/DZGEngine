@@ -78,5 +78,27 @@ private:
 	void RotateT(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void RotateS(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void RotateZ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+
+	void LeftI(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void LeftJ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void LeftL(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void LeftT(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void LeftS(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void LeftZ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+
+	void RightI(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void RightJ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void RightL(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void RightT(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void RightS(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void RightZ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+
+
+	void DownI(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void DownJ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void DownL(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void DownT(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void DownS(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void DownZ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 };
 
