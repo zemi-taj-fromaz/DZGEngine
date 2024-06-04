@@ -226,7 +226,24 @@ void MyScene::keyCallback(GLFWwindow* window, int key, int scancode, int action,
 		{
 		case(GLFW_KEY_DOWN):
 		{
-			m_CurrentTetro.processDown(this->MeshVec);
+			if (!m_CurrentTetro.processDown(this->MeshVec)) 
+			{ 
+				m_CurrentTetro = Tetromino(); 
+
+				for (auto& pos : m_CurrentTetro.Positions)
+				{
+					dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take();
+				}
+			}
+			else if(m_CurrentTetro.IsAttached(this->MeshVec))
+			{
+				m_CurrentTetro = Tetromino();
+
+				for (auto& pos : m_CurrentTetro.Positions)
+				{
+					dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take();
+				}
+			}
 			break;
 		}
 		case(GLFW_KEY_UP):

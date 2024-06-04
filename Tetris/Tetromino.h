@@ -2,7 +2,9 @@
 
 #include <vector>
 #include <memory>
-#include "Mesh.h"
+#include <random>
+
+struct Mesh;
 
 enum TetrominoType
 {
@@ -28,56 +30,77 @@ class Tetromino
 public:
 	Tetromino()
 	{
-		//type = TetrominoType::I;
-		//Positions.push_back({ 0,5 });
-		//Positions.push_back({ 1,5 });
-		//Positions.push_back({ 2,5 });
-		//Positions.push_back({ 3,5 });
-
-		//type = TetrominoType::J;
-		//Positions.push_back({ 0,5 });
-		//Positions.push_back({ 1,5 });
-		//Positions.push_back({ 2,5 });
-		//Positions.push_back({ 2,4 });
-
-		//type = TetrominoType::L;
-		//Positions.push_back({ 0,5 });
-		//Positions.push_back({ 1,5 });
-		//Positions.push_back({ 2,5 });
-		//Positions.push_back({ 2,6 });
-
-		//type = TetrominoType::T;
-		//Positions.push_back({ 1,4 });
-		//Positions.push_back({ 1,5 });
-		//Positions.push_back({ 1,6 });
-		//Positions.push_back({ 2,5 });
-
-		type = TetrominoType::S;
-		Positions.push_back({ 1,5 });
-		Positions.push_back({ 1,4 });
-		Positions.push_back({ 2,4 });
-		Positions.push_back({ 2,3 });
-
-		//type = TetrominoType::Z;
-		//Positions.push_back({ 1,4 });
-		//Positions.push_back({ 1,5 });
-		//Positions.push_back({ 2,5 });
-		//Positions.push_back({ 2,6 });
+		static std::random_device dev;
+		static std::mt19937 rng(dev());
+		static std::uniform_int_distribution<int> RandInt(2, 7); // distribution in range [1, 6]
 
 		rotationPos = 1;
+
+		type = Tetromino::GenerateType();
+		type = TetrominoType::L;
+
+		switch (type)
+		{
+		case(TetrominoType::I):
+			{
+				float column = RandInt(rng);
+				Positions = { {0, column}, {1, column}, {2, column}, {3, column} };
+				break;
+			}
+		case(TetrominoType::J):
+		{
+			float column = RandInt(rng);
+			Positions = { {0, column}, {1, column}, {2, column}, {2, column - 1} };
+			break;
+		}
+		case(TetrominoType::L):
+		{
+			float column = RandInt(rng);
+			Positions = { {0, column}, {1, column}, {2, column}, {2, column + 1} };
+			break;
+		}
+		case(TetrominoType::T):
+		{
+			float column = RandInt(rng);
+			Positions = { {0, column}, {0, column + 1}, {0, column + 2}, {1, column } };
+			break;
+		}
+		case(TetrominoType::S):
+		{
+			float column = RandInt(rng);
+			Positions = { {0, column}, {0, column - 1}, {1, column - 1}, {1, column - 2} };
+			break;
+		}
+		case(TetrominoType::Z):
+		{
+			float column = RandInt(rng);
+			Positions = { {0, column}, {0, column + 1}, {1, column + 1}, {1, column + 2} };
+			break;
+		}
+		}
 		/* select random Type and select random spawn position(random collumn)*/
 	}
 
-	void processDown(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	bool processDown(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void processUp(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void processLeft(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void processRight(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	
+	bool IsAttached(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+
 	TetrominoType type;
 	int rotationPos;
 	std::vector<std::pair<int, int> > Positions;
 
 private:
+
+	static std::random_device dev;
+	static std::mt19937 rng;
+
+	static std::uniform_int_distribution<int> RandInt; // distribution in range [1, 6]
+
+	static TetrominoType GenerateType();
+
 	void RotateI(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void RotateL(std::vector<std::shared_ptr<Mesh>>& MeshVec);
@@ -100,11 +123,11 @@ private:
 	void RightZ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 
 
-	void DownI(std::vector<std::shared_ptr<Mesh>>& MeshVec);
-	void DownJ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
-	void DownL(std::vector<std::shared_ptr<Mesh>>& MeshVec);
-	void DownT(std::vector<std::shared_ptr<Mesh>>& MeshVec);
-	void DownS(std::vector<std::shared_ptr<Mesh>>& MeshVec);
-	void DownZ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	bool DownI(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	bool DownJ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	bool DownL(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	bool DownT(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	bool DownS(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	bool DownZ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 };
 

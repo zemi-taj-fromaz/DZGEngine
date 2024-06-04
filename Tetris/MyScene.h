@@ -10,6 +10,7 @@
 #include <vendor/imgui/imgui_impl_vulkan.h>
 
 #include <random>
+#include <queue>
 
 #include "Tetromino.h"
 #include "Field.h"
@@ -46,6 +47,7 @@ private:
 	GameState gs = GameState::PLAY;
 
 	Tetromino m_CurrentTetro;
+	std::queue<Tetromino> TetroQueue;
 	FieldVec_t m_FieldVec;
 
 	int m_Score = 0;
