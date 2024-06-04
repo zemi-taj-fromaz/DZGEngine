@@ -7,6 +7,7 @@
 #include "Mesh.h"
 #include "texture.h"
 #include "Sampler.h"
+#include "Camera.h"
 
 #include "vendor/imgui/imgui.h"
 #include "vendor/imgui/imgui_impl_glfw.h"
@@ -38,6 +39,7 @@ class Scene
 {
 public:
 	Scene() : WIDTH(1280u), HEIGHT(720u) {}
+	Scene(uint32_t width, uint32_t height) : WIDTH(width), HEIGHT(height) {}
 	uint32_t WIDTH;
 	uint32_t HEIGHT;
 	PipelineDataVec_t pipelineDataVec;
@@ -60,6 +62,11 @@ public:
 	virtual void scene_update(float totalTime, float deltaTime, dzg* app) {}
 	virtual void inputPolling(GLFWwindow* window, float deltaTime) {}
 	virtual void drawImgui(dzg* app, VkCommandBuffer commandbuffer) {}
+	virtual std::unique_ptr<Camera> GetCamera(dzg* app) 
+	{
+		float aspectRation = (float)this->WIDTH / (float)this->HEIGHT;
+		return std::make_unique<Camera>(0, WIDTH, 0, HEIGHT);
+	}
 };
 
 

@@ -5,7 +5,7 @@
 //#include "vendor/imgui/imgui_impl_glfw.h"
 //#include "vendor/imgui/imgui_impl_vulkan.h"
 
-MyScene::MyScene()
+MyScene::MyScene(uint32_t width, uint32_t height) : Scene(width, height)
 {
 	this->clearColor = { {0.1f, 0.06f, 0.06f, 1.0f}};
 	//STEPS
@@ -92,50 +92,23 @@ MyScene::MyScene()
 
 	//8) Mesh
 
-	Player = std::make_shared<Mesh>(MeshType::Quad);
-	Player->DescriptorSetVec = DescriptorSetVec;
-	Player->PipelineData = pData;
-	Player->offsetPosition(glm::vec3(0.5f, 0.5f, 0.0f));
-
-	m_Player = Player;
-
-	MeshVec.push_back(m_Player);
-
-	float offset = 8.0f;
-	Pillar* pillar = nullptr;
-	for (int i = 3; i < 11; i++)
+	for (int i = 0; i < 20; ++i)
 	{
-		pillar = new Pillar();
-		std::shared_ptr<Mesh> m2 = std::shared_ptr<Mesh>(pillar);
-		m2->DescriptorSetVec = DescriptorSetVec;
-		m2->PipelineData = pDataPillar;
+		for (int j = 0; j < 10; ++j)
+		{
+			std::shared_ptr<Mesh> m2 = std::make_shared<Mesh>(MeshType::Quad);
+			m2->DescriptorSetVec = DescriptorSetVec;
+			m2->PipelineData = pDataPillar;
+			m2->Color = glm::vec4(0.1f, 0.1f, 0.8f, 1.0f);
+			m2->offsetPosition(glm::vec3(0.5f, 0.5f, 0.0f));
 
-		m2->setPosition(glm::vec3(offset * i, 0.0f, 0.0f));
+			m2->offsetPosition(glm::vec3(j*1.1f, i * 1.1f, 0.0f));
 
-		auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 1.0f, 1.0f));
-		m2->setScale(scale);
-		MeshVec.push_back(m2);
-		m_PillarsVec.push_back(m2);
+			//auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 1.0f, 1.0f));
+			//m2->setScale(scale);
+			MeshVec.push_back(m2);
+		}
 	}
-	pillar = nullptr;
-
-	m_ParticleSystem = std::make_unique<ParticleSystem>();
-
-	for (int i = 0; i < m_ParticleSystem->m_ParticlePool.size(); ++i)
-	{
-		m_ParticleSystem->m_ParticlePool[i]->DescriptorSetVec = DescriptorSetVec;
-		m_ParticleSystem->m_ParticlePool[i]->PipelineData = pDataPillar;
-		MeshVec.push_back(m_ParticleSystem->m_ParticlePool[i]);
-	}
-
-	m_EngineParticle.Position = { 0.0f, 0.0f };
-	m_EngineParticle.Velocity = { -2.0f, 0.0f },
-	m_EngineParticle.VelocityVariation = { 3.0f, 1.0f };
-	m_EngineParticle.SizeBegin = 0.3f, m_EngineParticle.SizeEnd = 0.0f, m_EngineParticle.SizeVariation = 0.3f;
-	m_EngineParticle.ColorBegin = { 254.0f / 255.0f, 10.0f / 255.0f, 10.0f / 255.0f, 1.0f };
-	m_EngineParticle.ColorEnd = { 254.0f / 255.0f, 212.0f / 255.0f, 50.0f / 255.0f , 1.0f };
-	m_EngineParticle.LifeTime = 1.0f;
-
 }
 
 std::wstring ConvertToWideString(const std::string& narrowStr) {
@@ -147,6 +120,17 @@ std::wstring ConvertToWideString(const std::string& narrowStr) {
 
 void MyScene::scene_update(float totalTime, float deltaTime, dzg* app) 
 {
+	for (auto& vec : MeshVec)
+	{
+		vec->Color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+	}
+	if (m_CurrentTetro.type == TetrominoaType::SQUARE)
+	{
+		auto pos = m_CurrentTetro.Positions[0];
+		MeshVec[pos.first * 10 + pos.second]->Color = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);
+	}
+
+	return;
 	// TODO Add sound
 	//bool isit = PlaySound(TEXT("C:/Users/hrcol/Downloads/about_time.wav"), NULL, SND_ASYNC);
 	//
@@ -165,6 +149,7 @@ void MyScene::scene_update(float totalTime, float deltaTime, dzg* app)
 	if (CollisionTest(app))
 	{
 		gs = GameState::OVER;
+		m_GameOver = true;
 		return;
 	}
 }
@@ -175,17 +160,17 @@ void MyScene::restartScene()
 		
 	m_Score = 0;
 	gs = GameState::PLAY;
-	float offset = 8.0f;
-	for (int i = 3; i < 11; i++)
-	{
-		m_PillarsVec[i - 3]->setPosition(glm::vec3(offset * i, 0.0f, 0.0f));
-	}
-	m_Player->setPosition({ 0.0f, 0.0f, 0.0f });
+	m_GameOver = false;
 }
 
 void MyScene::inputPolling(GLFWwindow* window, float deltaTime) 
 {
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		m_CurrentTetro.processInput(Input::DOWN);
+	}
 
+
+	return;
 	if (gs == GameState::OVER)
 	{
 		if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) 
@@ -199,54 +184,30 @@ void MyScene::inputPolling(GLFWwindow* window, float deltaTime)
 		return;
 	}
 
-	float playerSpeed = 6.0f;
-	//float gravity = 2.0f;
-	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		this->Player->offsetPosition(glm::vec3(0.0f, -playerSpeed * deltaTime, 0.0f));
-		auto rot = glm::rotate(glm::mat4(1.0f), glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-		this->Player->setRotation(rot);
+	//float playerSpeed = 6.0f;
+	////float gravity = 2.0f;
+	//if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+	//	this->Player->offsetPosition(glm::vec3(0.0f, -playerSpeed * deltaTime, 0.0f));
+	//	auto rot = glm::rotate(glm::mat4(1.0f), glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	//	this->Player->setRotation(rot);
 
-		m_EngineParticle.Position = glm::vec2(this->Player->Position) + glm::vec2(-0.5f, 1.0f);
-		m_EngineParticle.Velocity = glm::vec2(dynamic_cast<Pillar*>(m_PillarsVec[0].get())->Speed, 6.0f);
-		this->m_ParticleSystem->Emit(m_EngineParticle);
-	}
-	else
-	{
-		auto rot = glm::rotate(glm::mat4(1.0f), glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-		this->Player->setRotation(rot);
-		this->Player->offsetPosition(glm::vec3(0.0f, playerSpeed * deltaTime, 0.0f));
-	}
+	//	m_EngineParticle.Position = glm::vec2(this->Player->Position) + glm::vec2(-0.5f, 1.0f);
+	//	m_EngineParticle.Velocity = glm::vec2(dynamic_cast<Pillar*>(m_PillarsVec[0].get())->Speed, 6.0f);
+	//	this->m_ParticleSystem->Emit(m_EngineParticle);
+	//}
+	//else
+	//{
+	//	auto rot = glm::rotate(glm::mat4(1.0f), glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	//	this->Player->setRotation(rot);
+	//	this->Player->offsetPosition(glm::vec3(0.0f, playerSpeed * deltaTime, 0.0f));
+	//}
 }
 
 bool MyScene::CollisionTest(dzg* app)
 {
-	return CheckBorders(app) || CheckPillars();
-}
-
-bool MyScene::CheckBorders(dzg* app)
-{
-	return  app->camHeight <= this->Player->Position.y +1.0f || this->Player->Position.y <= app->camHeight * -1.0f; // 1.0f is player size
-}
-
-bool MyScene::CheckPillars()
-{
-	for (auto& pillar : m_PillarsVec)
-	{
-		if (pillar->Position.x <= 1.0f && pillar->Position.x >= -2.0f) //TODO add explanations/remove hardcoding for these fixed variables
-		{
-
-			if (std::abs(pillar->Position.x) < 0.05f) m_Score++;
-
-			bool Nocollision = (pillar->Position.z < this->Player->Position.y) && (this->Player->Position.y + 1.0f < pillar->Position.w);
-
-			if (!Nocollision) {
-				return true;
-			}
-		}
-	}
-
 	return false;
 }
+
 
 void MyScene::drawImgui(dzg* app, VkCommandBuffer commandbuffer)
 {	if(gs == GameState::PLAY)
@@ -331,13 +292,6 @@ void MyScene::drawImgui(dzg* app, VkCommandBuffer commandbuffer)
 
 std::unique_ptr<Camera> MyScene::GetCamera(dzg* app)
 {
-	float aspectRation = (float)this->WIDTH / (float)this->HEIGHT;
-
-	float camHeight = 9.0f;
-	app->camHeight = camHeight;
-	float bottom = -camHeight;
-	float top = camHeight;
-	float left = bottom * aspectRation;
-	float right = top * aspectRation;
-	return std::make_unique<Camera>(left, right, bottom, top);
+	return std::make_unique<Camera>(-0.5f, 15.0f * 1.1f + 0.5f, -0.5f, 20.0f * 1.1f+ 0.5f);
 }
+

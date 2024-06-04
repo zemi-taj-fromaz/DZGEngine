@@ -4,8 +4,6 @@
 
 #include "Scene.h"
 #include "BufferObject.h"
-#include "Pillar.h"
-#include "ParticleSystem.h"
 
 #include <vendor/imgui/imgui.h>
 #include <vendor/imgui/imgui_impl_glfw.h>
@@ -13,7 +11,7 @@
 
 #include <random>
 
-using PillarsVec_t = std::vector<std::shared_ptr<Mesh>>;
+#include "Tetrominoes.h"
 
 enum GameState
 {
@@ -26,8 +24,7 @@ enum GameState
 class MyScene : public Scene
 {
 public:
-	MyScene();
-	MyScene(uint32_t, uint32_t);
+	MyScene(uint32_t width, uint32_t height);
 
 	virtual void scene_update(float totalTime, float deltaTime, dzg* app) override;
 	virtual void inputPolling(GLFWwindow* window, float deltaTime) override;
@@ -35,20 +32,15 @@ public:
 	virtual std::unique_ptr<Camera> GetCamera(dzg* app) override;
 
 private:
-
 	void restartScene();
 
 	bool CollisionTest(dzg* app);
-	bool CheckBorders(dzg* app);
-	bool CheckPillars();
 
-	ParticleProps m_EngineParticle;
-	std::unique_ptr<ParticleSystem> m_ParticleSystem;
-	PillarsVec_t m_PillarsVec;
-
-	std::shared_ptr<Mesh> m_Player;
+	bool m_GameOver = false;
 
 	GameState gs = GameState::PLAY;
+
+	Tetrominoes m_CurrentTetro;
 
 	int m_Score = 0;
 };

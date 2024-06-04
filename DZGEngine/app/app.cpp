@@ -21,6 +21,8 @@
 #include <limits> 
 #include <algorithm> 
 
+#include <windows.h>
+
 #include "AppBoilerplate.h"
 
 void dzg::run(std::unique_ptr<Scene>& s) {
@@ -36,24 +38,7 @@ void dzg::run(std::unique_ptr<Scene>& s) {
     
     initImgui();
 
-    float aspectRation = (float)this->WIDTH / (float)this->HEIGHT;
-
-
-    float camHeight = 9.0f;
-    
-    this->camHeight = camHeight;
-
-    float bottom = -camHeight;
-    float top = camHeight;
-    float left = bottom * aspectRation;
-    float right = top * aspectRation;
-
-    //float camHeight = 9.0f;
-    //float bottom = 0.f;
-    //float top = this->HEIGHT;
-    //float left = 0.f;
-    //float right = this->WIDTH;
-    camera = std::make_unique<Camera>(left, right, bottom, top);
+    camera = m_scene->GetCamera(this);
 
 
  //   camera = std::make_unique<Camera>(0.0f, static_cast<float>(this->WIDTH), 0.0f, (float)this->HEIGHT);
@@ -64,7 +49,7 @@ void dzg::run(std::unique_ptr<Scene>& s) {
 
 void  dzg::mainLoop() {
     
-    static float initialTime{ (float)glfwGetTime() };
+    initialTime = (float)glfwGetTime();
 
 
     float time = (float)glfwGetTime();
@@ -75,7 +60,7 @@ void  dzg::mainLoop() {
     style->Colors[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
     while (!glfwWindowShouldClose(window)) {
-
+        
         float currTime = (float)glfwGetTime();
         deltaTime = currTime - time;
         totalTime = currTime - initialTime;

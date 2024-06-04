@@ -154,6 +154,7 @@ public:
     std::unique_ptr<Camera> camera;
     int camHeight;
     std::unique_ptr<Scene> m_scene;
+    float initialTime;
 
 private:
     const int MAX_FRAMES_IN_FLIGHT = 2;

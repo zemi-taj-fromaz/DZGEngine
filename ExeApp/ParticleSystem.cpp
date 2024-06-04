@@ -28,7 +28,7 @@ void Particle::update(float totalTime, float deltaTime, dzg* app)
 
 	offsetPosition(glm::vec3(Velocity.x * deltaTime, Velocity.y * deltaTime, 0.0f));
 
-  	this->LifeRemaining -= 1.0f *deltaTime;
+    	this->LifeRemaining -= 1.0f *deltaTime;
 
 	//std::cout << LifeRemaining << std::endl;
 	  
