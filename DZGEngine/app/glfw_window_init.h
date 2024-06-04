@@ -16,6 +16,11 @@ namespace glfw
         app->framebufferResized = true;
     }
 
+    static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+        auto app = reinterpret_cast<dzg*>(glfwGetWindowUserPointer(window));
+        app->m_scene->keyCallback(window, key, scancode, action, mods);
+    }
+
     GLFWwindow* initWindowGLFW(int WIDTH, int HEIGHT, std::string appName = "Vulkan")
     {
         glfwInit();
@@ -29,6 +34,10 @@ namespace glfw
     {
         glfwSetWindowUserPointer(window, app);
         glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
+        glfwSetKeyCallback(window, keyCallback);
+        /*
+            Add more callback functions as needed
+        */
     }
      
     bool inputPolling(GLFWwindow* window, float deltaTime)

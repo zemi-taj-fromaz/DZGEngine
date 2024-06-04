@@ -24,19 +24,12 @@ public:
 		/* select random Type and select random spawn position(random collumn)*/
 	}
 
-	void processInput(Input input)
-	{
-		if (input = Input::DOWN)
-		{
-			for (auto& pair : Positions)
-			{
-				pair.first += 1;
-			}
-		}
-	}
-
+	void processDown();
+	void processUp();
+	void processLeft();
+	void processRight();
+	
 	TetrominoaType type;
 	std::vector<std::pair<int, int> > Positions;
-
 };
 

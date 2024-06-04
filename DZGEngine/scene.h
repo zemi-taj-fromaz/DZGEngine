@@ -67,6 +67,9 @@ public:
 		float aspectRation = (float)this->WIDTH / (float)this->HEIGHT;
 		return std::make_unique<Camera>(0, WIDTH, 0, HEIGHT);
 	}
+
+	virtual void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {}
+
 };
 
 

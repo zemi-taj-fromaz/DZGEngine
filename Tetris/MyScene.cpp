@@ -165,10 +165,6 @@ void MyScene::restartScene()
 
 void MyScene::inputPolling(GLFWwindow* window, float deltaTime) 
 {
-	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		m_CurrentTetro.processInput(Input::DOWN);
-	}
-
 
 	return;
 	if (gs == GameState::OVER)
@@ -294,4 +290,35 @@ std::unique_ptr<Camera> MyScene::GetCamera(dzg* app)
 {
 	return std::make_unique<Camera>(-0.5f, 15.0f * 1.1f + 0.5f, -0.5f, 20.0f * 1.1f+ 0.5f);
 }
+
+void MyScene::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) 
+{
+	if (action == GLFW_PRESS)
+	{
+		switch (key)
+		{
+		case(GLFW_KEY_DOWN):
+		{
+			m_CurrentTetro.processDown();
+			break;
+		}
+		case(GLFW_KEY_UP):
+		{
+			m_CurrentTetro.processUp();
+			break;
+		}
+		case(GLFW_KEY_LEFT):
+		{
+			m_CurrentTetro.processLeft();
+			break;
+		}
+		case(GLFW_KEY_RIGHT):
+		{
+			m_CurrentTetro.processRight();
+			break;
+		}
+		}
+	}
+}
+
 

@@ -30,6 +30,7 @@ public:
 	virtual void inputPolling(GLFWwindow* window, float deltaTime) override;
 	virtual void drawImgui(dzg* app, VkCommandBuffer commandbuffer) override;
 	virtual std::unique_ptr<Camera> GetCamera(dzg* app) override;
+	virtual void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) override;
 
 private:
 	void restartScene();
