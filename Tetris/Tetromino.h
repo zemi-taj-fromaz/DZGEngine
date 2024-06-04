@@ -40,11 +40,17 @@ public:
 		//Positions.push_back({ 2,5 });
 		//Positions.push_back({ 2,4 });
 
-		type = TetrominoType::T;
-		Positions.push_back({ 1,4 });
+		//type = TetrominoType::T;
+		//Positions.push_back({ 1,4 });
+		//Positions.push_back({ 1,5 });
+		//Positions.push_back({ 1,6 });
+		//Positions.push_back({ 2,5 });
+
+		type = TetrominoType::S;
 		Positions.push_back({ 1,5 });
-		Positions.push_back({ 1,6 });
-		Positions.push_back({ 2,5 });
+		Positions.push_back({ 1,4 });
+		Positions.push_back({ 2,4 });
+		Positions.push_back({ 2,3 });
 
 		rotationPos = 1;
 		/* select random Type and select random spawn position(random collumn)*/
@@ -64,5 +70,6 @@ private:
 	void RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void RotateL(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void RotateT(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void RotateS(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 };
 
