@@ -7,7 +7,7 @@
 
 MyScene::MyScene(uint32_t width, uint32_t height) : Scene(width, height)
 {
-	this->clearColor = { {0.1f, 0.06f, 0.06f, 1.0f}};
+	this->clearColor = { {0.1f, 0.06f, 0.06f, 1.0f} };
 	//STEPS
 	// 1) Textures
 	// 2) Samplers
@@ -92,23 +92,27 @@ MyScene::MyScene(uint32_t width, uint32_t height) : Scene(width, height)
 
 	//8) Mesh
 
+	Field* field = nullptr;
 	for (int i = 0; i < 20; ++i)
 	{
 		for (int j = 0; j < 10; ++j)
 		{
-			std::shared_ptr<Mesh> m2 = std::make_shared<Mesh>(MeshType::Quad);
+			field = new Field();
+			std::shared_ptr<Mesh> m2 = std::shared_ptr<Mesh>(field);
 			m2->DescriptorSetVec = DescriptorSetVec;
 			m2->PipelineData = pDataPillar;
-			m2->Color = glm::vec4(0.1f, 0.1f, 0.8f, 1.0f);
 			m2->offsetPosition(glm::vec3(0.5f, 0.5f, 0.0f));
-
-			m2->offsetPosition(glm::vec3(j*1.1f, i * 1.1f, 0.0f));
-
-			//auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 1.0f, 1.0f));
-			//m2->setScale(scale);
+			m2->offsetPosition(glm::vec3(j * 1.1f, i * 1.1f, 0.0f));
 			MeshVec.push_back(m2);
 		}
 	}
+	field = nullptr;
+
+	for (auto& pos : m_CurrentTetro.Positions)
+	{
+		dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take();
+	}
+
 }
 
 std::wstring ConvertToWideString(const std::string& narrowStr) {
@@ -120,15 +124,15 @@ std::wstring ConvertToWideString(const std::string& narrowStr) {
 
 void MyScene::scene_update(float totalTime, float deltaTime, dzg* app) 
 {
-	for (auto& vec : MeshVec)
-	{
-		vec->Color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-	}
-	if (m_CurrentTetro.type == TetrominoaType::SQUARE)
-	{
-		auto pos = m_CurrentTetro.Positions[0];
-		MeshVec[pos.first * 10 + pos.second]->Color = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);
-	}
+	//for (auto& vec : MeshVec)
+	//{
+	//	vec->Color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+	//}
+	//if (m_CurrentTetro.type == TetrominoType::SQUARE)
+	//{
+	//	auto pos = m_CurrentTetro.Positions[0];
+	//	MeshVec[pos.first * 10 + pos.second]->Color = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);
+	//}
 
 	return;
 	// TODO Add sound
@@ -206,84 +210,7 @@ bool MyScene::CollisionTest(dzg* app)
 
 
 void MyScene::drawImgui(dzg* app, VkCommandBuffer commandbuffer)
-{	if(gs == GameState::PLAY)
-	{
-		ImGui_ImplVulkan_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-
-		ImGui::NewFrame();
-
-		ImGuiWindowFlags window_flags = 0;
-		window_flags |= ImGuiWindowFlags_NoBackground;
-		window_flags |= ImGuiWindowFlags_NoTitleBar;
-
-		ImVec2 windowSize{ 250, 350 };
-		ImGui::SetNextWindowSize(windowSize);
-
-		ImGui::SetNextWindowPos(ImVec2(app->GetWidth() / 1.2, app->GetHeight() / 10));
-
-		//ImGui::SetNextWindowPos(ImVec2(0, 0));
-
-		// etc.
-		bool open_ptr = true;
-		ImGui::Begin("I'm a Window!", &open_ptr, window_flags);
-
-		ImFont* font = ImGui::GetFont();
-		font->Scale = 2;
-
-		// font->Color
-		ImGui::PushFont(font);
-		//imgui commands
-
-		std::string score = "Score : " + std::to_string(m_Score);
-		ImGui::Text(score.c_str());
-
-		ImGui::PopFont();
-
-		ImGui::End();
-
-		ImGui::EndFrame();
-		ImGui::Render();
-		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandbuffer);
-	}
-	else if(gs == GameState::OVER)
-	{
-		ImGui_ImplVulkan_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-
-		ImGui::NewFrame();
-
-		ImGuiWindowFlags window_flags = 0;
-		window_flags |= ImGuiWindowFlags_NoBackground;
-		window_flags |= ImGuiWindowFlags_NoTitleBar;
-
-		ImVec2 windowSize{ 270, 350 };
-		ImGui::SetNextWindowSize(windowSize);
-		ImGui::SetNextWindowPos(ImVec2(app->GetWidth() / 2, app->GetHeight() / 2));
-		// etc.
-		bool open_ptr = true;
-		ImGui::Begin("I'm a Window!", &open_ptr, window_flags);
-
-		ImFont* font = ImGui::GetFont();
-		font->Scale = 2;
-
-		// font->Color
-		ImGui::PushFont(font);
-		//imgui commands
-
-		std::string score = "Your score : " + std::to_string(m_Score);
-		ImGui::Text("GAME OVER");
-		ImGui::Text(score.c_str());
-		ImGui::Text("Press R to restart Game");
-
-		ImGui::PopFont();
-
-		ImGui::End();
-
-		ImGui::EndFrame();
-		ImGui::Render();
-		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandbuffer);
-	}
+{
 }
 
 std::unique_ptr<Camera> MyScene::GetCamera(dzg* app)
@@ -299,22 +226,22 @@ void MyScene::keyCallback(GLFWwindow* window, int key, int scancode, int action,
 		{
 		case(GLFW_KEY_DOWN):
 		{
-			m_CurrentTetro.processDown();
+			m_CurrentTetro.processDown(this->MeshVec);
 			break;
 		}
 		case(GLFW_KEY_UP):
 		{
-			m_CurrentTetro.processUp();
+			m_CurrentTetro.processUp(MeshVec);
 			break;
 		}
 		case(GLFW_KEY_LEFT):
 		{
-			m_CurrentTetro.processLeft();
+			m_CurrentTetro.processLeft(MeshVec);
 			break;
 		}
 		case(GLFW_KEY_RIGHT):
 		{
-			m_CurrentTetro.processRight();
+			m_CurrentTetro.processRight(MeshVec);
 			break;
 		}
 		}

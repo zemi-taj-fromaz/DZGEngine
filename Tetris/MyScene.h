@@ -11,7 +11,11 @@
 
 #include <random>
 
-#include "Tetrominoes.h"
+#include "Tetromino.h"
+#include "Field.h"
+
+
+using FieldVec_t = std::vector<std::shared_ptr<Field>>;
 
 enum GameState
 {
@@ -41,7 +45,8 @@ private:
 
 	GameState gs = GameState::PLAY;
 
-	Tetrominoes m_CurrentTetro;
+	Tetromino m_CurrentTetro;
+	FieldVec_t m_FieldVec;
 
 	int m_Score = 0;
 };

@@ -136,9 +136,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BufferObject.cpp" />
+    <ClCompile Include="Field.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyScene.cpp" />
-    <ClCompile Include="Tetrominoes.cpp" />
+    <ClCompile Include="Tetromino.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DZGEngine\DZGEngine.vcxproj">
@@ -147,8 +148,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BufferObject.h" />
+    <ClInclude Include="Field.h" />
     <ClInclude Include="MyScene.h" />
-    <ClInclude Include="Tetrominoes.h" />
+    <ClInclude Include="Tetromino.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
