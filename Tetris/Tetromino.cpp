@@ -367,11 +367,11 @@ void Tetromino::RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 	}
 }
 
-void Tetromino::RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
+void Tetromino::RotateL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 {
 	if (rotationPos == 1)
 	{
-		if (Positions[0].second > 8) return;
+		if (Positions[0].second < 1) return;
 
 
 		int currPos0x = Positions[0].first;
@@ -392,8 +392,8 @@ void Tetromino::RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		int newPos2x = currPos2x - 1;
 		int newPos2y = currPos2y - 1;
 
-		int newPos3x = currPos3x - 2;
-		int newPos3y = currPos3y;
+		int newPos3x = currPos3x;
+		int newPos3y = currPos3y - 2;
 
 		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
 		//		if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
@@ -423,7 +423,7 @@ void Tetromino::RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 	}
 	else if (rotationPos == 2)
 	{
-		if (Positions[0].first > 18) return;
+		if (Positions[0].first < 1) return;
 
 		int currPos0x = Positions[0].first;
 		int currPos0y = Positions[0].second;
@@ -443,8 +443,8 @@ void Tetromino::RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		int newPos2x = currPos2x - 1;
 		int newPos2y = currPos2y + 1;
 
-		int newPos3x = currPos3x;
-		int newPos3y = currPos3y + 2;
+		int newPos3x = currPos3x - 2;
+		int newPos3y = currPos3y;
 
 		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
 		//		if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
@@ -474,7 +474,7 @@ void Tetromino::RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 	}
 	else if (rotationPos == 3)
 	{
-		if (Positions[0].second < 1) return;
+		if (Positions[0].second > 8) return;
 
 		int currPos0x = Positions[0].first;
 		int currPos0y = Positions[0].second;
@@ -494,8 +494,8 @@ void Tetromino::RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		int newPos2x = currPos2x + 1;
 		int newPos2y = currPos2y + 1;
 
-		int newPos3x = currPos3x + 2;
-		int newPos3y = currPos3y;
+		int newPos3x = currPos3x;
+		int newPos3y = currPos3y + 2;
 
 		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
 		//		if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
@@ -525,7 +525,7 @@ void Tetromino::RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 	}
 	else if (rotationPos == 4)
 	{
-		if (Positions[0].first < 1) return;
+		if (Positions[0].first > 18) return;
 
 		int currPos0x = Positions[0].first;
 		int currPos0y = Positions[0].second;
@@ -545,8 +545,8 @@ void Tetromino::RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		int newPos2x = currPos2x + 1;
 		int newPos2y = currPos2y - 1;
 
-		int newPos3x = currPos3x;
-		int newPos3y = currPos3y - 2;
+		int newPos3x = currPos3x + 2;
+		int newPos3y = currPos3y;
 
 		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
 		//		if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;

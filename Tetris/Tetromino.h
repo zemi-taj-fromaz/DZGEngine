@@ -12,9 +12,9 @@ enum TetrominoType
 	O = 3,
 	T = 4,
 	J = 5,
-	L = 5,
-	S = 6,
-	Z = 7
+	L = 6,
+	S = 7,
+	Z = 8
 };
 
 enum Input
@@ -34,11 +34,11 @@ public:
 		//Positions.push_back({ 2,5 });
 		//Positions.push_back({ 3,5 });
 
-		type = TetrominoType::J;
-		Positions.push_back({ 0,5 });
-		Positions.push_back({ 1,5 });
-		Positions.push_back({ 2,5 });
-		Positions.push_back({ 2,4 });
+		//type = TetrominoType::J;
+		//Positions.push_back({ 0,5 });
+		//Positions.push_back({ 1,5 });
+		//Positions.push_back({ 2,5 });
+		//Positions.push_back({ 2,4 });
 
 		type = TetrominoType::L;
 		Positions.push_back({ 0,5 });
