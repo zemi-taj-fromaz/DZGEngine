@@ -40,23 +40,29 @@ public:
 		//Positions.push_back({ 2,5 });
 		//Positions.push_back({ 2,4 });
 
+		//type = TetrominoType::L;
+		//Positions.push_back({ 0,5 });
+		//Positions.push_back({ 1,5 });
+		//Positions.push_back({ 2,5 });
+		//Positions.push_back({ 2,6 });
+
 		//type = TetrominoType::T;
 		//Positions.push_back({ 1,4 });
 		//Positions.push_back({ 1,5 });
 		//Positions.push_back({ 1,6 });
 		//Positions.push_back({ 2,5 });
 
-		//type = TetrominoType::S;
-		//Positions.push_back({ 1,5 });
-		//Positions.push_back({ 1,4 });
-		//Positions.push_back({ 2,4 });
-		//Positions.push_back({ 2,3 });
-
-		type = TetrominoType::Z;
-		Positions.push_back({ 1,4 });
+		type = TetrominoType::S;
 		Positions.push_back({ 1,5 });
-		Positions.push_back({ 2,5 });
-		Positions.push_back({ 2,6 });
+		Positions.push_back({ 1,4 });
+		Positions.push_back({ 2,4 });
+		Positions.push_back({ 2,3 });
+
+		//type = TetrominoType::Z;
+		//Positions.push_back({ 1,4 });
+		//Positions.push_back({ 1,5 });
+		//Positions.push_back({ 2,5 });
+		//Positions.push_back({ 2,6 });
 
 		rotationPos = 1;
 		/* select random Type and select random spawn position(random collumn)*/

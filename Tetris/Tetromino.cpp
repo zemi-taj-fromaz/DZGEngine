@@ -1367,9 +1367,9 @@ void Tetromino::LeftL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		int newPos3y = currPos3y - 1;
 
 		//if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
-		if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
 		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
-		//if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
 
 
 		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
@@ -1379,9 +1379,9 @@ void Tetromino::LeftL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 
 
 		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
 		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2774,4 +2774,893 @@ void Tetromino::RightZ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		Positions[3].second = newPos3y;
 	}
 }
+
+void Tetromino::DownI(std::vector<std::shared_ptr<Mesh>>& MeshVec)
+{
+	if (rotationPos == 1)
+	{
+		if (Positions[3].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		//if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+	else if (rotationPos == 2)
+	{
+		if (Positions[0].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+}
+
+void Tetromino::DownJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
+{
+	if (rotationPos == 1)
+	{
+		if (Positions[3].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		//if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+	else if (rotationPos == 2)
+	{
+		if (Positions[0].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+	else if (rotationPos == 3)
+	{
+		if (Positions[0].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		//dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+	else if (rotationPos == 4)
+	{
+		if (Positions[0].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+}
+
+void Tetromino::DownL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
+{
+	if (rotationPos == 1)
+	{
+		if (Positions[2].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		//if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+	else if (rotationPos == 2)
+	{
+		if (Positions[3].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+	else if (rotationPos == 3)
+	{
+		if (Positions[0].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		//dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+	else if (rotationPos == 4)
+	{
+		if (Positions[0].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+}
+
+void Tetromino::DownT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
+{
+	if (rotationPos == 1)
+	{
+		if (Positions[3].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+	else if (rotationPos == 2)
+	{
+		if (Positions[2].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		//if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+	else if (rotationPos == 3)
+	{
+		if (Positions[0].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+	else if (rotationPos == 4)
+	{
+		if (Positions[0].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		//dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+}
+
+void Tetromino::DownS(std::vector<std::shared_ptr<Mesh>>& MeshVec)
+{
+	if (rotationPos == 1)
+	{
+		if (Positions[3].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+	else if (rotationPos == 2)
+	{
+		if (Positions[0].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		//dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+}
+
+void Tetromino::DownZ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
+{
+	if (rotationPos == 1)
+	{
+		if (Positions[3].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+	else if (rotationPos == 2)
+	{
+		if (Positions[0].first > 18) return;
+
+		int currPos0x = Positions[0].first;
+		int currPos0y = Positions[0].second;
+		int currPos1x = Positions[1].first;
+		int currPos1y = Positions[1].second;
+		int currPos2x = Positions[2].first;
+		int currPos2y = Positions[2].second;
+		int currPos3x = Positions[3].first;
+		int currPos3y = Positions[3].second;
+
+		int newPos0x = currPos0x + 1;
+		int newPos0y = currPos0y;
+		int newPos1x = currPos1x + 1;
+		int newPos1y = currPos1y;
+		int newPos2x = currPos2x + 1;
+		int newPos2y = currPos2y;
+		int newPos3x = currPos3x + 1;
+		int newPos3y = currPos3y;
+
+		//if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
+		//if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return;
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
+
+
+		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+		dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+
+
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+
+		Positions[0].first = newPos0x;
+		Positions[1].first = newPos1x;
+		Positions[2].first = newPos2x;
+		Positions[3].first = newPos3x;
+		Positions[0].second = newPos0y;
+		Positions[1].second = newPos1y;
+		Positions[2].second = newPos2y;
+		Positions[3].second = newPos3y;
+	}
+}
+
 
