@@ -2,13 +2,19 @@
 
 #include <iostream>
 #include <memory>
+#include <Windows.h>
+#include "MMSystem.h"
+
 
 std::unique_ptr<Scene> CreateScene();
 
 int main() {
     dzg app;
     auto s = CreateScene();
+
     try {
+
+        PlaySound(TEXT("..\\resources\\music\\tetris.wav"), 0, SND_FILENAME | SND_ASYNC);
         app.run(s);
     }
     catch (const std::exception& e) {
