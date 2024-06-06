@@ -59,9 +59,16 @@ bool Tetromino::IsAttached(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 
 TetrominoType Tetromino::GenerateType()
 {
-	std::mt19937 generator(std::time(nullptr)); // Seed the generator
-	std::uniform_int_distribution<int> distribution(2, 8); // Define the range
+	static std::mt19937 generator(std::time(nullptr)); // Seed the generator
+	static std::uniform_int_distribution<int> distribution(2, 8); // Define the range
 	return static_cast<TetrominoType>(distribution(generator));
+}
+
+glm::vec4 Tetromino::GenerateColor()
+{
+	static std::mt19937 generator(std::time(nullptr)); // Seed the generator
+	static std::uniform_real_distribution<float> distribution(0.0f, 1.0f); // Define the range
+	return glm::vec4(distribution(generator), distribution(generator), distribution(generator), 1.0f);
 }
 
 void Tetromino::RotateI(std::vector<std::shared_ptr<Mesh>>& MeshVec)
@@ -104,10 +111,10 @@ void Tetromino::RotateI(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//	dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//	dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -155,10 +162,10 @@ void Tetromino::RotateI(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//	dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//	dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -212,10 +219,10 @@ void Tetromino::RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[2].first = newPos2x;
@@ -263,10 +270,10 @@ void Tetromino::RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[2].first = newPos2x;
@@ -314,10 +321,10 @@ void Tetromino::RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[2].first = newPos2x;
@@ -365,10 +372,10 @@ void Tetromino::RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[2].first = newPos2x;
@@ -421,10 +428,10 @@ void Tetromino::RotateL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[2].first = newPos2x;
@@ -472,10 +479,10 @@ void Tetromino::RotateL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[2].first = newPos2x;
@@ -523,10 +530,10 @@ void Tetromino::RotateL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[2].first = newPos2x;
@@ -574,10 +581,10 @@ void Tetromino::RotateL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[2].first = newPos2x;
@@ -631,10 +638,10 @@ void Tetromino::RotateT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[2].first = newPos2x;
@@ -682,10 +689,10 @@ void Tetromino::RotateT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[2].first = newPos2x;
@@ -733,10 +740,10 @@ void Tetromino::RotateT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 	//	dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-	//	dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+	//	dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[2].first = newPos2x;
@@ -784,10 +791,10 @@ void Tetromino::RotateT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 	//	dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[2].first = newPos2x;
@@ -840,10 +847,10 @@ void Tetromino::RotateS(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//	dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//	dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -893,10 +900,10 @@ void Tetromino::RotateS(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -951,10 +958,10 @@ void Tetromino::RotateZ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//	dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//	dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1004,10 +1011,10 @@ void Tetromino::RotateZ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1058,10 +1065,10 @@ void Tetromino::LeftI(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1106,10 +1113,10 @@ void Tetromino::LeftI(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1158,10 +1165,10 @@ void Tetromino::LeftJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1206,10 +1213,10 @@ void Tetromino::LeftJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1254,10 +1261,10 @@ void Tetromino::LeftJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1302,10 +1309,10 @@ void Tetromino::LeftJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1354,10 +1361,10 @@ void Tetromino::LeftL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1402,10 +1409,10 @@ void Tetromino::LeftL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1450,10 +1457,10 @@ void Tetromino::LeftL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1498,10 +1505,10 @@ void Tetromino::LeftL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1550,10 +1557,10 @@ void Tetromino::LeftT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1598,10 +1605,10 @@ void Tetromino::LeftT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1646,10 +1653,10 @@ void Tetromino::LeftT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1694,10 +1701,10 @@ void Tetromino::LeftT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1746,10 +1753,10 @@ void Tetromino::LeftS(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1794,10 +1801,10 @@ void Tetromino::LeftS(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1846,10 +1853,10 @@ void Tetromino::LeftZ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-	//	dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-	//	dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+	//	dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+	//	dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1894,10 +1901,10 @@ void Tetromino::LeftZ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1947,10 +1954,10 @@ void Tetromino::RightI(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -1995,10 +2002,10 @@ void Tetromino::RightI(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2047,10 +2054,10 @@ void Tetromino::RightJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2095,10 +2102,10 @@ void Tetromino::RightJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2143,10 +2150,10 @@ void Tetromino::RightJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2191,10 +2198,10 @@ void Tetromino::RightJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2243,10 +2250,10 @@ void Tetromino::RightL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2291,10 +2298,10 @@ void Tetromino::RightL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2339,10 +2346,10 @@ void Tetromino::RightL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2387,10 +2394,10 @@ void Tetromino::RightL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2439,10 +2446,10 @@ void Tetromino::RightT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2487,10 +2494,10 @@ void Tetromino::RightT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2535,10 +2542,10 @@ void Tetromino::RightT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2583,10 +2590,10 @@ void Tetromino::RightT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2635,10 +2642,10 @@ void Tetromino::RightS(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2683,10 +2690,10 @@ void Tetromino::RightS(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2735,10 +2742,10 @@ void Tetromino::RightZ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 	//	dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-	//	dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+	//	dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2783,10 +2790,10 @@ void Tetromino::RightZ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2835,10 +2842,10 @@ bool Tetromino::DownI(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2883,10 +2890,10 @@ bool Tetromino::DownI(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2936,10 +2943,10 @@ bool Tetromino::DownJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -2984,10 +2991,10 @@ bool Tetromino::DownJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3032,10 +3039,10 @@ bool Tetromino::DownJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3080,10 +3087,10 @@ bool Tetromino::DownJ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3133,10 +3140,10 @@ bool Tetromino::DownL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3181,10 +3188,10 @@ bool Tetromino::DownL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3229,10 +3236,10 @@ bool Tetromino::DownL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3277,10 +3284,10 @@ bool Tetromino::DownL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3330,10 +3337,10 @@ bool Tetromino::DownT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3378,10 +3385,10 @@ bool Tetromino::DownT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3426,10 +3433,10 @@ bool Tetromino::DownT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3474,10 +3481,10 @@ bool Tetromino::DownT(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3527,10 +3534,10 @@ bool Tetromino::DownS(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3575,10 +3582,10 @@ bool Tetromino::DownS(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3628,10 +3635,10 @@ bool Tetromino::DownZ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;
@@ -3676,10 +3683,10 @@ bool Tetromino::DownZ(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 		//dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
-		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take();
-		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take();
-		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take();
+		//dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->Take(Color);
+		//dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->Take(Color);
+		dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->Take(Color);
 
 		Positions[0].first = newPos0x;
 		Positions[1].first = newPos1x;

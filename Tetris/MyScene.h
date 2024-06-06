@@ -10,7 +10,7 @@
 #include <vendor/imgui/imgui_impl_vulkan.h>
 
 #include <random>
-#include <queue>
+#include <deque>
 
 #include "Tetromino.h"
 #include "Field.h"
@@ -39,16 +39,80 @@ public:
 
 private:
 	void restartScene();
+	void clearNextFields()
+	{
+		for (int i = 0; i < m_NextTetrominoFieldVec.size(); i++)
+		{
+			dynamic_cast<Field*>(m_NextTetrominoFieldVec[i].get())->Free();
+		}
+	}
 
-	bool CollisionTest(dzg* app);
+	void drawNextFields()
+	{
+		for (int i = 0; i < 3; ++i)
+		{
+			TetrominoType type = m_TetroQueue[i].type;
+			glm::vec4 color = m_TetroQueue[i].Color;
+			if (type == TetrominoType::I)
+			{
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 0 * 4 + 2].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 1 * 4 + 2].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 2 * 4 + 2].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 3 * 4 + 2].get())->Take(color);
+			}
+			if (type == TetrominoType::O)
+			{
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 1 * 4 + 1].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 1 * 4 + 2].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 2 * 4 + 1].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 2 * 4 + 2].get())->Take(color);
+			}
+			else if (type == TetrominoType::J)
+			{
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 1 * 4 + 2].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 2 * 4 + 2].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 3 * 4 + 2].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 3 * 4 + 1].get())->Take(color);
+			}
+			else if (type == TetrominoType::L)
+			{
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 1 * 4 + 2].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 2 * 4 + 2].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 3 * 4 + 2].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 3 * 4 + 3].get())->Take(color);
+			}
+			else if (type == TetrominoType::T)
+			{
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 2 * 4 + 0].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 2 * 4 + 1].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 2 * 4 + 2].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 3 * 4 + 1].get())->Take(color);
+			}
+			else if (type == TetrominoType::Z)
+			{
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 2 * 4 + 0].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 2 * 4 + 1].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 3 * 4 + 1].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 3 * 4 + 2].get())->Take(color);
+			}
+			else if (type == TetrominoType::S)
+			{
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 2 * 4 + 2].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 2 * 4 + 3].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 3 * 4 + 1].get())->Take(color);
+				dynamic_cast<Field*>(m_NextTetrominoFieldVec[i * 4 * 4 + 3 * 4 + 2].get())->Take(color);
+			}
+		}
+	}
 
 	bool m_GameOver = false;
 
-	GameState gs = GameState::PLAY;
+	GameState gs = GameState::PREPARE;
 
 	Tetromino m_CurrentTetro;
-	std::queue<Tetromino> TetroQueue;
-	FieldVec_t m_FieldVec;
+	std::deque<Tetromino> m_TetroQueue;
+	std::vector<std::shared_ptr<Mesh>> m_NextTetrominoFieldVec;
+
 
 	int m_Score = 0;
 };

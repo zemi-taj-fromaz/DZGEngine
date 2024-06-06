@@ -13,7 +13,8 @@ public:
 		Color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 	}
 
-	void Take() { isTaken = true;  Color = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);}
+	//void Take(Colorglm::vec4 color) { isTaken = true;  Color = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);}
+	void Take(glm::vec4& color) { isTaken = true;  Color = color;}
 	void Free() { isTaken = false; Color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);}
 	bool IsTaken() { return isTaken; }
 

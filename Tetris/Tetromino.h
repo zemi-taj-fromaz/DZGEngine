@@ -4,6 +4,8 @@
 #include <memory>
 #include <random>
 
+#include <glm/glm.hpp>
+
 struct Mesh;
 
 enum TetrominoType
@@ -37,7 +39,7 @@ public:
 		rotationPos = 1;
 
 		type = Tetromino::GenerateType();
-		type = TetrominoType::L;
+		this->Color = Tetromino::GenerateColor();
 
 		switch (type)
 		{
@@ -62,7 +64,7 @@ public:
 		case(TetrominoType::T):
 		{
 			float column = RandInt(rng);
-			Positions = { {0, column}, {0, column + 1}, {0, column + 2}, {1, column } };
+			Positions = { {0, column}, {0, column + 1}, {0, column + 2}, {1, column + 1 } };
 			break;
 		}
 		case(TetrominoType::S):
@@ -77,6 +79,12 @@ public:
 			Positions = { {0, column}, {0, column + 1}, {1, column + 1}, {1, column + 2} };
 			break;
 		}
+		//case(TetrominoType::O):
+		//{
+		//	float column = RandInt(rng);
+		//	Positions = { {0, column}, {0, column + 1}, {1, column + 1}, {1, column + 2} };
+		//	break;
+		//}
 		}
 		/* select random Type and select random spawn position(random collumn)*/
 	}
@@ -91,6 +99,7 @@ public:
 	TetrominoType type;
 	int rotationPos;
 	std::vector<std::pair<int, int> > Positions;
+	glm::vec4 Color;
 
 private:
 
@@ -100,6 +109,8 @@ private:
 	static std::uniform_int_distribution<int> RandInt; // distribution in range [1, 6]
 
 	static TetrominoType GenerateType();
+	static glm::vec4 GenerateColor();
+
 
 	void RotateI(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void RotateJ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
@@ -129,5 +140,6 @@ private:
 	bool DownT(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	bool DownS(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	bool DownZ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+
 };
 

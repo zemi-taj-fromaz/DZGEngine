@@ -108,10 +108,34 @@ MyScene::MyScene(uint32_t width, uint32_t height) : Scene(width, height)
 	}
 	field = nullptr;
 
+	for (int i = 0; i < 3; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			for (int k = 0; k < 4; ++k)
+			{
+				field = new Field();
+				std::shared_ptr<Mesh> m2 = std::shared_ptr<Mesh>(field);
+				m2->DescriptorSetVec = DescriptorSetVec;
+				m2->PipelineData = pDataPillar;
+				m2->offsetPosition(glm::vec3(0.5f, 0.5f, 0.0f));
+				m2->offsetPosition(glm::vec3((k + 11) * 1.1f, (j + i*5) * 1.1f, 0.0f));
+				MeshVec.push_back(m2);
+				m_NextTetrominoFieldVec.push_back(m2);
+			}
+		}
+	}
+	field = nullptr;
+
 	for (auto& pos : m_CurrentTetro.Positions)
 	{
-		dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take();
+		dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take(m_CurrentTetro.Color);
 	}
+
+	m_TetroQueue.push_back(Tetromino());
+	m_TetroQueue.push_back(Tetromino());
+	m_TetroQueue.push_back(Tetromino());
+
 
 }
 
@@ -124,38 +148,58 @@ std::wstring ConvertToWideString(const std::string& narrowStr) {
 
 void MyScene::scene_update(float totalTime, float deltaTime, dzg* app) 
 {
-	//for (auto& vec : MeshVec)
-	//{
-	//	vec->Color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-	//}
-	//if (m_CurrentTetro.type == TetrominoType::SQUARE)
-	//{
-	//	auto pos = m_CurrentTetro.Positions[0];
-	//	MeshVec[pos.first * 10 + pos.second]->Color = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);
-	//}
-
-	return;
-	// TODO Add sound
-	//bool isit = PlaySound(TEXT("C:/Users/hrcol/Downloads/about_time.wav"), NULL, SND_ASYNC);
-	//
-	//if (isit == false)
-	//{
-	//	std::cout << " Sound not playing" << std::endl;
-	//}
-
 	if (gs == GameState::OVER) return;
-
-	for (int i = 0; i < MeshVec.size(); ++i)
+	if (gs == GameState::PREPARE)
 	{
-		MeshVec[i]->update(totalTime, deltaTime, app);
-	}
-
-	if (CollisionTest(app))
-	{
-		gs = GameState::OVER;
-		m_GameOver = true;
+		drawNextFields();
+		gs = GameState::PLAY;
 		return;
 	}
+
+	static float time = 0.0f;
+	static float period = 1.0f;
+
+	time += deltaTime;
+	if (time > period)
+	{
+		// do something
+		time -= period;
+		period = 0.96f * period;
+	}
+	
+	bool isRowFull;
+	for (int i = 0; i < 20; i++) //TODO - switch hardcoded 20 and 10 for rows and columns
+	{
+		isRowFull = true;
+		for (int j = 0; j < 10; j++)
+		{
+			if (!dynamic_cast<Field*>(MeshVec[i * 10 + j].get())->IsTaken())
+			{
+				isRowFull = false; break;
+			}
+		}
+		if (isRowFull == false) continue; //TODO also maybe abstract this to separate functions for better readibility
+										 // TODO pokušaj da ovo triggera neku vrstu eventa
+		for (int j = 0; j < 10; j++)
+		{
+			dynamic_cast<Field*>(MeshVec[i * 10 + j].get())->Free();
+		}
+
+		for (int k = i - 1; k >= 0; --k)
+		{
+			for (int j = 0; j < 10; j++)
+			{
+				if (dynamic_cast<Field*>(MeshVec[k * 10 + j].get())->IsTaken())
+				{
+					auto color = MeshVec[k * 10 + j]->Color;
+					dynamic_cast<Field*>(MeshVec[k * 10 + j].get())->Free();
+					dynamic_cast<Field*>(MeshVec[(k + 1) * 10 + j].get())->Take(color);
+				}
+			}
+		}
+	}
+
+	return;
 }
 
 void MyScene::restartScene()
@@ -183,31 +227,7 @@ void MyScene::inputPolling(GLFWwindow* window, float deltaTime)
 		}
 		return;
 	}
-
-	//float playerSpeed = 6.0f;
-	////float gravity = 2.0f;
-	//if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-	//	this->Player->offsetPosition(glm::vec3(0.0f, -playerSpeed * deltaTime, 0.0f));
-	//	auto rot = glm::rotate(glm::mat4(1.0f), glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	//	this->Player->setRotation(rot);
-
-	//	m_EngineParticle.Position = glm::vec2(this->Player->Position) + glm::vec2(-0.5f, 1.0f);
-	//	m_EngineParticle.Velocity = glm::vec2(dynamic_cast<Pillar*>(m_PillarsVec[0].get())->Speed, 6.0f);
-	//	this->m_ParticleSystem->Emit(m_EngineParticle);
-	//}
-	//else
-	//{
-	//	auto rot = glm::rotate(glm::mat4(1.0f), glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	//	this->Player->setRotation(rot);
-	//	this->Player->offsetPosition(glm::vec3(0.0f, playerSpeed * deltaTime, 0.0f));
-	//}
 }
-
-bool MyScene::CollisionTest(dzg* app)
-{
-	return false;
-}
-
 
 void MyScene::drawImgui(dzg* app, VkCommandBuffer commandbuffer)
 {
@@ -220,7 +240,8 @@ std::unique_ptr<Camera> MyScene::GetCamera(dzg* app)
 
 void MyScene::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) 
 {
-	if (action == GLFW_PRESS)
+	if (gs == GameState::OVER) return;
+	if (action == GLFW_PRESS || action == GLFW_REPEAT)
 	{
 		switch (key)
 		{
@@ -228,20 +249,35 @@ void MyScene::keyCallback(GLFWwindow* window, int key, int scancode, int action,
 		{
 			if (!m_CurrentTetro.processDown(this->MeshVec)) 
 			{ 
-				m_CurrentTetro = Tetromino(); 
+				m_CurrentTetro = m_TetroQueue.front();
+				m_TetroQueue.pop_front();
+				m_TetroQueue.push_back(Tetromino());
+
+				clearNextFields();
+				drawNextFields();
 
 				for (auto& pos : m_CurrentTetro.Positions)
 				{
-					dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take();
+					if (dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->IsTaken())
+					{
+						gs = GameState::OVER;
+						return;
+					}
+					dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take(m_CurrentTetro.Color);
 				}
 			}
 			else if(m_CurrentTetro.IsAttached(this->MeshVec))
 			{
-				m_CurrentTetro = Tetromino();
+				m_CurrentTetro = m_TetroQueue.front();
+				m_TetroQueue.pop_front();
+				m_TetroQueue.push_back(Tetromino());
+
+				clearNextFields();
+				drawNextFields();
 
 				for (auto& pos : m_CurrentTetro.Positions)
 				{
-					dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take();
+					dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take(m_CurrentTetro.Color);
 				}
 			}
 			break;
