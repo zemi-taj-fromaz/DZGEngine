@@ -79,12 +79,12 @@ public:
 			Positions = { {0, column}, {0, column + 1}, {1, column + 1}, {1, column + 2} };
 			break;
 		}
-		//case(TetrominoType::O):
-		//{
-		//	float column = RandInt(rng);
-		//	Positions = { {0, column}, {0, column + 1}, {1, column + 1}, {1, column + 2} };
-		//	break;
-		//}
+		case(TetrominoType::O):
+		{
+			float column = RandInt(rng);
+			Positions = { {0, column}, {0, column + 1}, {1, column}, {1, column + 1} };
+			break;
+		}
 		}
 		/* select random Type and select random spawn position(random collumn)*/
 	}
@@ -125,6 +125,7 @@ private:
 	void LeftT(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void LeftS(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void LeftZ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void LeftO(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 
 	void RightI(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void RightJ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
@@ -132,6 +133,7 @@ private:
 	void RightT(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void RightS(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	void RightZ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	void RightO(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 
 
 	bool DownI(std::vector<std::shared_ptr<Mesh>>& MeshVec);
@@ -140,6 +142,7 @@ private:
 	bool DownT(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	bool DownS(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 	bool DownZ(std::vector<std::shared_ptr<Mesh>>& MeshVec);
+	bool DownO(std::vector<std::shared_ptr<Mesh>>& MeshVec);
 
 };
 
