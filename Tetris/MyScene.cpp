@@ -159,42 +159,49 @@ void MyScene::scene_update(float totalTime, float deltaTime, dzg* app)
 	static float time = 0.0f;
 	static float period = 1.0f;
 
+
 	time += deltaTime;
+
 	if (time > period)
 	{
 		// do something
 		time -= period;
-		period = 0.96f * period;
-	}
-	
-	bool isRowFull;
-	for (int i = 0; i < 20; i++) //TODO - switch hardcoded 20 and 10 for rows and columns
-	{
-		isRowFull = true;
-		for (int j = 0; j < 10; j++)
+		period = 0.99995f * period;
+
+		if (!m_CurrentTetro.processDown(this->MeshVec))
 		{
-			if (!dynamic_cast<Field*>(MeshVec[i * 10 + j].get())->IsTaken())
+			clearFullRows();
+
+			m_CurrentTetro = m_TetroQueue.front();
+			m_TetroQueue.pop_front();
+			m_TetroQueue.push_back(Tetromino());
+
+			clearNextFields();
+			drawNextFields();
+
+			for (auto& pos : m_CurrentTetro.Positions)
 			{
-				isRowFull = false; break;
+				if (dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->IsTaken())
+				{
+					gs = GameState::OVER;
+					return;
+				}
+				dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take(m_CurrentTetro.Color);
 			}
 		}
-		if (isRowFull == false) continue; //TODO also maybe abstract this to separate functions for better readibility
-										 // TODO pokušaj da ovo triggera neku vrstu eventa
-		for (int j = 0; j < 10; j++)
+		else if (m_CurrentTetro.IsAttached(this->MeshVec))
 		{
-			dynamic_cast<Field*>(MeshVec[i * 10 + j].get())->Free();
-		}
+			clearFullRows();
+			m_CurrentTetro = m_TetroQueue.front();
+			m_TetroQueue.pop_front();
+			m_TetroQueue.push_back(Tetromino());
 
-		for (int k = i - 1; k >= 0; --k)
-		{
-			for (int j = 0; j < 10; j++)
+			clearNextFields();
+			drawNextFields();
+
+			for (auto& pos : m_CurrentTetro.Positions)
 			{
-				if (dynamic_cast<Field*>(MeshVec[k * 10 + j].get())->IsTaken())
-				{
-					auto color = MeshVec[k * 10 + j]->Color;
-					dynamic_cast<Field*>(MeshVec[k * 10 + j].get())->Free();
-					dynamic_cast<Field*>(MeshVec[(k + 1) * 10 + j].get())->Take(color);
-				}
+				dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take(m_CurrentTetro.Color);
 			}
 		}
 	}
@@ -207,14 +214,34 @@ void MyScene::restartScene()
 	//Todo - extract this to  a separate function
 		
 	m_Score = 0;
+
+	clearNextFields();
+
+	clearEntireField();
+
+	m_CurrentTetro = Tetromino();
+
+	for (auto& pos : m_CurrentTetro.Positions)
+	{
+		dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take(m_CurrentTetro.Color);
+	}
+
+
+	m_TetroQueue.clear();
+
+	m_TetroQueue.push_back(Tetromino());
+	m_TetroQueue.push_back(Tetromino());
+	m_TetroQueue.push_back(Tetromino());
+
+	drawNextFields();
+
 	gs = GameState::PLAY;
-	m_GameOver = false;
+
 }
 
 void MyScene::inputPolling(GLFWwindow* window, float deltaTime) 
 {
 
-	return;
 	if (gs == GameState::OVER)
 	{
 		if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) 
@@ -227,10 +254,147 @@ void MyScene::inputPolling(GLFWwindow* window, float deltaTime)
 		}
 		return;
 	}
+	return;
+
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) 
+	{
+
+		if (!m_CurrentTetro.processDown(this->MeshVec))
+		{
+			std::cout << " new tetro by event (not going down)" << std::endl;
+			clearFullRows();
+			m_CurrentTetro = m_TetroQueue.front();
+			m_TetroQueue.pop_front();
+			m_TetroQueue.push_back(Tetromino());
+
+			clearNextFields();
+			drawNextFields();
+
+			for (auto& pos : m_CurrentTetro.Positions)
+			{
+				if (dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->IsTaken())
+				{
+					gs = GameState::OVER;
+
+					return;
+				}
+				dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take(m_CurrentTetro.Color);
+			}
+		}
+		else if (m_CurrentTetro.IsAttached(this->MeshVec))
+		{
+			std::cout << " new tetro by event(is attached)" << std::endl;
+			clearFullRows();
+
+			m_CurrentTetro = m_TetroQueue.front();
+			m_TetroQueue.pop_front();
+			m_TetroQueue.push_back(Tetromino());
+
+			clearNextFields();
+			drawNextFields();
+
+			for (auto& pos : m_CurrentTetro.Positions)
+			{
+				dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take(m_CurrentTetro.Color);
+			}
+		}
+	}
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+	{
+		m_CurrentTetro.processUp(MeshVec);
+	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		m_CurrentTetro.processLeft(MeshVec);
+	}
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		m_CurrentTetro.processRight(MeshVec);
+	}
+		
+	
 }
 
 void MyScene::drawImgui(dzg* app, VkCommandBuffer commandbuffer)
 {
+	if (gs == GameState::PLAY)
+	{
+		ImGui_ImplVulkan_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+
+		ImGui::NewFrame();
+
+		ImGuiWindowFlags window_flags = 0;
+		window_flags |= ImGuiWindowFlags_NoBackground;
+		window_flags |= ImGuiWindowFlags_NoTitleBar;
+
+		ImVec2 windowSize{ 250, 350 };
+		ImGui::SetNextWindowSize(windowSize);
+
+		ImGui::SetNextWindowPos(ImVec2(app->GetWidth() / 1.4, app->GetHeight() / 1.4));
+
+		//ImGui::SetNextWindowPos(ImVec2(0, 0));
+
+		// etc.
+		bool open_ptr = true;
+		ImGui::Begin("I'm a Window!", &open_ptr, window_flags);
+
+		ImFont* font = ImGui::GetFont();
+		font->Scale = 2;
+
+		// font->Color
+		ImGui::PushFont(font);
+		//imgui commands
+
+		std::string score = "Score : " + std::to_string(m_Score);
+		ImGui::Text(score.c_str());
+
+		ImGui::PopFont();
+
+		ImGui::End();
+
+		ImGui::EndFrame();
+		ImGui::Render();
+		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandbuffer);
+	}
+	else if (gs == GameState::OVER)
+	{
+		ImGui_ImplVulkan_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+
+		ImGui::NewFrame();
+
+		ImGuiWindowFlags window_flags = 0;
+		window_flags |= ImGuiWindowFlags_NoBackground;
+		window_flags |= ImGuiWindowFlags_NoTitleBar;
+
+		ImVec2 windowSize{ 270, 350 };
+		ImGui::SetNextWindowSize(windowSize);
+		ImGui::SetNextWindowPos(ImVec2(app->GetWidth() / 1.4, app->GetHeight() / 1.4));
+		// etc.
+		bool open_ptr = true;
+		ImGui::Begin("I'm a Window!", &open_ptr, window_flags);
+
+		ImFont* font = ImGui::GetFont();
+		font->Scale = 2;
+
+		// font->Color
+		ImGui::PushFont(font);
+		//imgui commands
+
+		std::string score = "Score : " + std::to_string(m_Score);
+		ImGui::Text("GAME OVER");
+		ImGui::Text(score.c_str());
+		ImGui::Text("R[restart]");
+
+		ImGui::PopFont();
+
+		ImGui::End();
+
+		ImGui::EndFrame();
+		ImGui::Render();
+		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandbuffer);
+	}
 }
 
 std::unique_ptr<Camera> MyScene::GetCamera(dzg* app)
@@ -240,15 +404,23 @@ std::unique_ptr<Camera> MyScene::GetCamera(dzg* app)
 
 void MyScene::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) 
 {
-	if (gs == GameState::OVER) return;
+	if (gs == GameState::OVER)
+	{
+		return;
+	}
+
 	if (action == GLFW_PRESS || action == GLFW_REPEAT)
 	{
 		switch (key)
 		{
 		case(GLFW_KEY_DOWN):
 		{
+
 			if (!m_CurrentTetro.processDown(this->MeshVec)) 
 			{ 
+				std::cout << " new tetro by event (not going down)" << std::endl;
+				clearFullRows();
+
 				m_CurrentTetro = m_TetroQueue.front();
 				m_TetroQueue.pop_front();
 				m_TetroQueue.push_back(Tetromino());
@@ -261,6 +433,7 @@ void MyScene::keyCallback(GLFWwindow* window, int key, int scancode, int action,
 					if (dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->IsTaken())
 					{
 						gs = GameState::OVER;
+
 						return;
 					}
 					dynamic_cast<Field*>(MeshVec[pos.first * 10 + pos.second].get())->Take(m_CurrentTetro.Color);
@@ -268,6 +441,7 @@ void MyScene::keyCallback(GLFWwindow* window, int key, int scancode, int action,
 			}
 			else if(m_CurrentTetro.IsAttached(this->MeshVec))
 			{
+				clearFullRows();
 				m_CurrentTetro = m_TetroQueue.front();
 				m_TetroQueue.pop_front();
 				m_TetroQueue.push_back(Tetromino());
@@ -299,6 +473,7 @@ void MyScene::keyCallback(GLFWwindow* window, int key, int scancode, int action,
 		}
 		}
 	}
+
 }
 
 

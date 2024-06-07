@@ -14,7 +14,7 @@ int main() {
 
     try {
 
-        PlaySound(TEXT("..\\resources\\music\\tetris.wav"), 0, SND_FILENAME | SND_ASYNC);
+        PlaySound(TEXT("..\\resources\\music\\tetris.wav"), 0, SND_FILENAME | SND_ASYNC | SND_LOOP);
         app.run(s);
     }
     catch (const std::exception& e) {

@@ -1160,10 +1160,10 @@ void Tetromino::LeftO(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 	//if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return;
 
 
-	dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
-//	dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
-	dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
-//	dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
+	//dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();
+	dynamic_cast<Field*>(MeshVec[currPos1x * 10 + currPos1y].get())->Free();
+	//dynamic_cast<Field*>(MeshVec[currPos2x * 10 + currPos2y].get())->Free();
+	dynamic_cast<Field*>(MeshVec[currPos3x * 10 + currPos3y].get())->Free();
 
 
 	dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->Take(Color);
@@ -3281,8 +3281,10 @@ bool Tetromino::DownL(std::vector<std::shared_ptr<Mesh>>& MeshVec)
 
 		//if (dynamic_cast<Field*>(MeshVec[newPos0x * 10 + newPos0y].get())->IsTaken()) return;
 		//if (dynamic_cast<Field*>(MeshVec[newPos1x * 10 + newPos1y].get())->IsTaken()) return;
-		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) return false;
-		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) return false;
+		if (dynamic_cast<Field*>(MeshVec[newPos2x * 10 + newPos2y].get())->IsTaken()) { 
+			return false; }
+		if (dynamic_cast<Field*>(MeshVec[newPos3x * 10 + newPos3y].get())->IsTaken()) { 
+			return false; }
 
 
 		dynamic_cast<Field*>(MeshVec[currPos0x * 10 + currPos0y].get())->Free();

@@ -11,6 +11,7 @@
 
 #include <random>
 #include <deque>
+#include <atomic>
 
 #include "Tetromino.h"
 #include "Field.h"
@@ -44,6 +45,56 @@ private:
 		for (int i = 0; i < m_NextTetrominoFieldVec.size(); i++)
 		{
 			dynamic_cast<Field*>(m_NextTetrominoFieldVec[i].get())->Free();
+		}
+	}
+
+	void clearFullRows()
+	{
+		bool isRowFull;
+		for (int i = 0; i < 20; i++) //TODO - switch hardcoded 20 and 10 for rows and columns
+		{
+			isRowFull = true;
+			for (int j = 0; j < 10; j++)
+			{
+				if (!dynamic_cast<Field*>(MeshVec[i * 10 + j].get())->IsTaken())
+				{
+					isRowFull = false; break;
+				}
+			}
+			if (isRowFull == false) continue; //TODO also maybe abstract this to separate functions for better readibility
+			// TODO pokušaj da ovo triggera neku vrstu eventa
+
+			for (int j = 0; j < 10; j++)
+			{
+				dynamic_cast<Field*>(MeshVec[i * 10 + j].get())->Free();
+			}
+
+			for (int k = i - 1; k >= 0; --k)
+			{
+				for (int j = 0; j < 10; j++)
+				{
+					if (dynamic_cast<Field*>(MeshVec[k * 10 + j].get())->IsTaken())
+					{
+						auto color = MeshVec[k * 10 + j]->Color;
+						dynamic_cast<Field*>(MeshVec[k * 10 + j].get())->Free();
+						dynamic_cast<Field*>(MeshVec[(k + 1) * 10 + j].get())->Take(color);
+					}
+				}
+			}
+
+			m_Score += 10;
+		}
+	}
+
+	void clearEntireField()
+	{
+		for (int i = 0; i < 20; i++)
+		{
+			for (int j = 0; j < 10; j++)
+			{
+				dynamic_cast<Field*>(MeshVec[i * 10 + j].get())->Free();
+
+			}
 		}
 	}
 
@@ -115,5 +166,6 @@ private:
 
 
 	int m_Score = 0;
+
 };
 
