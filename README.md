@@ -17,7 +17,6 @@ Select these components during installation:
 
         To confirm the installation -> open the Bin folder in the installation directory and run vkcube.exe
         If you see an image like this it means it went well:
-![alt text](image-1.png)![image-1](https://github.com/zemi-taj-fromaz/DZGEngine/assets/99961022/59990a03-5a97-438a-9ac5-744a5c94dd11)
 
     
 2) Download GLFW https://www.glfw.org/download.html
