@@ -32,7 +32,7 @@ Select these components during installation:
 
 5) Set proper path
         
-        In "resources/compile.bat" set a proper to glslc.exe for shader compilation
+        In "resources/compile.bat" set a proper to glslc.exe for shader compilation. Run this script initially and after that -  in the case of initial shader adding
 
         example: set "glslcPath=C:\VulkanSDK\1.3.283.0\Bin\glslc.exe"
 
