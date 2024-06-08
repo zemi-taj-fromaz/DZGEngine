@@ -1,13 +1,11 @@
 # DZGEngine
-2D Renderine(possible game) engine in C++ written using VulkanAPI
+2D Renderine(possible game) engine in C++ written using VulkanAPI 
+Disclaimer : Windows only!
 
 Used libraries:
     GLM (mathematics)
     GLFW (windowing and input library)
     STB_Image ( Image loading library)
-    Tiny Obj Loader (.obj loader library)
-    VkBootstrap (boilerplate code abstraction)
-    VMA (Vulkan memory allocator)
 
 Setup to run the project:
 
