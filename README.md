@@ -40,5 +40,15 @@ Select these components during installation:
 
 Currently developed scenes using this engine
 
+# Tetri$
+
+Enjoy the classic tetris experience enhanced by the sounds of Kuku$, Shegrt Hladnich (Tata Hladni) & Vuk Oreb
+![image](https://github.com/zemi-taj-fromaz/DZGEngine/assets/99961022/88b69327-32a5-4540-8e63-d54dc31a9753)
+
+# JetPug
+
+A pug with a jetpack (flappy bird rip-off)
+![image](https://github.com/zemi-taj-fromaz/DZGEngine/assets/99961022/e93c6b06-abe3-4b74-bc19-8303243d8aab)
+
 
 
