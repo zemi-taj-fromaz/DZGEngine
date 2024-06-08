@@ -204,10 +204,10 @@ void  dzg::initVulkan() {
       take scene
     */
     {
-        if (m_scene->TextureAtlas)
-        {
-            this->loadFont(8);
-        }
+        //if (m_scene->TextureAtlas)
+        //{
+        //    this->loadFont(8);
+        //}
         createTextureImage();
         createTextureImageView();
         createTextureSampler();

@@ -21,7 +21,7 @@ void dzg::createGraphicsPipelines()
 
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
         pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-        pipelineLayoutInfo.setLayoutCount = dSetLayoutVec.size(); // Optional
+        pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(dSetLayoutVec.size()); // Optional
         pipelineLayoutInfo.pSetLayouts = dSetLayoutVec.data(); // Optional 
         pipelineLayoutInfo.pushConstantRangeCount = 0; // Optional
         pipelineLayoutInfo.pPushConstantRanges = nullptr; // Optional

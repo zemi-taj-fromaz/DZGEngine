@@ -146,7 +146,6 @@ private:
     void createTextureSampler();
     bool         inputPolling(float deltaTime);
 
-    void loadFont(int fontsize);
     void createFontAtlas(char* pixels);
 
 public:

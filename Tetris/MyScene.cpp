@@ -379,7 +379,7 @@ void MyScene::drawImgui(dzg* app, VkCommandBuffer commandbuffer)
 		font->Scale = 2;
 
 		// font->Color
-		ImGui::PushFont(font);
+		ImGui::PushFont(font);	
 		//imgui commands
 
 		std::string score = "Score : " + std::to_string(m_Score);
