@@ -8,22 +8,16 @@ Used libraries:
     Tiny Obj Loader (.obj loader library)
     VkBootstrap (boilerplate code abstraction)
     VMA (Vulkan memory allocator)
-![image](https://github.com/zemi-taj-fromaz/DZGEngine/assets/99961022/433e455f-aa3c-4731-899d-607608e973b4)
-
-
-
 
 Setup to run the project:
 
 1) Download VulkanSDK https://vulkan.lunarg.com/sdk/home#windows
-        Select these components during installation:
-
-
-
+Select these components during installation:
+![image](https://github.com/zemi-taj-fromaz/DZGEngine/assets/99961022/433e455f-aa3c-4731-899d-607608e973b4)
 
         To confirm the installation -> open the Bin folder in the installation directory and run vkcube.exe
         If you see an image like this it means it went well:
-        ![alt text](image-1.png)![image-1](https://github.com/zemi-taj-fromaz/DZGEngine/assets/99961022/59990a03-5a97-438a-9ac5-744a5c94dd11)
+![alt text](image-1.png)![image-1](https://github.com/zemi-taj-fromaz/DZGEngine/assets/99961022/59990a03-5a97-438a-9ac5-744a5c94dd11)
 
     
 2) Download GLFW https://www.glfw.org/download.html
