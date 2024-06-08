@@ -8,6 +8,10 @@ Used libraries:
     Tiny Obj Loader (.obj loader library)
     VkBootstrap (boilerplate code abstraction)
     VMA (Vulkan memory allocator)
+![image](https://github.com/zemi-taj-fromaz/DZGEngine/assets/99961022/433e455f-aa3c-4731-899d-607608e973b4)
+
+
+
 
 Setup to run the project:
 
