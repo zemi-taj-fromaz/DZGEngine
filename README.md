@@ -13,6 +13,10 @@ Setup to run the project:
 
     #1 Download VulkanSDK https://vulkan.lunarg.com/sdk/home#windows
         Select these components during installation:
+
+        ![image](https://github.com/zemi-taj-fromaz/DZGEngine/assets/99961022/c84c5149-f67c-497e-b561-881cb6a8ce99)
+
+        
         ![image](https://github.com/zemi-taj-fromaz/DZGEngine/assets/99961022/6fc34042-e5fa-46d2-98f8-3d7540e21831)
 
 
