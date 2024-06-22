@@ -22,11 +22,13 @@ Select these components during installation:
 
         Download precompiled binaries
 
-3) Add appropriate directories to C++->General->"Additional include directiories" under project properties in Visual Studio
-        ![alt text](image-2.png)
+3) Add appropriate directories to "<AdditionalLibraryDirectories>" under project properties in Visual Studio
+    ![Snimka zaslona 2024-06-22 175139](https://github.com/zemi-taj-fromaz/STCEngine/assets/99961022/5c8f3b8d-a492-4db1-a627-8d6d38be876e)
 
-4) Add appropriate paths to Linker->General->Additional Library directories
-        ![alt text](image-3.png)
+
+
+4) Add appropriate directories to "<AdditionalIncludeDirectories>" under project properties in Visual Studio
+![Snimka zaslona 2024-06-22 175426](https://github.com/zemi-taj-fromaz/STCEngine/assets/99961022/eb75fe87-a005-4e9a-b3fe-a0189d9e1a5e)
 
 5) Set proper path
         
